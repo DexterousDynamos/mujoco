@@ -14,7 +14,7 @@ rm -r mujoco210-linux-x86_64.tar.gz
 
 ## Add mujoco to the path
 ```bash
-echo -e "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/arturo/.mujoco/mujoco210/bin" >> ~/.bashrc
+echo -e "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/$(whoami)/.mujoco/mujoco210/bin" >> ~/.bashrc
 echo -e "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/nvidia" >> ~/.bashrc
 echo -e "export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libGLEW.so" >> ~/.bashrc
 ```
