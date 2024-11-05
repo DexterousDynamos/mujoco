@@ -5,23 +5,24 @@ from mujoco_py import load_model_from_xml, MjSim, MjViewer
 from dataclasses import dataclass, field
 from typing import List, Dict
 import numpy as np
-from pyquaternion import Quaternion # TODO, see https://kieranwynn.github.io/pyquaternion/
+from pyquaternion import Quaternion
 
 @dataclass
 class Mujoco_XML:
-    # TODO: Add list of what kwargs are allowed for each function
-    # TODO: Add checks for valid inputs
-    # TODO: Remove not used default tags (e.g. not used contact/actuator)
-
     # Neccesary inputs
     model_name: str = field()
+
+    # Optional inputs
     use_defaults: str = True
 
     # Public variables, not to be set by user
     model_str: str = field(init=False)
 
     # Internal variables
-    _first_set: Dict[str, bool] = field(init=False, default_factory=lambda: {
+    _assets:            List[str]       = field(init=False, default_factory=list)
+    _xml_path:          str             = field(init=False, default='model.xml')
+    _mujoco_sim_path:   str             = field(init=False, default=os.path.join(os.path.dirname(__file__), 'mujoco_sim.sh'))
+    _first_set:         Dict[str, bool] = field(init=False, default_factory=lambda: {
         'compiler': False,
         'default': False,
         'asset': False,
@@ -31,9 +32,6 @@ class Mujoco_XML:
         'collision_class': False,
         'visual_class': False,
     })
-    _assets: List[str] = field(init=False, default_factory=list)
-    _xml_path: str = field(init=False, default='model.xml')
-    _mujoco_sim_path: str = field(init=False, default=os.path.join(os.path.dirname(__file__), 'mujoco_sim.sh'))
     
     def __post_init__(self):
         self.model_str = (
@@ -67,7 +65,16 @@ class Mujoco_XML:
             self.add_default("joint", type="hinge", limited="true")
         # self.sim = mujoco_py.MjSim(self.model)
 
-    def insert_at_index(self, target: str, index: int, insert: str, add_end: str = ''):
+    def _insert_at_index(self, target: str, index: int, insert: str, add_end: str = ''):
+        '''
+        Insert a string at a specific index in the Mujoco XML file.
+
+        Args:
+            target (str):   The target string to search for in the XML file.
+            index (int):    The index to insert the string at.
+            insert (str):   The string to insert at the specified index.
+            add_end (str):  The string to insert after the insert string. Defaults to empty string.
+        '''
         # For indent purposes (0 = False, 1 = True)
         if target in self._first_set.keys():
             add_indent = 1 - self._first_set[target]
@@ -88,83 +95,156 @@ class Mujoco_XML:
         if target in self._first_set.keys():
             self._first_set[target] = True
 
-    def insert_after_first(self, target: str, insert: str, add_end: str = ''):
-        lines = self.model_str.splitlines()
-        # print("Inserting after", target)
-        # print("Current xml:", self.model_str)
-        target_indices = [i for i, line in enumerate(lines) if target in line]
-        self.insert_at_index(target, target_indices[0] + 1, insert, add_end=add_end)
+    def _insert_after_first(self, target: str, insert: str, add_end: str = ''):
+        '''
+        Insert a string after the first instance of a target string in the Mujoco XML file.
 
-    def insert_before_last(self, target: str, insert: str, add_end: str = ''):
+        Args:
+            target (str):   The target string to search for in the XML file.
+            insert (str):   The string to insert after the first instance of the target string.
+            add_end (str):  The string to insert after the insert string. Defaults to empty string.
+        '''
         lines = self.model_str.splitlines()
         target_indices = [i for i, line in enumerate(lines) if target in line]
-        self.insert_at_index(target, target_indices[-1], insert, add_end=add_end)
+        if len(target_indices) == 0:
+            raise ValueError(f"Target '{target}' not found in XML file.")
+        self._insert_at_index(target, target_indices[0] + 1, insert, add_end=add_end)
+
+    def _insert_before_last(self, target: str, insert: str, add_end: str = ''):
+        '''
+        Insert a string before the last instance of a target string in the Mujoco XML file.
+
+        Args:
+            target (str):   The target string to search for in the XML file.
+            insert (str):   The string to insert before the last instance of the target string.
+            add_end (str):  The string to insert after the insert string. Defaults to empty string.
+        '''
+        lines = self.model_str.splitlines()
+        target_indices = [i for i, line in enumerate(lines) if target in line]
+        self._insert_at_index(target, target_indices[-1], insert, add_end=add_end)
 
     def add_compiler(self, angle: str = "radian"):
-        self.insert_after_first(self.model_name, f'<compiler angle="{angle}"/>')
+        '''
+        Add default compiler to the Mujoco XML file.
+
+        Args:
+            angle (str): The angle to use for the compiler. Defaults to "radian".
+        '''
+        self._insert_after_first(self.model_name, f'<compiler angle="{angle}"/>')
 
     def add_default_class(self, class_name: str, parent_class: str = ''):
+        '''
+        Add a default class to the Mujoco XML file. TODO: Parent class still to implement
+
+        Args:
+            class_name (str):   The name of the default class to add.
+            parent_class (str): The name of the parent class. Defaults to empty string (i.e. no parent class).
+        '''
         if parent_class == '':
-            self.insert_before_last("default", f'<default class="{class_name}">', add_end='</default>')
+            self._insert_before_last("default", f'<default class="{class_name}">', add_end='</default>')
         else:
-            self.insert_before_last("default", f'<default class="{class_name}" parent="{parent_class}">', add_end='</default>')
+            self._insert_before_last("default", f'<default class="{class_name}" parent="{parent_class}">', add_end='</default>')
 
         if class_name == "collision" or class_name == "visual":
             self._first_set[f'{class_name}_class'] = True
 
     def add_default(self, tag: str, class_name: str = '', **kwargs):
+        '''
+        Add a default tag to the Mujoco XML file.
+
+        Args:
+            tag (str):          The XML tag to add (geom, position, velocity, motor, mesh, joint, etc.).
+            class_name (str):   The default class name to add the tag to (needs to be added first via 'add_default_class'). Defaults to empty string (i.e. no parent class).
+        '''
         kwarg_str = ' '.join([f'{key}="{value}"' for key, value in kwargs.items()])
         if class_name == '':
-            self.insert_before_last("default", f'<{tag} {kwarg_str}/>')
+            self._insert_before_last("default", f'<{tag} {kwarg_str}/>')
         else:
-            self.insert_after_first(f'default class="{class_name}"', f'<{tag} {kwarg_str}/>')
+            self._insert_after_first(f'default class="{class_name}"', f'<{tag} {kwarg_str}/>')
 
     def add_asset(self, name: str, filepath: str):
-        # Assumes that mesh name is the same as later body name
-        self.insert_before_last("asset", f'<mesh name="{name}" file="{filepath}"/>')
+        '''
+        Add an asset to the Mujoco XML file.
+
+        Args:
+            name (str):     The name of the asset.
+            filepath (str): The file path to the asset.
+        '''
+        self._insert_before_last("asset", f'<mesh name="{name}" file="{filepath}"/>')
         self._assets.append(filepath)
 
-    def add_body(self, name: str, pos: List[float] | np.ndarray = np.array([0, 0, 0]), quat: List[float] | np.ndarray = np.array([1, 0, 0, 0]), parent: str = ''):
-        # 'quat' input in format 'w x y z'
+    def add_body(self, name: str, pos: List[float] | np.ndarray = np.array([0, 0, 0]), quat: List[float] | np.ndarray | Quaternion = Quaternion(1, 0, 0, 0), parent: str = ''):
+        '''
+        Add a body within the "worldbody" section to the Mujoco XML file. TODO: Add separate mesh name
+
+        Args:
+            name (str):                                     The name of the body.
+            pos (List[float] | np.ndarray):                 The position of the body in the format [x, y, z]. Defaults to [0, 0, 0].
+            quat (List[float] | np.ndarray | Quaternion):   The quaternion of the body in the format [w, x, y, z]. Defaults to [1, 0, 0, 0].
+            parent (str):                                   The name of the parent body. Defaults to empty string.
+        '''
         # Assumes that previous mesh name is the same as body name
         if parent == '':
-            self.insert_before_last("worldbody", f'<body name="{name}" pos="{pos[0]} {pos[1]} {pos[2]}" quat="{quat[0]} {quat[1]} {quat[2]} {quat[3]}">', add_end='</body>')
+            self._insert_before_last("worldbody", f'<body name="{name}" pos="{pos[0]} {pos[1]} {pos[2]}" quat="{quat[0]} {quat[1]} {quat[2]} {quat[3]}">', add_end='</body>')
         else:
-            self.insert_after_first(f'body name="{parent}"', f'<body name="{name}" pos="{pos[0]} {pos[1]} {pos[2]}" quat="{quat[0]} {quat[1]} {quat[2]} {quat[3]}">', add_end='</body>')
+            self._insert_after_first(f'body name="{parent}"', f'<body name="{name}" pos="{pos[0]} {pos[1]} {pos[2]}" quat="{quat[0]} {quat[1]} {quat[2]} {quat[3]}">', add_end='</body>')
 
         if self._first_set['collision_class']:
-            self.insert_after_first(f'body name="{name}"', f'<geom class="collision" mesh="{name}"/>')
+            self._insert_after_first(f'body name="{name}"', f'<geom class="collision" mesh="{name}"/>')
         if self._first_set['visual_class']:
-            self.insert_after_first(f'body name="{name}"', f'<geom class="visual" mesh="{name}"/>')
+            self._insert_after_first(f'body name="{name}"', f'<geom class="visual" mesh="{name}"/>')
 
     def add_joint(self, body_name: str, pos: List[float] | np.ndarray = np.array([0, 0, 0]), axis: List[float] | np.ndarray = np.array([0, 0, 1]), range: List[float] | np.ndarray = np.array([-1, 1])):
-        self.insert_after_first(f'body name="{body_name}"', f'<joint name="joint_{body_name}" pos="{pos[0]} {pos[1]} {pos[2]}" axis="{axis[0]} {axis[1]} {axis[2]}" range="{range[0]} {range[1]}"/>')
+        '''
+        TODO (perfect/debug)
+        '''
+        self._insert_after_first(f'body name="{body_name}"', f'<joint name="joint_{body_name}" pos="{pos[0]} {pos[1]} {pos[2]}" axis="{axis[0]} {axis[1]} {axis[2]}" range="{range[0]} {range[1]}"/>')
 
     def add_actuator(self, name: str, joint_name: str, actuator_type: str = 'motor', ctrlrange: List[float] | np.ndarray = np.array([-1, 1])):
-        # kwarg_str = ' '.join([f'{key}="{value}"' for key, value in kwargs.items()])
-        self.insert_before_last("actuator", f'<{actuator_type} name="{name}" joint="{joint_name}" ctrlrange="{ctrlrange[0]} {ctrlrange[1]}"/>')
+        '''
+        TODO (perfect/debug)
+        '''
+        self._insert_before_last("actuator", f'<{actuator_type} name="{name}" joint="{joint_name}" ctrlrange="{ctrlrange[0]} {ctrlrange[1]}"/>')
 
     def exclude_contact(self, body1: str, body2: str):
-        self.insert_before_last("contact", f'<exclude body1="{body1}" body2="{body2}"/>')
+        '''
+        TODO (perfect/debug)
+        '''
+        self._insert_before_last("contact", f'<exclude body1="{body1}" body2="{body2}"/>')
 
     def export_xml(self, filepath: str = 'model.xml'):
+        '''
+        Export the Mujoco XML file to the specified filepath.
+
+        Args:
+            filepath (str): The file path to export the XML file to. Defaults to 'model.xml'.
+        '''
         self._xml_path = filepath
-        # if filepath == '':
-        #     filepath = self._xml_path
+        if not os.path.exists(os.path.dirname(filepath)):
+            os.makedirs(os.path.dirname(filepath))
         with open(filepath, 'w') as file:
             file.write(self.model_str)
 
     def run_interactive(self, filepath: str = ''):
+        '''
+        Run the interactive window for the Mujoco XML file.
+
+        Note:
+            Be sure mujoco_sim.sh is in your PATH or in the same directory as this file.
+        '''
         if filepath == '':
             filepath = self._xml_path
         if not os.path.exists(filepath):
             self.export_xml(filepath)
-        # Note: Be sure mujoco_sim.sh is in your PATH or in the same directory as this file
-        # subprocess.run(["bash", "mujoco_sim.sh"])
         subprocess.run(f"cd {os.path.dirname(filepath)} && bash {self._mujoco_sim_path}", shell=True, check=True)
 
     def run_simulation(self):
-        # Note: Make sure to run the script from its directory
+        '''
+        (Still TODO) Run the physics simulation using the Mujoco XML file. Includes inputs etc.
+
+        Note:
+            Make sure to run the script from its directory.
+        '''
         subprocess.run(["mkdir", "-p", "/tmp/assets"])
         model_str = self.model_str
         for asset in self._assets:
@@ -197,6 +277,5 @@ if __name__ == "__main__":
 
     env.export_xml()
 
-    # print(env.model_str)
     env.run_interactive()
     # env.run_simulation()
