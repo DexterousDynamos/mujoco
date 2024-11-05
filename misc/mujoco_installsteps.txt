@@ -1,0 +1,16 @@
+# See 'https://github.com/openai/mujoco-py' for most of this. The rest is debugging via online fori
+pip install -U 'mujoco-py<2.2,>=2.1'
+pip install mujoco
+pip install cython
+
+wget https://mujoco.org/download/mujoco210-linux-x86_64.tar.gz && tar -xvzf mujoco210-linux-x86_64.tar.gz
+mkdir -p ~/.mujoco && mv mujoco210 ~/.mujoco/mujoco210
+rm -r mujoco210-linux-x86_64.tar.gz
+
+echo -e "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/arturo/.mujoco/mujoco210/bin" >> ~/.bashrc
+echo -e "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/nvidia" >> ~/.bashrc
+echo -e "export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libGLEW.so" >> ~/.bashrc
+
+# Maybe
+sudo apt install libosmesa6-dev libgl1-mesa-glx libglfw3
+sudo apt-get install patchelf
