@@ -15,7 +15,7 @@ pip install -U 'mujoco-py<2.2,>=2.1' mujoco cython
 
 ## Add mujoco to the path
 ```bash
-echo -e "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/arturo/.mujoco/mujoco210/bin" >> ~/.bashrc
+echo -e "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/$(whoami)/.mujoco/mujoco210/bin" >> ~/.bashrc
 echo -e "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/nvidia" >> ~/.bashrc
 echo -e "export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libGLEW.so" >> ~/.bashrc
 ```
