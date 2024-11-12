@@ -10,7 +10,8 @@ rm -r mujoco210-linux-x86_64.tar.gz
 
 ## Install pip dependencies
 ```bash
-pip install -U 'mujoco-py<2.2,>=2.1' mujoco cython
+pip install -U 'mujoco-py<2.2,>=2.1' mujoco
+pip install "cython<3"
 ```
 
 ## Add mujoco to the path
