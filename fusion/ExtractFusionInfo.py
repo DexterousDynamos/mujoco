@@ -45,6 +45,13 @@ def run(context):
         rootComp = design.rootComponent
         allOccs = rootComp.allOccurrences
         joints = rootComp.allJoints
+        
+        def clean_name(name):
+            # Extract the number after the first colon and add it to the letters before the first empty space with a hyphen
+            match = re.match(r'(\S+)\s.*:(\d+)', name)
+            if match:
+                return f"{match.group(1)}-{match.group(2)}"
+            return name            
 
         # Collect component data
         def extract_component_data(occ: Occurrence):
@@ -84,8 +91,8 @@ def run(context):
             export_mgr.execute(stl_export_options)
 
             entry = {
-                "Component Name": comp_name_with_version,
-                "Parent(s)": parent_name,
+                "Component Name": clean_name(comp_name_with_version),
+                "Parent(s)": clean_name(parent_name),
                 "Transformation": {
                     # "Rotation Matrix": rotation_matrix,
                     "Quaternion": quaternion,
@@ -100,20 +107,23 @@ def run(context):
                 # Find desired component names for both connected occurrences
                 comp1 = joint.occurrenceOne.name
                 comp2 = joint.occurrenceTwo.name
+                
                 try:
                     joint_origin = joint.geometryOrOriginOne.origin
                     joint_axis = joint.jointMotion.rotationAxisVector
                     joint_info = {
-                        "Connected Components": [comp1, comp2],
-                        "Joint Origin": {
-                            "x": joint_origin.x,
-                            "y": joint_origin.y,
-                            "z": joint_origin.z
-                        },
-                        "Joint Axis": {
-                            "x": joint_axis.x,
-                            "y": joint_axis.y,
-                            "z": joint_axis.z
+                        "Connected Components": [clean_name(comp1), clean_name(comp2)],
+                        "Transformation": {
+                            "Joint Origin": [
+                                joint_origin.x,
+                                joint_origin.y,
+                                joint_origin.z
+                            ],
+                            "Joint Axis": [
+                                joint_axis.x,
+                                joint_axis.y,
+                                joint_axis.z
+                            ]
                         }
                     }
                     return joint_info

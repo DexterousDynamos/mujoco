@@ -1,7 +1,7 @@
 {
     "Components": [
         {
-            "Component Name": "Carpals v46:1",
+            "Component Name": "Carpals-1",
             "Parent(s)": "Root",
             "Transformation": {
                 "Quaternion": [
@@ -19,8 +19,8 @@
             "STL File": "Carpals.stl"
         },
         {
-            "Component Name": "M-DP v57:1",
-            "Parent(s)": "M-Assembly v92:1",
+            "Component Name": "M-DP-1",
+            "Parent(s)": "M-Assembly-1",
             "Transformation": {
                 "Quaternion": [
                     0.5942867636512689,
@@ -37,8 +37,8 @@
             "STL File": "M-DP.stl"
         },
         {
-            "Component Name": "M-MP v76:1",
-            "Parent(s)": "M-Assembly v92:1",
+            "Component Name": "M-MP-1",
+            "Parent(s)": "M-Assembly-1",
             "Transformation": {
                 "Quaternion": [
                     -0.3420201433256674,
@@ -55,8 +55,8 @@
             "STL File": "M-MP.stl"
         },
         {
-            "Component Name": "M-AP v21:1",
-            "Parent(s)": "M-Assembly v92:1",
+            "Component Name": "M-AP-1",
+            "Parent(s)": "M-Assembly-1",
             "Transformation": {
                 "Quaternion": [
                     1.0,
@@ -73,8 +73,8 @@
             "STL File": "M-AP.stl"
         },
         {
-            "Component Name": "M-PP v33:1",
-            "Parent(s)": "M-Assembly v92:1",
+            "Component Name": "M-PP-1",
+            "Parent(s)": "M-Assembly-1",
             "Transformation": {
                 "Quaternion": [
                     0.537299608346824,
@@ -91,7 +91,7 @@
             "STL File": "M-PP.stl"
         },
         {
-            "Component Name": "M-Assembly v92:1",
+            "Component Name": "M-Assembly-1",
             "Parent(s)": "Root",
             "Transformation": {
                 "Quaternion": [
@@ -109,8 +109,8 @@
             "STL File": "M-Assembly.stl"
         },
         {
-            "Component Name": "M-DP v57:1",
-            "Parent(s)": "M-Assembly v92:2",
+            "Component Name": "M-DP-1",
+            "Parent(s)": "M-Assembly-2",
             "Transformation": {
                 "Quaternion": [
                     0.6199394342084613,
@@ -127,8 +127,8 @@
             "STL File": "M-DP.stl"
         },
         {
-            "Component Name": "M-MP v76:1",
-            "Parent(s)": "M-Assembly v92:2",
+            "Component Name": "M-MP-1",
+            "Parent(s)": "M-Assembly-2",
             "Transformation": {
                 "Quaternion": [
                     -0.3826834323650901,
@@ -145,8 +145,8 @@
             "STL File": "M-MP.stl"
         },
         {
-            "Component Name": "M-AP v21:1",
-            "Parent(s)": "M-Assembly v92:2",
+            "Component Name": "M-AP-1",
+            "Parent(s)": "M-Assembly-2",
             "Transformation": {
                 "Quaternion": [
                     1.0,
@@ -163,8 +163,8 @@
             "STL File": "M-AP.stl"
         },
         {
-            "Component Name": "M-PP v33:1",
-            "Parent(s)": "M-Assembly v92:2",
+            "Component Name": "M-PP-1",
+            "Parent(s)": "M-Assembly-2",
             "Transformation": {
                 "Quaternion": [
                     0.5372996083468239,
@@ -181,7 +181,7 @@
             "STL File": "M-PP.stl"
         },
         {
-            "Component Name": "M-Assembly v92:2",
+            "Component Name": "M-Assembly-2",
             "Parent(s)": "Root",
             "Transformation": {
                 "Quaternion": [
@@ -199,8 +199,8 @@
             "STL File": "M-Assembly.stl"
         },
         {
-            "Component Name": "M-DP v57:1",
-            "Parent(s)": "I-Assembly v5:1",
+            "Component Name": "M-DP-1",
+            "Parent(s)": "I-Assembly-1",
             "Transformation": {
                 "Quaternion": [
                     -0.13794968964147145,
@@ -217,8 +217,8 @@
             "STL File": "M-DP.stl"
         },
         {
-            "Component Name": "M-MP v76:1",
-            "Parent(s)": "I-Assembly v5:1",
+            "Component Name": "M-MP-1",
+            "Parent(s)": "I-Assembly-1",
             "Transformation": {
                 "Quaternion": [
                     0.25881904510251985,
@@ -235,8 +235,8 @@
             "STL File": "M-MP.stl"
         },
         {
-            "Component Name": "M-AP v21:1",
-            "Parent(s)": "I-Assembly v5:1",
+            "Component Name": "M-AP-1",
+            "Parent(s)": "I-Assembly-1",
             "Transformation": {
                 "Quaternion": [
                     1.0,
@@ -253,8 +253,8 @@
             "STL File": "M-AP.stl"
         },
         {
-            "Component Name": "I-PP v16:1",
-            "Parent(s)": "I-Assembly v5:1",
+            "Component Name": "I-PP-1",
+            "Parent(s)": "I-Assembly-1",
             "Transformation": {
                 "Quaternion": [
                     -0.25881904510251913,
@@ -271,7 +271,7 @@
             "STL File": "I-PP.stl"
         },
         {
-            "Component Name": "I-Assembly v5:1",
+            "Component Name": "I-Assembly-1",
             "Parent(s)": "Root",
             "Transformation": {
                 "Quaternion": [
@@ -289,8 +289,8 @@
             "STL File": "I-Assembly.stl"
         },
         {
-            "Component Name": "T-AP v9:1",
-            "Parent(s)": "T-Assembly v15:1",
+            "Component Name": "T-AP-1",
+            "Parent(s)": "T-Assembly-1",
             "Transformation": {
                 "Quaternion": [
                     1.0,
@@ -307,8 +307,8 @@
             "STL File": "T-AP.stl"
         },
         {
-            "Component Name": "T-AP_OUT v12:1",
-            "Parent(s)": "T-Assembly v15:1",
+            "Component Name": "T-AP_OUT-1",
+            "Parent(s)": "T-Assembly-1",
             "Transformation": {
                 "Quaternion": [
                     0.704416026402759,
@@ -325,8 +325,8 @@
             "STL File": "T-AP_OUT.stl"
         },
         {
-            "Component Name": "T-PP v30:1",
-            "Parent(s)": "T-Assembly v15:1",
+            "Component Name": "T-PP-1",
+            "Parent(s)": "T-Assembly-1",
             "Transformation": {
                 "Quaternion": [
                     0.5000000000000029,
@@ -343,8 +343,8 @@
             "STL File": "T-PP.stl"
         },
         {
-            "Component Name": "T-DP v13:1",
-            "Parent(s)": "T-Assembly v15:1",
+            "Component Name": "T-DP-1",
+            "Parent(s)": "T-Assembly-1",
             "Transformation": {
                 "Quaternion": [
                     0.24598416875662615,
@@ -361,7 +361,7 @@
             "STL File": "T-DP.stl"
         },
         {
-            "Component Name": "T-Assembly v15:1",
+            "Component Name": "T-Assembly-1",
             "Parent(s)": "Root",
             "Transformation": {
                 "Quaternion": [
@@ -379,8 +379,8 @@
             "STL File": "T-Assembly.stl"
         },
         {
-            "Component Name": "M-DP v57:1",
-            "Parent(s)": "P-Assembly v6:1",
+            "Component Name": "M-DP-1",
+            "Parent(s)": "P-Assembly-1",
             "Transformation": {
                 "Quaternion": [
                     0.6341847973991338,
@@ -397,8 +397,8 @@
             "STL File": "M-DP.stl"
         },
         {
-            "Component Name": "M-MP v76:1",
-            "Parent(s)": "P-Assembly v6:1",
+            "Component Name": "M-MP-1",
+            "Parent(s)": "P-Assembly-1",
             "Transformation": {
                 "Quaternion": [
                     -0.42261826174069755,
@@ -415,8 +415,8 @@
             "STL File": "M-MP.stl"
         },
         {
-            "Component Name": "M-AP v21:1",
-            "Parent(s)": "P-Assembly v6:1",
+            "Component Name": "M-AP-1",
+            "Parent(s)": "P-Assembly-1",
             "Transformation": {
                 "Quaternion": [
                     1.0,
@@ -433,8 +433,8 @@
             "STL File": "M-AP.stl"
         },
         {
-            "Component Name": "P-PP v2:1",
-            "Parent(s)": "P-Assembly v6:1",
+            "Component Name": "P-PP-1",
+            "Parent(s)": "P-Assembly-1",
             "Transformation": {
                 "Quaternion": [
                     0.5735764363510455,
@@ -451,7 +451,7 @@
             "STL File": "P-PP.stl"
         },
         {
-            "Component Name": "P-Assembly v6:1",
+            "Component Name": "P-Assembly-1",
             "Parent(s)": "Root",
             "Transformation": {
                 "Quaternion": [
@@ -475,15 +475,17 @@
                 "Component2:1",
                 "Middle(base):1"
             ],
-            "Joint Origin": {
-                "x": 0.3435648161455508,
-                "y": 0.0077008942384841775,
-                "z": 8.389198772770959
-            },
-            "Joint Axis": {
-                "x": -1.8387692476636398e-16,
-                "y": -0.9999999999999994,
-                "z": 3.826114572140464e-17
+            "Transformation": {
+                "Joint Origin": [
+                    0.3435648161455508,
+                    0.0077008942384841775,
+                    8.389198772770959
+                ],
+                "Joint Axis": [
+                    -1.8387692476636398e-16,
+                    -0.9999999999999994,
+                    3.826114572140464e-17
+                ]
             }
         },
         {
@@ -491,15 +493,17 @@
                 "Index:1",
                 "Component2:1"
             ],
-            "Joint Origin": {
-                "x": -1.7899548803188963,
-                "y": 0.16454194494571125,
-                "z": 8.420118442086242
-            },
-            "Joint Axis": {
-                "x": -0.08715574274765803,
-                "y": -0.9961946980917423,
-                "z": -2.3875210426225787e-16
+            "Transformation": {
+                "Joint Origin": [
+                    -1.7899548803188963,
+                    0.16454194494571125,
+                    8.420118442086242
+                ],
+                "Joint Axis": [
+                    -0.08715574274765803,
+                    -0.9961946980917423,
+                    -2.3875210426225787e-16
+                ]
             }
         },
         {
@@ -507,31 +511,35 @@
                 "Ring:1",
                 "Component2:1"
             ],
-            "Joint Origin": {
-                "x": 2.232501178183862,
-                "y": 0.145960716536888,
-                "z": 7.205994944408673
-            },
-            "Joint Axis": {
-                "x": 0.08583165117742993,
-                "y": -0.9961946980917458,
-                "z": -0.015134435901338327
+            "Transformation": {
+                "Joint Origin": [
+                    2.232501178183862,
+                    0.145960716536888,
+                    7.205994944408673
+                ],
+                "Joint Axis": [
+                    0.08583165117742993,
+                    -0.9961946980917458,
+                    -0.015134435901338327
+                ]
             }
         },
         {
             "Connected Components": [
-                "CarpalBoneThumb v9:1",
+                "CarpalBoneThumb-1",
                 "Component2:1"
             ],
-            "Joint Origin": {
-                "x": -2.61800921484849,
-                "y": 0.7431890738364613,
-                "z": 2.174757181987335
-            },
-            "Joint Axis": {
-                "x": 0.2248834198899719,
-                "y": 0.7556498909230261,
-                "z": -0.615159076830161
+            "Transformation": {
+                "Joint Origin": [
+                    -2.61800921484849,
+                    0.7431890738364613,
+                    2.174757181987335
+                ],
+                "Joint Axis": [
+                    0.2248834198899719,
+                    0.7556498909230261,
+                    -0.615159076830161
+                ]
             }
         },
         {
@@ -539,159 +547,179 @@
                 "Pinkie:1",
                 "Component2:1"
             ],
-            "Joint Origin": {
-                "x": 3.690914765504383,
-                "y": 0.7205591120672354,
-                "z": 5.689547017516052
-            },
-            "Joint Axis": {
-                "x": 0.2628146403981255,
-                "y": -0.9634798136049462,
-                "z": -0.05133335726582944
+            "Transformation": {
+                "Joint Origin": [
+                    3.690914765504383,
+                    0.7205591120672354,
+                    5.689547017516052
+                ],
+                "Joint Axis": [
+                    0.2628146403981255,
+                    -0.9634798136049462,
+                    -0.05133335726582944
+                ]
             }
         },
         {
             "Connected Components": [
-                "M-DP v57:1",
-                "M-MP v76:1"
+                "M-DP-1",
+                "M-MP-1"
             ],
-            "Joint Origin": {
-                "x": 1.6748710648754104,
-                "y": 4.116914230358313,
-                "z": 15.939411697536013
-            },
-            "Joint Axis": {
-                "x": -0.9848077530122079,
-                "y": 4.40619762898109e-16,
-                "z": 0.17364817766693064
+            "Transformation": {
+                "Joint Origin": [
+                    1.6748710648754104,
+                    4.116914230358313,
+                    15.939411697536013
+                ],
+                "Joint Axis": [
+                    -0.9848077530122079,
+                    4.40619762898109e-16,
+                    0.17364817766693064
+                ]
             }
         },
         {
             "Connected Components": [
-                "M-MP v76:1",
-                "M-PP v33:1"
+                "M-MP-1",
+                "M-PP-1"
             ],
-            "Joint Origin": {
-                "x": 1.349035930982403,
-                "y": 2.0362685505938467,
-                "z": 14.0915088264959
-            },
-            "Joint Axis": {
-                "x": -0.9848077530122061,
-                "y": 4.518954654919582e-16,
-                "z": 0.1736481776669303
+            "Transformation": {
+                "Joint Origin": [
+                    1.349035930982403,
+                    2.0362685505938467,
+                    14.0915088264959
+                ],
+                "Joint Axis": [
+                    -0.9848077530122061,
+                    4.518954654919582e-16,
+                    0.1736481776669303
+                ]
             }
         },
         {
             "Connected Components": [
-                "M-PP v33:1",
+                "M-PP-1",
                 "Component2:1"
             ],
-            "Joint Origin": {
-                "x": 0.5936181919859344,
-                "y": 0.007700894238478778,
-                "z": 9.807321937108545
-            },
-            "Joint Axis": {
-                "x": -0.9848077530122077,
-                "y": 4.471791860416463e-16,
-                "z": 0.17364817766693041
+            "Transformation": {
+                "Joint Origin": [
+                    0.5936181919859344,
+                    0.007700894238478778,
+                    9.807321937108545
+                ],
+                "Joint Axis": [
+                    -0.9848077530122077,
+                    4.471791860416463e-16,
+                    0.17364817766693041
+                ]
             }
         },
         {
             "Connected Components": [
-                "M-DP v57:1",
-                "M-MP v76:1"
+                "M-DP-1",
+                "M-MP-1"
             ],
-            "Joint Origin": {
-                "x": 5.1963225030651925,
-                "y": 4.295413394573595,
-                "z": 14.373945341296956
-            },
-            "Joint Axis": {
-                "x": -0.9026879888680895,
-                "y": -0.0841859828293679,
-                "z": 0.421979993658863
+            "Transformation": {
+                "Joint Origin": [
+                    5.1963225030651925,
+                    4.295413394573595,
+                    14.373945341296956
+                ],
+                "Joint Axis": [
+                    -0.9026879888680895,
+                    -0.0841859828293679,
+                    0.421979993658863
+                ]
             }
         },
         {
             "Connected Components": [
-                "M-MP v76:1",
-                "M-PP v33:1"
+                "M-MP-1",
+                "M-PP-1"
             ],
-            "Joint Origin": {
-                "x": 4.495555127155223,
-                "y": 2.347233360185727,
-                "z": 12.486216642973856
-            },
-            "Joint Axis": {
-                "x": -0.9026879888680874,
-                "y": -0.08418598282936754,
-                "z": 0.4219799936588621
+            "Transformation": {
+                "Joint Origin": [
+                    4.495555127155223,
+                    2.347233360185727,
+                    12.486216642973856
+                ],
+                "Joint Axis": [
+                    -0.9026879888680874,
+                    -0.08418598282936754,
+                    0.4219799936588621
+                ]
             }
         },
         {
             "Connected Components": [
-                "M-PP v33:1",
+                "M-PP-1",
                 "Component2:1"
             ],
-            "Joint Origin": {
-                "x": 2.835383204857319,
-                "y": 0.22825334664440744,
-                "z": 8.512081153257109
-            },
-            "Joint Axis": {
-                "x": -0.9026879888680932,
-                "y": -0.08418598282936765,
-                "z": 0.42197999365886474
+            "Transformation": {
+                "Joint Origin": [
+                    2.835383204857319,
+                    0.22825334664440744,
+                    8.512081153257109
+                ],
+                "Joint Axis": [
+                    -0.9026879888680932,
+                    -0.08418598282936765,
+                    0.42197999365886474
+                ]
             }
         },
         {
             "Connected Components": [
-                "M-DP v57:1",
-                "M-MP v76:1"
+                "M-DP-1",
+                "M-MP-1"
             ],
-            "Joint Origin": {
-                "x": -1.4526218402482358,
-                "y": 6.146878776781269,
-                "z": 10.538628617759718
-            },
-            "Joint Axis": {
-                "x": -0.9924038765060994,
-                "y": 0.0868240888334654,
-                "z": -0.08715574274765851
+            "Transformation": {
+                "Joint Origin": [
+                    -1.4526218402482358,
+                    6.146878776781269,
+                    10.538628617759718
+                ],
+                "Joint Axis": [
+                    -0.9924038765060994,
+                    0.0868240888334654,
+                    -0.08715574274765851
+                ]
             }
         },
         {
             "Connected Components": [
-                "M-MP v76:1",
-                "I-PP v16:1"
+                "M-MP-1",
+                "I-PP-1"
             ],
-            "Joint Origin": {
-                "x": -1.7823556095479287,
-                "y": 3.691402007320653,
-                "z": 11.847028203521878
-            },
-            "Joint Axis": {
-                "x": -0.992403876506103,
-                "y": 0.08682408883346536,
-                "z": -0.0871557427476587
+            "Transformation": {
+                "Joint Origin": [
+                    -1.7823556095479287,
+                    3.691402007320653,
+                    11.847028203521878
+                ],
+                "Joint Axis": [
+                    -0.992403876506103,
+                    0.08682408883346536,
+                    -0.0871557427476587
+                ]
             }
         },
         {
             "Connected Components": [
-                "I-PP v16:1",
+                "I-PP-1",
                 "Component2:1"
             ],
-            "Joint Origin": {
-                "x": -1.9106237811017055,
-                "y": 0.2252900976815088,
-                "z": 9.854638807338363
-            },
-            "Joint Axis": {
-                "x": -0.9924038765061031,
-                "y": 0.08682408883346551,
-                "z": -0.08715574274765873
+            "Transformation": {
+                "Joint Origin": [
+                    -1.9106237811017055,
+                    0.2252900976815088,
+                    9.854638807338363
+                ],
+                "Joint Axis": [
+                    -0.9924038765061031,
+                    0.08682408883346551,
+                    -0.08715574274765873
+                ]
             }
         },
         {
@@ -699,95 +727,107 @@
                 "Component2:1",
                 "Component2:1"
             ],
-            "Joint Origin": {
-                "x": -2.78532865369281,
-                "y": 1.8423718863623109,
-                "z": 3.4475499184658687
-            },
-            "Joint Axis": {
-                "x": 0.9692059033779141,
-                "y": -0.10846266973682551,
-                "z": 0.2210786424124996
+            "Transformation": {
+                "Joint Origin": [
+                    -2.78532865369281,
+                    1.8423718863623109,
+                    3.4475499184658687
+                ],
+                "Joint Axis": [
+                    0.9692059033779141,
+                    -0.10846266973682551,
+                    0.2210786424124996
+                ]
             }
         },
         {
             "Connected Components": [
                 "Component2:1",
-                "T-PP v30:1"
+                "T-PP-1"
             ],
-            "Joint Origin": {
-                "x": -2.9227797057940967,
-                "y": 3.6072464962155895,
-                "z": 4.915992910131298
-            },
-            "Joint Axis": {
-                "x": -0.23889014348131732,
-                "y": -0.6320048296925179,
-                "z": 0.7372254706619876
+            "Transformation": {
+                "Joint Origin": [
+                    -2.9227797057940967,
+                    3.6072464962155895,
+                    4.915992910131298
+                ],
+                "Joint Axis": [
+                    -0.23889014348131732,
+                    -0.6320048296925179,
+                    0.7372254706619876
+                ]
             }
         },
         {
             "Connected Components": [
-                "T-PP v30:1",
-                "T-DP v13:1"
+                "T-PP-1",
+                "T-DP-1"
             ],
-            "Joint Origin": {
-                "x": -2.5944374435588706,
-                "y": 5.8177811120918825,
-                "z": 6.917424415540099
-            },
-            "Joint Axis": {
-                "x": -0.23889014348132503,
-                "y": -0.6320048296925402,
-                "z": 0.7372254706620142
+            "Transformation": {
+                "Joint Origin": [
+                    -2.5944374435588706,
+                    5.8177811120918825,
+                    6.917424415540099
+                ],
+                "Joint Axis": [
+                    -0.23889014348132503,
+                    -0.6320048296925402,
+                    0.7372254706620142
+                ]
             }
         },
         {
             "Connected Components": [
-                "M-DP v57:1",
-                "M-MP v76:1"
+                "M-DP-1",
+                "M-MP-1"
             ],
-            "Joint Origin": {
-                "x": 8.564033803302866,
-                "y": 4.685866189063879,
-                "z": 8.79659096296926
-            },
-            "Joint Axis": {
-                "x": -0.4313389552717454,
-                "y": -0.164917106604858,
-                "z": 0.886988756193766
+            "Transformation": {
+                "Joint Origin": [
+                    8.564033803302866,
+                    4.685866189063879,
+                    8.79659096296926
+                ],
+                "Joint Axis": [
+                    -0.4313389552717454,
+                    -0.164917106604858,
+                    0.886988756193766
+                ]
             }
         },
         {
             "Connected Components": [
-                "M-MP v76:1",
-                "P-PP v2:1"
+                "M-MP-1",
+                "P-PP-1"
             ],
-            "Joint Origin": {
-                "x": 7.110237966708692,
-                "y": 2.5595179097261047,
-                "z": 7.6942658473801515
-            },
-            "Joint Axis": {
-                "x": -0.4313389552717457,
-                "y": -0.1649171066048583,
-                "z": 0.8869887561937636
+            "Transformation": {
+                "Joint Origin": [
+                    7.110237966708692,
+                    2.5595179097261047,
+                    7.6942658473801515
+                ],
+                "Joint Axis": [
+                    -0.4313389552717457,
+                    -0.1649171066048583,
+                    0.8869887561937636
+                ]
             }
         },
         {
             "Connected Components": [
-                "P-PP v2:1",
+                "P-PP-1",
                 "Component2:1"
             ],
-            "Joint Origin": {
-                "x": 4.9468640722696655,
-                "y": 0.9761841595827495,
-                "z": 6.347838118715579
-            },
-            "Joint Axis": {
-                "x": -0.43133895527174587,
-                "y": -0.16491710660485825,
-                "z": 0.886988756193764
+            "Transformation": {
+                "Joint Origin": [
+                    4.9468640722696655,
+                    0.9761841595827495,
+                    6.347838118715579
+                ],
+                "Joint Axis": [
+                    -0.43133895527174587,
+                    -0.16491710660485825,
+                    0.886988756193764
+                ]
             }
         }
     ]
