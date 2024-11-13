@@ -20,7 +20,7 @@ def run(context):
 
         # Set the desired component names
         desired_component_names = [
-            'M-MP', 'M-DP', 'M-AP','M-PP', 'I-PP', 'P-PP', 'T-PP', 'T-DP', 'T-AP', 'T-AP_OUT', 'Carpals', 'P-Assembly', 'I-Assembly', 'M-Assembly', 'T-Assembly'
+            'Carpals','M-AP','T-AP','T-AP_OUT', 'M-PP', 'I-PP', 'P-PP' , 'T-PP' ,'M-MP','M-DP','T-DP', 'P-Assembly', 'I-Assembly', 'M-Assembly', 'T-Assembly'
         ]
 
         # Set the output directory
@@ -50,14 +50,30 @@ def run(context):
             # Extract the number after the first colon and add it to the letters before the first empty space with a hyphen
             match = re.match(r'(\S+)\s.*:(\d+)', name)
             if match:
-                return f"{match.group(1)}-{match.group(2)}"
-            return name            
+                return f"{match.group(1)}:{match.group(2)}"
+            return name  
+        
+        def get_parent_name(occ: Occurrence):
+            plus_index = occ.fullPathName.rfind("+")
+            if plus_index == -1:
+                parent_name = 'Root'
+                unique_name = occ.fullPathName
+            else:
+                parent_name = occ.fullPathName[:plus_index]
+                unique_name = occ.fullPathName[plus_index+1:] 
+            
+            return parent_name, unique_name  #
+        
+        def get_base_name(name):
+            base_name = re.sub(r'(\s*v\s*\d+:\d+|:\d+)', '', name).strip()
+            return base_name
+                
 
         # Collect component data
         def extract_component_data(occ: Occurrence):
             # Extract the base component name without the version info
             comp_name_with_version = occ.name  # Includes version (e.g., "M_MP v76:1")
-            base_name = re.sub(r'\s*v\s*\d+:\d+', '', comp_name_with_version).strip()
+            base_name = get_base_name(comp_name_with_version)
 
             # Only proceed if the base name is in the desired component names list
             if base_name not in desired_component_names:
@@ -72,14 +88,8 @@ def run(context):
             ]
             quaternion = rotation_matrix_to_quaternion(rotation_matrix)
             translation = (transform.getCell(0, 3), transform.getCell(1, 3), transform.getCell(2, 3))
-
-            plus_index = occ.fullPathName.rfind("+")
-            if plus_index == -1:
-                parent_name = 'Root'
-                unique_name = occ.fullPathName
-            else:
-                parent_name = occ.fullPathName[:plus_index]
-                unique_name = occ.fullPathName[plus_index+1:]         
+        
+            parent_name, unique_name = get_parent_name(occ)
 
             # Set up the STL export
             export_mgr = app.activeProduct.exportManager
@@ -92,27 +102,57 @@ def run(context):
 
             entry = {
                 "Component Name": clean_name(comp_name_with_version),
-                "Parent(s)": clean_name(parent_name),
+                "Parent": clean_name(parent_name),
                 "Transformation": {
                     # "Rotation Matrix": rotation_matrix,
                     "Quaternion": quaternion,
                     "Translation": translation
                 },
-                "STL File": stl_filename  # Add STL file path to the component data
+                "STL File": stl_filename,  # Add STL file path to the component data
+                "Is Base Component": "Assembly" not in comp_name_with_version
             }
             return entry
         
         def extract_joint_data(joint):
             if joint.jointMotion.jointType == 1: # revolute joint
-                # Find desired component names for both connected occurrences
-                comp1 = joint.occurrenceOne.name
-                comp2 = joint.occurrenceTwo.name
+                occ1, occ1_name = joint.occurrenceOne, clean_name(joint.occurrenceOne.name)
+                occ2, occ2_name = joint.occurrenceTwo, clean_name(joint.occurrenceTwo.name)
+                comp1, comp1_name = occ1.component, clean_name(occ1.name)
+                comp2, comp2_name = occ2.component, clean_name(occ2.name)
+        
+                parent1_name, _ = get_parent_name(occ1)
+                parent2_name, _ = get_parent_name(occ2)
+                parent1_name = clean_name(parent1_name)
+                parent2_name = clean_name(parent2_name)
+                
+                if 'Carpals' in parent1_name: # Special case where carpals bones are subcomponents in the same rigid body
+                    occ1_name = parent1_name
+                    parent1_name = 'Root'
+                if 'Carpals' in parent2_name:
+                    occ2_name = parent2_name
+                    parent2_name = 'Root'
+                    
+                
+                base_name1 = get_base_name(occ1_name)
+                base_name2 = get_base_name(occ2_name)
+                
+            
+                if desired_component_names.index(base_name1) > desired_component_names.index(base_name2):
+                    occ1_name, occ2_name = occ2_name, occ1_name
+                    parent1_name, parent2_name = parent2_name, parent1_name
                 
                 try:
                     joint_origin = joint.geometryOrOriginOne.origin
                     joint_axis = joint.jointMotion.rotationAxisVector
                     joint_info = {
-                        "Connected Components": [clean_name(comp1), clean_name(comp2)],
+                        "Base Component": {
+                            "Component Name": occ1_name,
+                            "Parent": parent1_name
+                        },
+                        "Rotating Component": {
+                            "Component Name": occ2_name,
+                            "Parent": parent2_name
+                        },
                         "Transformation": {
                             "Joint Origin": [
                                 joint_origin.x,
@@ -129,7 +169,7 @@ def run(context):
                     return joint_info
 
                 except:
-                    ui.messageBox(f'Failed to extract joint for components: {comp1}, {comp2}. . Most likely your joint is not defined correctly.')
+                    ui.messageBox(f'Failed to extract joint for components: {occ1}, {occ2}. . Most likely your joint is not defined correctly.')
                     return None
             return None
             
