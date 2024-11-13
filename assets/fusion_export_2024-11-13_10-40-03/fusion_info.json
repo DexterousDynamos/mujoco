@@ -1,7 +1,7 @@
 {
     "Components": [
         {
-            "Component Name": "Carpals-1",
+            "Component Name": "Carpals:1",
             "Parent(s)": "Root",
             "Transformation": {
                 "Quaternion": [
@@ -19,8 +19,8 @@
             "STL File": "Carpals.stl"
         },
         {
-            "Component Name": "M-DP-1",
-            "Parent(s)": "M-Assembly-1",
+            "Component Name": "M-DP:1",
+            "Parent(s)": "M-Assembly:1",
             "Transformation": {
                 "Quaternion": [
                     0.5942867636512689,
@@ -37,8 +37,8 @@
             "STL File": "M-DP.stl"
         },
         {
-            "Component Name": "M-MP-1",
-            "Parent(s)": "M-Assembly-1",
+            "Component Name": "M-MP:1",
+            "Parent(s)": "M-Assembly:1",
             "Transformation": {
                 "Quaternion": [
                     -0.3420201433256674,
@@ -55,8 +55,8 @@
             "STL File": "M-MP.stl"
         },
         {
-            "Component Name": "M-AP-1",
-            "Parent(s)": "M-Assembly-1",
+            "Component Name": "M-AP:1",
+            "Parent(s)": "M-Assembly:1",
             "Transformation": {
                 "Quaternion": [
                     1.0,
@@ -73,8 +73,8 @@
             "STL File": "M-AP.stl"
         },
         {
-            "Component Name": "M-PP-1",
-            "Parent(s)": "M-Assembly-1",
+            "Component Name": "M-PP:1",
+            "Parent(s)": "M-Assembly:1",
             "Transformation": {
                 "Quaternion": [
                     0.537299608346824,
@@ -91,7 +91,7 @@
             "STL File": "M-PP.stl"
         },
         {
-            "Component Name": "M-Assembly-1",
+            "Component Name": "M-Assembly:1",
             "Parent(s)": "Root",
             "Transformation": {
                 "Quaternion": [
@@ -109,8 +109,8 @@
             "STL File": "M-Assembly.stl"
         },
         {
-            "Component Name": "M-DP-1",
-            "Parent(s)": "M-Assembly-2",
+            "Component Name": "M-DP:1",
+            "Parent(s)": "M-Assembly:2",
             "Transformation": {
                 "Quaternion": [
                     0.6199394342084613,
@@ -127,8 +127,8 @@
             "STL File": "M-DP.stl"
         },
         {
-            "Component Name": "M-MP-1",
-            "Parent(s)": "M-Assembly-2",
+            "Component Name": "M-MP:1",
+            "Parent(s)": "M-Assembly:2",
             "Transformation": {
                 "Quaternion": [
                     -0.3826834323650901,
@@ -145,8 +145,8 @@
             "STL File": "M-MP.stl"
         },
         {
-            "Component Name": "M-AP-1",
-            "Parent(s)": "M-Assembly-2",
+            "Component Name": "M-AP:1",
+            "Parent(s)": "M-Assembly:2",
             "Transformation": {
                 "Quaternion": [
                     1.0,
@@ -163,8 +163,8 @@
             "STL File": "M-AP.stl"
         },
         {
-            "Component Name": "M-PP-1",
-            "Parent(s)": "M-Assembly-2",
+            "Component Name": "M-PP:1",
+            "Parent(s)": "M-Assembly:2",
             "Transformation": {
                 "Quaternion": [
                     0.5372996083468239,
@@ -181,7 +181,7 @@
             "STL File": "M-PP.stl"
         },
         {
-            "Component Name": "M-Assembly-2",
+            "Component Name": "M-Assembly:2",
             "Parent(s)": "Root",
             "Transformation": {
                 "Quaternion": [
@@ -199,8 +199,8 @@
             "STL File": "M-Assembly.stl"
         },
         {
-            "Component Name": "M-DP-1",
-            "Parent(s)": "I-Assembly-1",
+            "Component Name": "M-DP:1",
+            "Parent(s)": "I-Assembly:1",
             "Transformation": {
                 "Quaternion": [
                     -0.13794968964147145,
@@ -217,8 +217,8 @@
             "STL File": "M-DP.stl"
         },
         {
-            "Component Name": "M-MP-1",
-            "Parent(s)": "I-Assembly-1",
+            "Component Name": "M-MP:1",
+            "Parent(s)": "I-Assembly:1",
             "Transformation": {
                 "Quaternion": [
                     0.25881904510251985,
@@ -235,8 +235,8 @@
             "STL File": "M-MP.stl"
         },
         {
-            "Component Name": "M-AP-1",
-            "Parent(s)": "I-Assembly-1",
+            "Component Name": "M-AP:1",
+            "Parent(s)": "I-Assembly:1",
             "Transformation": {
                 "Quaternion": [
                     1.0,
@@ -253,8 +253,8 @@
             "STL File": "M-AP.stl"
         },
         {
-            "Component Name": "I-PP-1",
-            "Parent(s)": "I-Assembly-1",
+            "Component Name": "I-PP:1",
+            "Parent(s)": "I-Assembly:1",
             "Transformation": {
                 "Quaternion": [
                     -0.25881904510251913,
@@ -271,7 +271,7 @@
             "STL File": "I-PP.stl"
         },
         {
-            "Component Name": "I-Assembly-1",
+            "Component Name": "I-Assembly:1",
             "Parent(s)": "Root",
             "Transformation": {
                 "Quaternion": [
@@ -289,8 +289,8 @@
             "STL File": "I-Assembly.stl"
         },
         {
-            "Component Name": "T-AP-1",
-            "Parent(s)": "T-Assembly-1",
+            "Component Name": "T-AP:1",
+            "Parent(s)": "T-Assembly:1",
             "Transformation": {
                 "Quaternion": [
                     1.0,
@@ -307,8 +307,8 @@
             "STL File": "T-AP.stl"
         },
         {
-            "Component Name": "T-AP_OUT-1",
-            "Parent(s)": "T-Assembly-1",
+            "Component Name": "T-AP_OUT:1",
+            "Parent(s)": "T-Assembly:1",
             "Transformation": {
                 "Quaternion": [
                     0.704416026402759,
@@ -325,8 +325,8 @@
             "STL File": "T-AP_OUT.stl"
         },
         {
-            "Component Name": "T-PP-1",
-            "Parent(s)": "T-Assembly-1",
+            "Component Name": "T-PP:1",
+            "Parent(s)": "T-Assembly:1",
             "Transformation": {
                 "Quaternion": [
                     0.5000000000000029,
@@ -343,8 +343,8 @@
             "STL File": "T-PP.stl"
         },
         {
-            "Component Name": "T-DP-1",
-            "Parent(s)": "T-Assembly-1",
+            "Component Name": "T-DP:1",
+            "Parent(s)": "T-Assembly:1",
             "Transformation": {
                 "Quaternion": [
                     0.24598416875662615,
@@ -361,7 +361,7 @@
             "STL File": "T-DP.stl"
         },
         {
-            "Component Name": "T-Assembly-1",
+            "Component Name": "T-Assembly:1",
             "Parent(s)": "Root",
             "Transformation": {
                 "Quaternion": [
@@ -379,8 +379,8 @@
             "STL File": "T-Assembly.stl"
         },
         {
-            "Component Name": "M-DP-1",
-            "Parent(s)": "P-Assembly-1",
+            "Component Name": "M-DP:1",
+            "Parent(s)": "P-Assembly:1",
             "Transformation": {
                 "Quaternion": [
                     0.6341847973991338,
@@ -397,8 +397,8 @@
             "STL File": "M-DP.stl"
         },
         {
-            "Component Name": "M-MP-1",
-            "Parent(s)": "P-Assembly-1",
+            "Component Name": "M-MP:1",
+            "Parent(s)": "P-Assembly:1",
             "Transformation": {
                 "Quaternion": [
                     -0.42261826174069755,
@@ -415,8 +415,8 @@
             "STL File": "M-MP.stl"
         },
         {
-            "Component Name": "M-AP-1",
-            "Parent(s)": "P-Assembly-1",
+            "Component Name": "M-AP:1",
+            "Parent(s)": "P-Assembly:1",
             "Transformation": {
                 "Quaternion": [
                     1.0,
@@ -433,8 +433,8 @@
             "STL File": "M-AP.stl"
         },
         {
-            "Component Name": "P-PP-1",
-            "Parent(s)": "P-Assembly-1",
+            "Component Name": "P-PP:1",
+            "Parent(s)": "P-Assembly:1",
             "Transformation": {
                 "Quaternion": [
                     0.5735764363510455,
@@ -451,7 +451,7 @@
             "STL File": "P-PP.stl"
         },
         {
-            "Component Name": "P-Assembly-1",
+            "Component Name": "P-Assembly:1",
             "Parent(s)": "Root",
             "Transformation": {
                 "Quaternion": [
@@ -526,7 +526,7 @@
         },
         {
             "Connected Components": [
-                "CarpalBoneThumb-1",
+                "CarpalBoneThumb:1",
                 "Component2:1"
             ],
             "Transformation": {
@@ -562,8 +562,8 @@
         },
         {
             "Connected Components": [
-                "M-DP-1",
-                "M-MP-1"
+                "M-DP:1",
+                "M-MP:1"
             ],
             "Transformation": {
                 "Joint Origin": [
@@ -580,8 +580,8 @@
         },
         {
             "Connected Components": [
-                "M-MP-1",
-                "M-PP-1"
+                "M-MP:1",
+                "M-PP:1"
             ],
             "Transformation": {
                 "Joint Origin": [
@@ -598,7 +598,7 @@
         },
         {
             "Connected Components": [
-                "M-PP-1",
+                "M-PP:1",
                 "Component2:1"
             ],
             "Transformation": {
@@ -616,8 +616,8 @@
         },
         {
             "Connected Components": [
-                "M-DP-1",
-                "M-MP-1"
+                "M-DP:1",
+                "M-MP:1"
             ],
             "Transformation": {
                 "Joint Origin": [
@@ -634,8 +634,8 @@
         },
         {
             "Connected Components": [
-                "M-MP-1",
-                "M-PP-1"
+                "M-MP:1",
+                "M-PP:1"
             ],
             "Transformation": {
                 "Joint Origin": [
@@ -652,7 +652,7 @@
         },
         {
             "Connected Components": [
-                "M-PP-1",
+                "M-PP:1",
                 "Component2:1"
             ],
             "Transformation": {
@@ -670,8 +670,8 @@
         },
         {
             "Connected Components": [
-                "M-DP-1",
-                "M-MP-1"
+                "M-DP:1",
+                "M-MP:1"
             ],
             "Transformation": {
                 "Joint Origin": [
@@ -688,8 +688,8 @@
         },
         {
             "Connected Components": [
-                "M-MP-1",
-                "I-PP-1"
+                "M-MP:1",
+                "I-PP:1"
             ],
             "Transformation": {
                 "Joint Origin": [
@@ -706,7 +706,7 @@
         },
         {
             "Connected Components": [
-                "I-PP-1",
+                "I-PP:1",
                 "Component2:1"
             ],
             "Transformation": {
@@ -743,7 +743,7 @@
         {
             "Connected Components": [
                 "Component2:1",
-                "T-PP-1"
+                "T-PP:1"
             ],
             "Transformation": {
                 "Joint Origin": [
@@ -760,8 +760,8 @@
         },
         {
             "Connected Components": [
-                "T-PP-1",
-                "T-DP-1"
+                "T-PP:1",
+                "T-DP:1"
             ],
             "Transformation": {
                 "Joint Origin": [
@@ -778,8 +778,8 @@
         },
         {
             "Connected Components": [
-                "M-DP-1",
-                "M-MP-1"
+                "M-DP:1",
+                "M-MP:1"
             ],
             "Transformation": {
                 "Joint Origin": [
@@ -796,8 +796,8 @@
         },
         {
             "Connected Components": [
-                "M-MP-1",
-                "P-PP-1"
+                "M-MP:1",
+                "P-PP:1"
             ],
             "Transformation": {
                 "Joint Origin": [
@@ -814,7 +814,7 @@
         },
         {
             "Connected Components": [
-                "P-PP-1",
+                "P-PP:1",
                 "Component2:1"
             ],
             "Transformation": {

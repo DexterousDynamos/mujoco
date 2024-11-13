@@ -50,7 +50,7 @@ def run(context):
             # Extract the number after the first colon and add it to the letters before the first empty space with a hyphen
             match = re.match(r'(\S+)\s.*:(\d+)', name)
             if match:
-                return f"{match.group(1)}-{match.group(2)}"
+                return f"{match.group(1)}:{match.group(2)}"
             return name            
 
         # Collect component data
