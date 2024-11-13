@@ -18,24 +18,24 @@
 		</default>
 	</default>
 	<asset>
-		<mesh name="carpals" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/Carpals.stl"/>
-		<mesh name="index_0" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/Index/Index_0.stl"/>
-		<mesh name="index_3" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/Index/Index_3.stl"/>
-		<mesh name="index_2" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/Index/Index_2.stl"/>
-		<mesh name="index_1" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/Index/Index_1.stl"/>
-		<mesh name="middle_0" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/Middle/Middle_0.stl"/>
-		<mesh name="middle_1" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/Middle/Middle_1.stl"/>
-		<mesh name="middle_3" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/Middle/Middle_3.stl"/>
-		<mesh name="middle_2" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/Middle/Middle_2.stl"/>
-		<mesh name="link_1" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/Test/link_1.stl"/>
-		<mesh name="link_0" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/Test/link_0.stl"/>
-		<mesh name="link_2" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/Test/link_2.stl"/>
-		<mesh name="link_3_0" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/Test/link_3_0.stl"/>
-		<mesh name="link_3_1" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/Test/link_3_1.stl"/>
-		<mesh name="ring_0" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/Ring/Ring_0.stl"/>
-		<mesh name="ring_3" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/Ring/Ring_3.stl"/>
-		<mesh name="ring_2" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/Ring/Ring_2.stl"/>
-		<mesh name="ring_1" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/Ring/Ring_1.stl"/>
+		<mesh name="carpals" file="/home/ccc/dev/03_RWR/mujoco/assets/Carpals.stl"/>
+		<mesh name="middle_0" file="/home/ccc/dev/03_RWR/mujoco/assets/Middle/Middle_0.stl"/>
+		<mesh name="middle_3" file="/home/ccc/dev/03_RWR/mujoco/assets/Middle/Middle_3.stl"/>
+		<mesh name="middle_2" file="/home/ccc/dev/03_RWR/mujoco/assets/Middle/Middle_2.stl"/>
+		<mesh name="middle_1" file="/home/ccc/dev/03_RWR/mujoco/assets/Middle/Middle_1.stl"/>
+		<mesh name="link_3_0" file="/home/ccc/dev/03_RWR/mujoco/assets/Test/link_3_0.stl"/>
+		<mesh name="link_1" file="/home/ccc/dev/03_RWR/mujoco/assets/Test/link_1.stl"/>
+		<mesh name="link_2" file="/home/ccc/dev/03_RWR/mujoco/assets/Test/link_2.stl"/>
+		<mesh name="link_3_1" file="/home/ccc/dev/03_RWR/mujoco/assets/Test/link_3_1.stl"/>
+		<mesh name="link_0" file="/home/ccc/dev/03_RWR/mujoco/assets/Test/link_0.stl"/>
+		<mesh name="ring_1" file="/home/ccc/dev/03_RWR/mujoco/assets/Ring/Ring_1.stl"/>
+		<mesh name="ring_3" file="/home/ccc/dev/03_RWR/mujoco/assets/Ring/Ring_3.stl"/>
+		<mesh name="ring_2" file="/home/ccc/dev/03_RWR/mujoco/assets/Ring/Ring_2.stl"/>
+		<mesh name="ring_0" file="/home/ccc/dev/03_RWR/mujoco/assets/Ring/Ring_0.stl"/>
+		<mesh name="index_0" file="/home/ccc/dev/03_RWR/mujoco/assets/Index/Index_0.stl"/>
+		<mesh name="index_2" file="/home/ccc/dev/03_RWR/mujoco/assets/Index/Index_2.stl"/>
+		<mesh name="index_1" file="/home/ccc/dev/03_RWR/mujoco/assets/Index/Index_1.stl"/>
+		<mesh name="index_3" file="/home/ccc/dev/03_RWR/mujoco/assets/Index/Index_3.stl"/>
 	</asset>
 	<worldbody>
 		<body name="carpals" pos="-0.0023819095706446845 7.700894238483424e-05 0.04535823796707632" quat="0.9961946980917453 -1.4202884614863493e-17 0.08715574274765808 -1.3800197464863533e-16">
@@ -45,7 +45,7 @@
 		<body name="middle_0" pos="0.005936181919859301 7.700894238483121e-05 0.09807321937108542" quat="-0.4545194776720437 -0.45451947767204454 -0.5416752204197023 0.5416752204197018">
 			<body name="middle_1" pos="-3.4864695314573206e-17 3.788952308610547e-17 -3.2891983407779e-17" quat="0.5372996083468236 -4.996003610813204e-16 -0.843391445812885 0.0">
 				<body name="middle_2" pos="1.2576745200831851e-17 8.673617379884035e-18 0.04800000000000014" quat="-0.9762960071199318 2.7755575615628914e-16 0.21643961393810357 2.7755575615628914e-16">
-					<body name="middle_3" pos="0.001000000000000197 -9.999999999998378e-05 0.02800000000000003" quat="-0.5633249626000132 -0.4273932457488012 -0.42739324574880105 -0.5633249626000136">
+					<body name="middle_3" pos="0.0010000000000001952 -9.999999999998205e-05 0.028000000000000032" quat="-0.5633249626000132 -0.42739324574880116 -0.4273932457488011 -0.5633249626000137">
 						<geom class="visual" mesh="middle_3"/>
 						<geom class="collision" mesh="middle_3"/>
 					</body>
@@ -61,7 +61,7 @@
 		<body name="ring_0" pos="0.0283538320485732 0.0022825334664441092 0.08512081153257103" quat="0.40230685029693464 0.356826327968979 0.6166378107275327 -0.574962590307832">
 			<body name="ring_1" pos="1.419719338147371e-16 -4.222937038133595e-17 9.759347954116955e-18" quat="-0.49999999999999956 4.718447854656915e-16 0.8660254037844377 -1.1102230246251565e-16">
 				<body name="ring_2" pos="1.3444106938820255e-17 3.642919299551295e-17 0.048000000000000334" quat="0.9396926207859074 -1.1102230246251565e-16 -0.34202014332566866 -2.220446049250313e-16">
-					<body name="ring_3" pos="0.0010000000000000928 -0.00010000000000012603 0.027999999999999844" quat="0.5963678105290191 0.3799281965909149 0.3799281965909148 0.5963678105290177">
+					<body name="ring_3" pos="0.0010000000000000946 -0.0001000000000001295 0.027999999999999844" quat="0.5963678105290191 0.379928196590915 0.3799281965909147 0.5963678105290177">
 						<geom class="visual" mesh="ring_3"/>
 						<geom class="collision" mesh="ring_3"/>
 					</body>

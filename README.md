@@ -27,6 +27,10 @@ sudo apt install libosmesa6-dev libgl1-mesa-glx libglfw3
 sudo apt-get install patchelf
 ```
 
+# Install the libGLEW compiler if you have not already
+```bash
+sudo apt-get install libglew-dev
+```
 # Implementation instructions
 Create a model via `main.py`. This will create a mujoco `.xml` file in the `xml` folder (overwrites if already existent). This file can be used to run an interarctive simulation via using the `run_interactive()` method (which simply sources the `mujoco_sim.sh` script). The script excludes any `.xml` files in the `xml` folder whose name starts with `exclude`.
 
