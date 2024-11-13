@@ -1,0 +1,42 @@
+<mujoco model="exclude_main_template.xml">
+	<compiler angle="radian"/>
+	<option integrator="RK4"/>
+	<default>
+		<default class="collision">
+			<geom contype="1" conaffinity="1" group="4"/>
+		</default>
+		<default class="visual">
+			<geom contype="0" conaffinity="0" group="1" mass="0"/>
+		</default>
+		<geom type="mesh" quat="1 0 0 0"/>
+		<position ctrllimited="true" kp="100"/>
+		<velocity ctrllimited="true" kv="10"/>
+		<motor ctrllimited="true"/>
+		<mesh scale="0.001 0.001 0.001"/>
+		<joint type="hinge" limited="true"/>
+		<default class="index_joint">
+			<joint axis="1 0 0"/>
+		</default>
+	</default>
+	<asset>
+		<mesh name="carpals" file="assets/Carpals.stl"/>
+		<mesh name="middle_0" file="assets/Middle/Middle_0.stl"/>
+	</asset>
+	<worldbody>
+		<body name="carpals" pos="0 0 -0.5" quat="1.0 0.0 0.0 0.0">
+			<body name="middle_0" pos="0.003436 7.7e-05 0.083892" quat="1.0 0.0 0.0 0.0">
+				<joint name="joint_middle_0" pos="0.003436 7.7e-05 0.083892" axis="0 -1 0" range="-0.78 0.78"/>
+				<geom class="visual" mesh="middle_0"/>
+				<geom class="collision" mesh="middle_0"/>
+			</body>
+			<geom class="visual" mesh="carpals"/>
+			<geom class="collision" mesh="carpals"/>
+		</body>
+	</worldbody>
+	<actuator>
+		<motor name="motor_joint" joint="joint_middle_0" ctrlrange="-1 1"/>
+	</actuator>
+	<contact>
+		<exclude body1="carpals" body2="middle_0"/>
+	</contact>
+</mujoco>

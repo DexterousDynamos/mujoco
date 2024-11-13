@@ -10,17 +10,26 @@ class Fusion_Model:
     json_file_path: str = field()
 
     # Public variables, not to be set by user
-    # root_component: 'Fusion_Model.Component' = field(init=False, default=None)
     root_component: 'Fusion_Model.Component'        = field(init=False)
     components:     List['Fusion_Model.Component']  = field(init=False, default_factory=list)
 
+    root_joint_component: 'Fusion_Model.Component'          = field(init=False)
+    joint_components:     List['Fusion_Model.Component']    = field(init=False, default_factory=list)
+
     # Internal variables
-    _component_counts: Dict[str, int] = field(init=False, default_factory=dict)
+    _json_data:         Dict            = field(init=False, default_factory=dict)
+    _component_counts:  Dict[str, int]  = field(init=False, default_factory=dict)
+    _subassembly_names: List[str]       = field(init=False, default_factory=list)
 
     def __post_init__(self):
         self.root_component = Fusion_Model.Component("Root")
         self.components.append(self.root_component)
+
+        # Read json data
+        with open(self.json_file_path, 'r') as json_file:
+            self._json_data = json.load(json_file)
         self._build_component_tree()
+        self._build_joint_tree()
 
     def __str__(self):
         self._print_component_tree(self.components[0], 0)
@@ -50,14 +59,31 @@ class Fusion_Model:
                 return i
             
         return None
+    
+    def find_joint_component_index(self, name: str) -> int:
+        '''
+        Find the index of a joint component in the joint component list.
+
+        Args:
+            name (str): The name of the joint component to find.
+
+        Returns:
+            int: The index of the joint component in the joint component list.
+        '''
+        for i, component in enumerate(self.joint_components):
+            if component.name == name:
+                return i
+            
+        return None
 
     def _build_component_tree(self):
         '''
         Build the component tree from the JSON data. TODO: Line needs fix if more assembly layers
         '''
-        # Load the JSON data from the specified file
-        with open(self.json_file_path, 'r') as json_file:
-            data = json.load(json_file)
+        # # Load the JSON data from the specified file
+        # with open(self.json_file_path, 'r') as json_file:
+        #     data = json.load(json_file)
+        data = self._json_data["Components"]
         
         for item in data:
             name = item["Component Name"]
@@ -67,6 +93,10 @@ class Fusion_Model:
             else:
                 self._component_counts[name] = 0
             self.components.append(Fusion_Model.Component(name))
+
+            # TODO: Change to correct entry name
+            if item["Is_Subassembly"]:
+                self._subassembly_names.append(name)
 
         self._component_counts = {}
         for item in data:
@@ -119,6 +149,15 @@ class Fusion_Model:
         
     # def copy(self):
     #     return Fusion_Model(json_file_path=self.json_file_path)
+
+    def _build_joint_tree(self):
+        '''
+        Build the joint tree from the JSON data.
+        '''
+        data = self._json_data["Joints"]
+
+        # Make dict where key is the parent name and value is dict with pos and axis
+        pass
 
     def _print_component_tree(self, component: 'Fusion_Model.Component', level: int):
         '''

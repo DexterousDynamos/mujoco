@@ -51,7 +51,8 @@ class Mujoco_XML:
 
         # Default settings - turn off when creating a new 'Mujoco_XML' object by passing 'use_defaults=False'
         if self.use_defaults:
-            self.add_compiler("radian")
+            self.add_option(integrator="RK4")
+            self.add_compiler(angle="radian")
             self.add_default_class("collision")
             self.add_default("geom", "collision", contype="1", conaffinity="1", group="4")
             self.add_default_class("visual")
@@ -123,14 +124,33 @@ class Mujoco_XML:
         target_indices = [i for i, line in enumerate(lines) if target in line]
         self._insert_at_index(target, target_indices[-1], insert, add_end=add_end)
 
-    def add_compiler(self, angle: str = "radian"):
+    def add_option(self, **kwargs):
         '''
-        Add default compiler to the Mujoco XML file.
+        Add an option to the Mujoco XML file.
 
         Args:
-            angle (str): The angle to use for the compiler. Defaults to "radian".
+            kwargs: The arguments to pass to the option.
         '''
-        self._insert_after_first(self.model_name, f'<compiler angle="{angle}"/>')
+        kwarg_str = ' '.join([f'{key}="{value}"' for key, value in kwargs.items()])
+        self._insert_after_first(self.model_name, f'<option {kwarg_str}/>')
+
+    def add_compiler(self, **kwargs):
+        '''
+        Add a compiler to the Mujoco XML file.
+
+        Args:
+            kwargs: The arguments to pass to the compiler.
+        '''
+        kwarg_str = ' '.join([f'{key}="{value}"' for key, value in kwargs.items()])
+        self._insert_after_first(self.model_name, f'<compiler {kwarg_str}/>')
+    # def add_compiler(self, angle: str = "radian"):
+    #     '''
+    #     Add default compiler to the Mujoco XML file.
+
+    #     Args:
+    #         angle (str): The angle to use for the compiler. Defaults to "radian".
+    #     '''
+    #     self._insert_after_first(self.model_name, f'<compiler angle="{angle}"/>')
 
     def add_default_class(self, class_name: str, parent_class: str = ''):
         '''
@@ -173,26 +193,29 @@ class Mujoco_XML:
         self._insert_before_last("asset", f'<mesh name="{name}" file="{filepath}"/>')
         self._assets.append(filepath)
 
-    def add_body(self, name: str, pos: List[float] | np.ndarray = np.array([0, 0, 0]), quat: List[float] | np.ndarray | Quaternion = Quaternion(1, 0, 0, 0), parent: str = ''):
+    def add_body(self, body_name: str, mesh_name: str = '', pos: List[float] | np.ndarray = np.array([0, 0, 0]), quat: List[float] | np.ndarray | Quaternion = Quaternion(1, 0, 0, 0), parent_body_name: str = ''):
         '''
         Add a body within the "worldbody" section to the Mujoco XML file. TODO: Add separate mesh name
 
         Args:
-            name (str):                                     The name of the body.
+            body_name (str):                                The name of the body.
+            mesh_name (str):                                The name of the mesh asset. Defaults to empty string (i.e. body name).
             pos (List[float] | np.ndarray):                 The position of the body in the format [x, y, z]. Defaults to [0, 0, 0].
             quat (List[float] | np.ndarray | Quaternion):   The quaternion of the body in the format [w, x, y, z]. Defaults to [1, 0, 0, 0].
-            parent (str):                                   The name of the parent body. Defaults to empty string.
+            parent_body_name (str):                         The name of the parent body. Defaults to empty string.
         '''
+        if mesh_name == '':
+            mesh_name = body_name
         # Assumes that previous mesh name is the same as body name
-        if parent == '':
-            self._insert_before_last("worldbody", f'<body name="{name}" pos="{pos[0]} {pos[1]} {pos[2]}" quat="{quat[0]} {quat[1]} {quat[2]} {quat[3]}">', add_end='</body>')
+        if parent_body_name == '':
+            self._insert_before_last("worldbody", f'<body name="{body_name}" pos="{pos[0]} {pos[1]} {pos[2]}" quat="{quat[0]} {quat[1]} {quat[2]} {quat[3]}">', add_end='</body>')
         else:
-            self._insert_after_first(f'body name="{parent}"', f'<body name="{name}" pos="{pos[0]} {pos[1]} {pos[2]}" quat="{quat[0]} {quat[1]} {quat[2]} {quat[3]}">', add_end='</body>')
+            self._insert_after_first(f'body name="{parent_body_name}"', f'<body name="{body_name}" pos="{pos[0]} {pos[1]} {pos[2]}" quat="{quat[0]} {quat[1]} {quat[2]} {quat[3]}">', add_end='</body>')
 
         if self._first_set['collision_class']:
-            self._insert_after_first(f'body name="{name}"', f'<geom class="collision" mesh="{name}"/>')
+            self._insert_after_first(f'body name="{body_name}"', f'<geom class="collision" mesh="{mesh_name}"/>')
         if self._first_set['visual_class']:
-            self._insert_after_first(f'body name="{name}"', f'<geom class="visual" mesh="{name}"/>')
+            self._insert_after_first(f'body name="{body_name}"', f'<geom class="visual" mesh="{mesh_name}"/>')
 
     def add_joint(self, body_name: str, pos: List[float] | np.ndarray = np.array([0, 0, 0]), axis: List[float] | np.ndarray = np.array([0, 0, 1]), range: List[float] | np.ndarray = np.array([-1, 1])):
         '''
@@ -219,10 +242,13 @@ class Mujoco_XML:
         Args:
             filepath (str): The file path to export the XML file to. Defaults to 'model.xml'.
         '''
-        self._xml_path = filepath
-        if not os.path.exists(os.path.dirname(filepath)):
-            os.makedirs(os.path.dirname(filepath))
-        with open(filepath, 'w') as file:
+        if filepath == '':
+            raise ValueError("ERROR in 'export_xml': 'filepath' cannot be empty.")
+        
+        self._xml_path = os.path.join(os.path.dirname(__file__), filepath)
+        if os.path.dirname(filepath) != '' and not os.path.exists(os.path.dirname(self._xml_path)):
+            os.makedirs(os.path.dirname(self._xml_path))
+        with open(self._xml_path, 'w') as file:
             file.write(self.model_str)
 
     def run_interactive(self, filepath: str = ''):
@@ -267,7 +293,7 @@ if __name__ == "__main__":
     env.add_asset("middle_0", "assets/Middle/Middle_0.stl")
 
     env.add_body("carpals", pos=[0, 0, -0.5])
-    env.add_body("middle_0", pos=[0.003436, 0.000077, 0.083892], parent="carpals")
+    env.add_body("middle_0", pos=[0.003436, 0.000077, 0.083892], parent_body_name="carpals")
 
     env.add_joint("middle_0", pos=[0.003436, 0.000077, 0.083892], axis=[0, -1, 0], range=[-0.78, 0.78])
 
