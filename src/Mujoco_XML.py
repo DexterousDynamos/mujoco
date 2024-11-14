@@ -46,6 +46,8 @@ class Mujoco_XML:
             '\t</actuator>\n'
             '\t<contact>\n'
             '\t</contact>\n'
+            '\t<equality>\n'
+            '\t</equality>\n'
             '</mujoco>'
         )
 
@@ -211,6 +213,7 @@ class Mujoco_XML:
             self._insert_before_last("worldbody", f'<body name="{body_name}" pos="{pos[0]} {pos[1]} {pos[2]}" quat="{quat[0]} {quat[1]} {quat[2]} {quat[3]}">', add_end='</body>')
         else:
             self._insert_after_first(f'body name="{parent_body_name}"', f'<body name="{body_name}" pos="{pos[0]} {pos[1]} {pos[2]}" quat="{quat[0]} {quat[1]} {quat[2]} {quat[3]}">', add_end='</body>')
+            self.exclude_contact(parent_body_name, body_name)
 
         if self._first_set['collision_class']:
             self._insert_after_first(f'body name="{body_name}"', f'<geom class="collision" mesh="{mesh_name}"/>')
@@ -234,6 +237,13 @@ class Mujoco_XML:
         TODO (perfect/debug)
         '''
         self._insert_before_last("contact", f'<exclude body1="{body1}" body2="{body2}"/>')
+
+    def add_joint_equality(self, joint1: str, joint2: str, factor: float = 1):
+        '''
+        TODO (perfect/debug)
+        '''
+        # Linear relationship (theta_2 = theta_1 * factor, usually t2 = a_0 + a_1 * t1 + ... + a_4 * t1^4 possible)
+        self._insert_before_last("equality", f'<joint name="{joint1}" joint="joint_{joint2}" factor="0 {factor} 0 0 0"/>')
 
     def export_xml(self, filepath: str = 'model.xml'):
         '''

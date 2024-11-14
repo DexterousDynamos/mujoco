@@ -14,6 +14,7 @@ for file in *.xml; do
         if [[ ! "$file" =~ ^exclude ]]; then
             echo -e "${GREEN}Running Mujoco viewer for:\t${NC} $file"
             python3 -m mujoco.viewer --mjcf="$file" &
+            disown
         else
             echo -e "${ORANGE}Skipping excluded file:\t\t${NC} $file"
         fi

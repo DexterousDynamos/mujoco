@@ -24,7 +24,9 @@ class DexterousDynamos:
     # Internal variables
     _env: Mujoco_XML = field(init=False)
     _fusion_data: Fusion_Model = field(init=False)
-    _quattrans_dict: Dict[str, List[Quaternion, np.ndarray]] = field(init=False, default_factory=dict)
+    _remapped_fusion_data: Fusion_Model = field(init=False) # Should be removeable in the future
+    _quattrans_dict: Dict[str, Tuple[Quaternion, np.ndarray]] = field(init=False, default_factory=dict)
+    _joint_transforms: Dict[str, Tuple[np.ndarray, np.ndarray]] = field(init=False, default_factory=dict) # pos, axis # DEBUG - manual joints, should be removed later
 
 
     def __post_init__(self):
@@ -37,10 +39,13 @@ class DexterousDynamos:
 
         # Read the Fusion JSON file
         self._fusion_data = Fusion_Model(json_file_path=os.path.join(self.asset_folder, self.json_filename))
+        self._remapped_fusion_data = Fusion_Model(json_file_path=os.path.join(self.asset_folder, self.json_filename))
+        self._remapped_fusion_data.remap_component_tree()
+        
 
         # Add components to the Mujoco XML environment
         for child in self._fusion_data.root_component.children:
-            self.add_component(child.name)
+            self.add_component(child)
 
     def _find_latest_folder(self):
         '''
@@ -102,6 +107,26 @@ class DexterousDynamos:
         elif len(split_name) == 1:
             raise ValueError("Component name should contain a colon")
         return split_name[0]
+    
+    def _find_component_ind(self, component: Fusion_Model.Component, is_orig: bool) -> int:
+        '''
+        Find the index of a component in the Fusion model.
+
+        Args:
+            component (Fusion_Model.Component): The component to find the index of.
+
+        Returns:
+            int: The index of the component.
+        '''
+        if is_orig:
+            data = self._fusion_data
+        else:
+            data = self._remapped_fusion_data
+        
+        for index, comp in enumerate(data.components):
+            if comp.id == component.id:
+                return index
+        return None
 
     def find_joint_parent(self, component: Fusion_Model.Component) -> Fusion_Model.Component:
         '''
@@ -120,7 +145,8 @@ class DexterousDynamos:
             raise ValueError("Some error finding parent")
         return parent
 
-    def add_component(self, component_name: str) -> None:
+    # TODO: Make remapped_component input useless via fixes in Fusion Model (comp ids in fusion script)
+    def add_component(self, component: Fusion_Model.Component) -> None:
         '''
         Adds a component and its children to the Mujoco XML environment.
 
@@ -197,37 +223,41 @@ class DexterousDynamos:
             if component.name == "Root":
                 return component_translation
             return recursive_calculate_trans(component.parent, component.parent.quaternion.rotate(component_translation) + component.parent.translation)
-        
-        # orig_component = orig_data.components[orig_data.find_component_index(component_name)]
-        # remapped_component = remapped_data.components[remapped_data.find_component_index(component_name)]
-        # if component_name not in exclude_parent_list:
+
+        # orig_component = self._fusion_data.components[self._fusion_data.find_component_index(component_name)]
+        # remapped_component = self._fusion_data.joint_components[self._fusion_data.find_joint_component_index(component_name)]
+        # if component_name not in self._fusion_data._subassembly_names:
         #     quat    = recursive_calculate_quat(orig_component)
         #     trans   = recursive_calculate_trans(orig_component, orig_component.translation)
-        #     quattrans_dict[component_name] = [quat, trans]
+        #     self._quattrans_dict[component_name] = [quat, trans]
 
-        #     remapped_parent_name = self.find_joint_parent(remapped_component, exclude_parent_list).name
+        #     remapped_parent_name = self.find_joint_parent(remapped_component).name
         #     if remapped_parent_name != "Root":
-        #         trans, quat = get_relative_transform(quattrans_dict[remapped_parent_name][1], quattrans_dict[remapped_parent_name][0], trans, quat)
-        #     self.env.add_body(stl_lookup_table[component_name], pos=trans, quat=quat, parent='' if remapped_parent_name == "Root" else stl_lookup_table[remapped_parent_name])
+        #         trans, quat = get_relative_transform(self._quattrans_dict[remapped_parent_name][1], self._quattrans_dict[remapped_parent_name][0], trans, quat)
+        #     self._env.add_body(self._compname_to_stlname(component_name), pos=trans, quat=quat, parent='' if remapped_parent_name == "Root" else self._compname_to_stlname(remapped_parent_name))
 
         # for child in remapped_component.children:
-        #     self.add_component(child.name, orig_data, remapped_data, stl_lookup_table, exclude_parent_list, quattrans_dict)
-
-        orig_component = self._fusion_data.components[self._fusion_data.find_component_index(component_name)]
-        remapped_component = self._fusion_data.joint_components[self._fusion_data.find_joint_component_index(component_name)]
+        #     self.add_component(child.name)
+        orig_component = self._fusion_data.components[self._find_component_ind(component, True)]
+        remapped_component = self._remapped_fusion_data.components[self._find_component_ind(component, False)]
+        component_name = component.name
+        full_component_name = f"{component_name}/{component.id}"
         if component_name not in self._fusion_data._subassembly_names:
             quat    = recursive_calculate_quat(orig_component)
             trans   = recursive_calculate_trans(orig_component, orig_component.translation)
-            self._quattrans_dict[component_name] = [quat, trans]
+            self._quattrans_dict[full_component_name] = [quat, trans]
 
-            remapped_parent_name = self.find_joint_parent(remapped_component).name
+            remapped_parent = self.find_joint_parent(remapped_component)
+            remapped_parent_name = remapped_parent.name
+            full_remapped_parent_name = f"{remapped_parent_name}/{remapped_parent.id}"
             if remapped_parent_name != "Root":
-                trans, quat = get_relative_transform(self._quattrans_dict[remapped_parent_name][1], self._quattrans_dict[remapped_parent_name][0], trans, quat)
-            self._env.add_body(self._compname_to_stlname(component_name), pos=trans, quat=quat, parent='' if remapped_parent_name == "Root" else self._compname_to_stlname(remapped_parent_name))
+                trans, quat = get_relative_transform(self._quattrans_dict[full_remapped_parent_name][1], self._quattrans_dict[full_remapped_parent_name][0], trans, quat)
+            self._env.add_body(full_component_name, self._compname_to_stlname(component_name), pos=trans, quat=quat, parent_body_name='' if remapped_parent_name == "Root" else full_remapped_parent_name)
 
         for child in remapped_component.children:
-            self.add_component(child.name)
+            self.add_component(child)
 
+    # TODO: Fix correct file path (w.r.t. DexterousDynamos.py, not Mujoco_XML.py)
     def export_xml(self, filename: str):
         '''
         Export the Mujoco XML environment to a file.
@@ -237,6 +267,23 @@ class DexterousDynamos:
         '''
         self._env.export_xml(filename)
 
+    # DEBUG - manual joints
+    def calculate_joint_transforms(self):
+        '''
+        Calculate the joint transforms for the Dexterous Dynamos model.
+        '''
+        # tree = {"Root/Carpals:1": "Carpals:1/1"}
+        joint_data ={
+            # Stuff
+        }
+        for joint in self._fusion_data.joints:
+            if joint.parent_component.name in self._fusion_data._subassembly_names:
+                continue
+            parent_name = joint.parent_component.name
+            child_name = joint.child_component.name
+            parent
+        pass
+
     def run_interactive(self):
         '''
         Run the Mujoco simulation interactively.
@@ -244,43 +291,50 @@ class DexterousDynamos:
         self._env.run_interactive()
 
 if __name__ == "__main__":
-
-    a = DexterousDynamos()
+    model = DexterousDynamos()
+    model.export_xml("xml/model.xml")
+    for comp in model._fusion_data.components:
+        if comp.parent != None:
+            print()
+            print(f"{comp.name}/{comp.id}")
+            print(f"{comp.parent.name}/{comp.name}")
     exit()
-    ############################################ Read out json file ############################################
-    json_file_path = 'assets/fusion_info.json'
-    data = Fusion_Model(json_file_path=json_file_path)
-    data_remapped = Fusion_Model(json_file_path=json_file_path)
-
-    parent_dict = {"Carpals v54:1": "Root",
-        "I-Assembly v9:1": "Root", "P-Assembly v82:1": "Root", "P-Assembly v82:2": "Root",
-        "M-DP v55:1_2": "M_MP v73:1_2", "M_MP v73:1_2": "I_PP v12:1", "I_PP v12:1": "M-AP v67:1_2", "M-AP v67:1_2": "I-Assembly v9:1",
-        "M-DP v55:1_1": "M_MP v73:1_1", "M_MP v73:1_1": "M_PP v60:1_1", "M_PP v60:1_1": "M-AP v67:1_1", "M-AP v67:1_1": "P-Assembly v82:2",
-        "M-DP v55:1": "M_MP v73:1", "M_MP v73:1": "M_PP v60:1", "M_PP v60:1": "M-AP v67:1", "M-AP v67:1": "P-Assembly v82:1"}
-    data_remapped.remap_component_tree(parent_dict)
-
-    ############################################ Create Mujoco XML ############################################
-    env = Mujoco_XML(model_name='main')
-    env.add_default_class("index_joint")
-    env.add_default("joint", "index_joint", axis="1 0 0")
-
-    for root, _, files in os.walk("assets/"):
-        for file in files:
-            if file.lower().endswith(".stl"):
-                # full_filepath = os.path.join(root, file)
-                full_filepath = os.path.abspath(os.path.join(root, file))
-                base_name = os.path.splitext(file)[0].lower()
-                env.add_asset(base_name, full_filepath)
-    stl_lookup_table = {"Carpals v54:1": "carpals",
-        "M-AP v67:1_2": "index_0", "I_PP v12:1": "index_1", "M_MP v73:1_2": "index_2", "M-DP v55:1_2": "index_3",
-        "M-AP v67:1": "middle_0", "M_PP v60:1": "middle_1", "M_MP v73:1": "middle_2", "M-DP v55:1": "middle_3",
-        "M-AP v67:1_1": "ring_0", "M_PP v60:1_1": "ring_1", "M_MP v73:1_1": "ring_2", "M-DP v55:1_1": "ring_3"}
-    exclude_parent_list = ["I-Assembly v9:1", "P-Assembly v82:1", "P-Assembly v82:2"]
+    model.run_interactive()
     
-    for child in data.root_component.children:
-        add_component(env, child.name, data, data_remapped, stl_lookup_table, exclude_parent_list, {})
+    # ############################################ Read out json file ############################################
+    # json_file_path = 'assets/fusion_info.json'
+    # data = Fusion_Model(json_file_path=json_file_path)
+    # data_remapped = Fusion_Model(json_file_path=json_file_path)
 
-    env.export_xml("xml/model.xml")
+    # parent_dict = {"Carpals v54:1": "Root",
+    #     "I-Assembly v9:1": "Root", "P-Assembly v82:1": "Root", "P-Assembly v82:2": "Root",
+    #     "M-DP v55:1_2": "M_MP v73:1_2", "M_MP v73:1_2": "I_PP v12:1", "I_PP v12:1": "M-AP v67:1_2", "M-AP v67:1_2": "I-Assembly v9:1",
+    #     "M-DP v55:1_1": "M_MP v73:1_1", "M_MP v73:1_1": "M_PP v60:1_1", "M_PP v60:1_1": "M-AP v67:1_1", "M-AP v67:1_1": "P-Assembly v82:2",
+    #     "M-DP v55:1": "M_MP v73:1", "M_MP v73:1": "M_PP v60:1", "M_PP v60:1": "M-AP v67:1", "M-AP v67:1": "P-Assembly v82:1"}
+    # data_remapped.remap_component_tree(parent_dict)
 
-    env.run_interactive()
-    # env.run_simulation()
+    # ############################################ Create Mujoco XML ############################################
+    # env = Mujoco_XML(model_name='main')
+    # env.add_default_class("index_joint")
+    # env.add_default("joint", "index_joint", axis="1 0 0")
+
+    # for root, _, files in os.walk("assets/"):
+    #     for file in files:
+    #         if file.lower().endswith(".stl"):
+    #             # full_filepath = os.path.join(root, file)
+    #             full_filepath = os.path.abspath(os.path.join(root, file))
+    #             base_name = os.path.splitext(file)[0].lower()
+    #             env.add_asset(base_name, full_filepath)
+    # stl_lookup_table = {"Carpals v54:1": "carpals",
+    #     "M-AP v67:1_2": "index_0", "I_PP v12:1": "index_1", "M_MP v73:1_2": "index_2", "M-DP v55:1_2": "index_3",
+    #     "M-AP v67:1": "middle_0", "M_PP v60:1": "middle_1", "M_MP v73:1": "middle_2", "M-DP v55:1": "middle_3",
+    #     "M-AP v67:1_1": "ring_0", "M_PP v60:1_1": "ring_1", "M_MP v73:1_1": "ring_2", "M-DP v55:1_1": "ring_3"}
+    # exclude_parent_list = ["I-Assembly v9:1", "P-Assembly v82:1", "P-Assembly v82:2"]
+    
+    # for child in data.root_component.children:
+    #     add_component(env, child.name, data, data_remapped, stl_lookup_table, exclude_parent_list, {})
+
+    # env.export_xml("xml/model.xml")
+
+    # env.run_interactive()
+    # # env.run_simulation()
