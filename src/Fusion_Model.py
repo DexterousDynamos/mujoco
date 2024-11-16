@@ -443,10 +443,11 @@ class Fusion_Model:
         #         print("Joint.axis:\t", np.around(component.joint.axis, 3))
 
 if __name__ == "__main__":
-    fusion_model = Fusion_Model(json_file_path='assets/fusion_export_2024-11-13_13-04-40/fusion_info.json')
-    # print(fusion_model)
-    # fusion_model.print_detailed_info()
+    pass
+    # fusion_model = Fusion_Model(json_file_path='assets/fusion_export_2024-11-13_13-04-40/fusion_info.json')
+    # # print(fusion_model)
+    # # fusion_model.print_detailed_info()
 
-    fusion_model2 = Fusion_Model(json_file_path='assets/fusion_export_2024-11-13_13-04-40/fusion_info.json')
-    fusion_model2.remap_component_tree()
-    print(fusion_model2)
+    # fusion_model2 = Fusion_Model(json_file_path='assets/fusion_export_2024-11-13_13-04-40/fusion_info.json')
+    # fusion_model2.remap_component_tree()
+    # print(fusion_model2)

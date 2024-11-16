@@ -272,16 +272,16 @@ class DexterousDynamos:
         '''
         Calculate the joint transforms for the Dexterous Dynamos model.
         '''
-        # tree = {"Root/Carpals:1": "Carpals:1/1"}
-        joint_data ={
-            # Stuff
-        }
-        for joint in self._fusion_data.joints:
-            if joint.parent_component.name in self._fusion_data._subassembly_names:
-                continue
-            parent_name = joint.parent_component.name
-            child_name = joint.child_component.name
-            parent
+        # # tree = {"Root/Carpals:1": "Carpals:1/1"}
+        # joint_data ={
+        #     # Stuff
+        # }
+        # for joint in self._fusion_data.joints:
+        #     if joint.parent_component.name in self._fusion_data._subassembly_names:
+        #         continue
+        #     parent_name = joint.parent_component.name
+        #     child_name = joint.child_component.name
+        #     parent
         pass
 
     def run_interactive(self):
@@ -298,8 +298,9 @@ if __name__ == "__main__":
             print()
             print(f"{comp.name}/{comp.id}")
             print(f"{comp.parent.name}/{comp.name}")
-    exit()
+            
     model.run_interactive()
+    exit()
     
     # ############################################ Read out json file ############################################
     # json_file_path = 'assets/fusion_info.json'
