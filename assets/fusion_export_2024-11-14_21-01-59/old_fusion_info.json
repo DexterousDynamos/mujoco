@@ -1,7 +1,7 @@
 {
     "Components": [
         {
-            "Component Name": "01",
+            "Component Name": "Carpals:1",
             "Parent": "Root",
             "Transformation": {
                 "Quaternion": [
@@ -20,8 +20,8 @@
             "Is Base Component": true
         },
         {
-            "Component Name": "18",
-            "Parent": "04",
+            "Component Name": "M-DP:1",
+            "Parent": "M-Assembly:1",
             "Transformation": {
                 "Quaternion": [
                     0.7044160264027589,
@@ -39,8 +39,8 @@
             "Is Base Component": true
         },
         {
-            "Component Name": "17",
-            "Parent": "04",
+            "Component Name": "M-MP:1",
+            "Parent": "M-Assembly:1",
             "Transformation": {
                 "Quaternion": [
                     0.7660444431189778,
@@ -58,8 +58,8 @@
             "Is Base Component": true
         },
         {
-            "Component Name": "16",
-            "Parent": "04",
+            "Component Name": "M-PP:1",
+            "Parent": "M-Assembly:1",
             "Transformation": {
                 "Quaternion": [
                     0.7660444431189777,
@@ -77,7 +77,7 @@
             "Is Base Component": true
         },
         {
-            "Component Name": "04",
+            "Component Name": "M-Assembly:1",
             "Parent": "Root",
             "Transformation": {
                 "Quaternion": [
@@ -96,8 +96,8 @@
             "Is Base Component": false
         },
         {
-            "Component Name": "22",
-            "Parent": "05",
+            "Component Name": "M-DP:1",
+            "Parent": "M-Assembly:2",
             "Transformation": {
                 "Quaternion": [
                     0.7044160264027581,
@@ -115,8 +115,8 @@
             "Is Base Component": true
         },
         {
-            "Component Name": "21",
-            "Parent": "05",
+            "Component Name": "M-MP:1",
+            "Parent": "M-Assembly:2",
             "Transformation": {
                 "Quaternion": [
                     0.7660444431189769,
@@ -134,8 +134,8 @@
             "Is Base Component": true
         },
         {
-            "Component Name": "15",
-            "Parent": "04",
+            "Component Name": "M-AP:1",
+            "Parent": "M-Assembly:1",
             "Transformation": {
                 "Quaternion": [
                     1.0000000000000004,
@@ -153,8 +153,8 @@
             "Is Base Component": true
         },
         {
-            "Component Name": "19",
-            "Parent": "05",
+            "Component Name": "M-AP:1",
+            "Parent": "M-Assembly:2",
             "Transformation": {
                 "Quaternion": [
                     1.0,
@@ -172,8 +172,8 @@
             "Is Base Component": true
         },
         {
-            "Component Name": "20",
-            "Parent": "05",
+            "Component Name": "M-PP:1",
+            "Parent": "M-Assembly:2",
             "Transformation": {
                 "Quaternion": [
                     0.7660444431189766,
@@ -191,7 +191,7 @@
             "Is Base Component": true
         },
         {
-            "Component Name": "05",
+            "Component Name": "M-Assembly:2",
             "Parent": "Root",
             "Transformation": {
                 "Quaternion": [
@@ -210,8 +210,8 @@
             "Is Base Component": false
         },
         {
-            "Component Name": "14",
-            "Parent": "03",
+            "Component Name": "M-DP:1",
+            "Parent": "I-Assembly:1",
             "Transformation": {
                 "Quaternion": [
                     0.704416026402758,
@@ -229,8 +229,8 @@
             "Is Base Component": true
         },
         {
-            "Component Name": "13",
-            "Parent": "03",
+            "Component Name": "M-MP:1",
+            "Parent": "I-Assembly:1",
             "Transformation": {
                 "Quaternion": [
                     0.7660444431189757,
@@ -248,8 +248,8 @@
             "Is Base Component": true
         },
         {
-            "Component Name": "11",
-            "Parent": "03",
+            "Component Name": "M-AP:1",
+            "Parent": "I-Assembly:1",
             "Transformation": {
                 "Quaternion": [
                     1.0,
@@ -267,8 +267,8 @@
             "Is Base Component": true
         },
         {
-            "Component Name": "12",
-            "Parent": "03",
+            "Component Name": "I-PP:1",
+            "Parent": "I-Assembly:1",
             "Transformation": {
                 "Quaternion": [
                     0.7660444431189762,
@@ -286,7 +286,7 @@
             "Is Base Component": true
         },
         {
-            "Component Name": "03",
+            "Component Name": "I-Assembly:1",
             "Parent": "Root",
             "Transformation": {
                 "Quaternion": [
@@ -305,8 +305,8 @@
             "Is Base Component": false
         },
         {
-            "Component Name": "07",
-            "Parent": "02",
+            "Component Name": "T-AP:1",
+            "Parent": "T-Assembly:1",
             "Transformation": {
                 "Quaternion": [
                     1.0,
@@ -324,8 +324,8 @@
             "Is Base Component": true
         },
         {
-            "Component Name": "08",
-            "Parent": "02",
+            "Component Name": "T-AP_OUT:1",
+            "Parent": "T-Assembly:1",
             "Transformation": {
                 "Quaternion": [
                     0.6532814824381885,
@@ -343,8 +343,8 @@
             "Is Base Component": true
         },
         {
-            "Component Name": "09",
-            "Parent": "02",
+            "Component Name": "T-PP:1",
+            "Parent": "T-Assembly:1",
             "Transformation": {
                 "Quaternion": [
                     0.6743797232066273,
@@ -362,8 +362,8 @@
             "Is Base Component": true
         },
         {
-            "Component Name": "10",
-            "Parent": "02",
+            "Component Name": "T-DP:1",
+            "Parent": "T-Assembly:1",
             "Transformation": {
                 "Quaternion": [
                     0.29315251683698595,
@@ -381,7 +381,7 @@
             "Is Base Component": true
         },
         {
-            "Component Name": "02",
+            "Component Name": "T-Assembly:1",
             "Parent": "Root",
             "Transformation": {
                 "Quaternion": [
@@ -400,8 +400,8 @@
             "Is Base Component": false
         },
         {
-            "Component Name": "26",
-            "Parent": "06",
+            "Component Name": "M-DP:1",
+            "Parent": "P-Assembly:1",
             "Transformation": {
                 "Quaternion": [
                     0.7044160264027585,
@@ -419,8 +419,8 @@
             "Is Base Component": true
         },
         {
-            "Component Name": "25",
-            "Parent": "06",
+            "Component Name": "M-MP:1",
+            "Parent": "P-Assembly:1",
             "Transformation": {
                 "Quaternion": [
                     0.7660444431189771,
@@ -438,8 +438,8 @@
             "Is Base Component": true
         },
         {
-            "Component Name": "23",
-            "Parent": "06",
+            "Component Name": "M-AP:1",
+            "Parent": "P-Assembly:1",
             "Transformation": {
                 "Quaternion": [
                     1.0,
@@ -457,8 +457,8 @@
             "Is Base Component": true
         },
         {
-            "Component Name": "24",
-            "Parent": "06",
+            "Component Name": "P-PP:1",
+            "Parent": "P-Assembly:1",
             "Transformation": {
                 "Quaternion": [
                     0.7660444431189763,
@@ -476,7 +476,7 @@
             "Is Base Component": true
         },
         {
-            "Component Name": "06",
+            "Component Name": "P-Assembly:1",
             "Parent": "Root",
             "Transformation": {
                 "Quaternion": [

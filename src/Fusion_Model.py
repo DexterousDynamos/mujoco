@@ -30,14 +30,21 @@ class Fusion_Model:
         self._build_component_tree()
         # self._build_joint_tree()
         # Hardcode parent dict (for joints) for now
-        self._parent_dict = {"Root/Carpals:1": "Root",
-                             "Root/M-Assembly:1": "Root", "Root/M-Assembly:2": "Root", "Root/I-Assembly:1": "Root", "Root/T-Assembly:1": "Root", "Root/P-Assembly:1": "Root",
-                             "M-Assembly:1/M-DP:1": "M-Assembly:1/M-MP:1", "M-Assembly:1/M-MP:1": "M-Assembly:1/M-PP:1", "M-Assembly:1/M-PP:1": "M-Assembly:1/M-AP:1", "M-Assembly:1/M-AP:1": "Root/M-Assembly:1",
-                             "M-Assembly:2/M-DP:1": "M-Assembly:2/M-MP:1", "M-Assembly:2/M-MP:1": "M-Assembly:2/M-PP:1", "M-Assembly:2/M-PP:1": "M-Assembly:2/M-AP:1", "M-Assembly:2/M-AP:1": "Root/M-Assembly:2",
-                             "I-Assembly:1/M-DP:1": "I-Assembly:1/M-MP:1", "I-Assembly:1/M-MP:1": "I-Assembly:1/I-PP:1", "I-Assembly:1/I-PP:1": "I-Assembly:1/M-AP:1", "I-Assembly:1/M-AP:1": "Root/I-Assembly:1",
-                             "T-Assembly:1/T-DP:1": "T-Assembly:1/T-PP:1", "T-Assembly:1/T-PP:1": "T-Assembly:1/T-AP_OUT:1", "T-Assembly:1/T-AP_OUT:1": "T-Assembly:1/T-AP:1", "T-Assembly:1/T-AP:1": "Root/T-Assembly:1",
-                             "P-Assembly:1/M-DP:1": "P-Assembly:1/M-MP:1", "P-Assembly:1/M-MP:1": "P-Assembly:1/P-PP:1", "P-Assembly:1/P-PP:1": "P-Assembly:1/M-AP:1", "P-Assembly:1/M-AP:1": "Root/P-Assembly:1"}
-        
+        self._parent_dict = {"01": "Root",
+                            "02": "Root", "03": "Root", "04": "Root", "05": "Root", "06": "Root",
+                            "07": "02", "08": "07", "09": "08", "10": "09",
+                            "11": "03", "12": "11", "13": "12", "14": "13",
+                            "15": "04", "16": "15", "17": "16", "18": "17",
+                            "19": "05", "20": "19", "21": "20", "22": "21",
+                            "23": "06", "24": "23", "25": "24", "26": "25"}
+        # self._parent_dict = {"Root/Carpals:1": "Root",
+        #                      "Root/M-Assembly:1": "Root", "Root/M-Assembly:2": "Root", "Root/I-Assembly:1": "Root", "Root/T-Assembly:1": "Root", "Root/P-Assembly:1": "Root",
+        #                      "M-Assembly:1/M-DP:1": "M-Assembly:1/M-MP:1", "M-Assembly:1/M-MP:1": "M-Assembly:1/M-PP:1", "M-Assembly:1/M-PP:1": "M-Assembly:1/M-AP:1", "M-Assembly:1/M-AP:1": "Root/M-Assembly:1",
+        #                      "M-Assembly:2/M-DP:1": "M-Assembly:2/M-MP:1", "M-Assembly:2/M-MP:1": "M-Assembly:2/M-PP:1", "M-Assembly:2/M-PP:1": "M-Assembly:2/M-AP:1", "M-Assembly:2/M-AP:1": "Root/M-Assembly:2",
+        #                      "I-Assembly:1/M-DP:1": "I-Assembly:1/M-MP:1", "I-Assembly:1/M-MP:1": "I-Assembly:1/I-PP:1", "I-Assembly:1/I-PP:1": "I-Assembly:1/M-AP:1", "I-Assembly:1/M-AP:1": "Root/I-Assembly:1",
+        #                      "T-Assembly:1/T-DP:1": "T-Assembly:1/T-PP:1", "T-Assembly:1/T-PP:1": "T-Assembly:1/T-AP_OUT:1", "T-Assembly:1/T-AP_OUT:1": "T-Assembly:1/T-AP:1", "T-Assembly:1/T-AP:1": "Root/T-Assembly:1",
+        #                      "P-Assembly:1/M-DP:1": "P-Assembly:1/M-MP:1", "P-Assembly:1/M-MP:1": "P-Assembly:1/P-PP:1", "P-Assembly:1/P-PP:1": "P-Assembly:1/M-AP:1", "P-Assembly:1/M-AP:1": "Root/P-Assembly:1"}
+
         # {"Carpals v54:1": "Root",
         #     "I-Assembly v9:1": "Root", "P-Assembly v82:1": "Root", "P-Assembly v82:2": "Root",
         #     "M-DP v55:1_2": "M_MP v73:1_2", "M_MP v73:1_2": "I_PP v12:1", "I_PP v12:1": "M-AP v67:1_2", "M-AP v67:1_2": "I-Assembly v9:1",
@@ -50,13 +57,15 @@ class Fusion_Model:
 
     @dataclass
     class Component:
+        # TODO: Make "name" useless. Instead, make ID primary
         name: str = field()
+        id:                 int                             = 0 # TODO: Make useless via unique ids in json file
+        stlname:            str                             = None
         quaternion:         Quaternion                      = field(default_factory=lambda: Quaternion(1, 0, 0, 0).normalised)
         translation:        np.ndarray                      = field(default_factory=lambda: np.zeros(3))
         parent:             'Fusion_Model.Component'        = None
         children:           List['Fusion_Model.Component']  = field(default_factory=list)
         joint:              'Fusion_Model.Joint'            = None
-        id:                 int                             = 0 # TODO: Make useless via unique ids in json file
         # index:              int                             = None # TODO: Make useless via unique ids in json file
         # unique_name:        str                             = None # TODO: Make useless via unique ids in json file
 
@@ -99,21 +108,21 @@ class Fusion_Model:
             
         return None
     
-    def find_joint_parent_index(self, name: str) -> int:
-        '''
-        Find the index of a joint component in the joint component list.
+    # def find_joint_parent_index(self, name: str) -> int:
+    #     '''
+    #     Find the index of a joint component in the joint component list.
 
-        Args:
-            name (str): The name of the joint component to find.
+    #     Args:
+    #         name (str): The name of the joint component to find.
 
-        Returns:
-            int: The index of the joint component in the joint component list.
-        '''
-        for i, component in enumerate(self.joint_components):
-            if component.name == name:
-                return i
+    #     Returns:
+    #         int: The index of the joint component in the joint component list.
+    #     '''
+    #     for i, component in enumerate(self.joint_components):
+    #         if component.name == name:
+    #             return i
             
-        return None
+    #     return None
 
     def _build_component_tree(self):
         '''
@@ -121,6 +130,7 @@ class Fusion_Model:
         '''
         self.root_component = Fusion_Model.Component("Root")
         self.components.append(self.root_component)
+        self._component_indices["Root"] = 0
 
         # TODO - have a look at M-AP-None glitch
         data = self._json_data["Components"]
@@ -130,6 +140,7 @@ class Fusion_Model:
         _component_counts = {}
         for index, item in enumerate(data):
             name = item["Component Name"]
+            stlname = item["STL File"]
             # # if name not in _component_counts.keys():
             # #     _component_counts[name] = 0
             # # _component_counts[name] += 1
@@ -139,17 +150,21 @@ class Fusion_Model:
             #     name += f"_{_component_counts[name]}"
             # else:
             #     _component_counts[name] = 0
-            self.components.append(Fusion_Model.Component(name))
-            self.components[-1].id = index + 1 # +1 because root component is at index 0
+
+            # self.components.append(Fusion_Model.Component(name))
+            # self.components[-1].id = index + 1 # +1 because root component is at index 0
+            self.components.append(Fusion_Model.Component(name, stlname=stlname)) # [CHANGED FOR ID]
 
             if not item["Is Base Component"]:
                 self._subassembly_names.append(name)
 
             parent_name = item["Parent"]
             # Add component to names_ids
-            self._component_indices[f"{parent_name}/{name}"] = len(self._component_indices) + 1 # index + 1 # +1 because root component is at index 0
-            # self.components[-1].index = len(self.components) - 1
-            # self.components[-1].unique_name = f"{parent_name}/{name}"
+            # self._component_indices[f"{parent_name}/{name}"] = len(self._component_indices) + 1 # index + 1 # +1 because root component is at index 0
+            # # self.components[-1].index = len(self.components) - 1
+            # # self.components[-1].unique_name = f"{parent_name}/{name}"
+
+            self._component_indices[name] = len(self._component_indices) # [CHANGED FOR ID]
 
         # for component_name in _component_counts.keys():
         #     _component_counts[component_name] = 0
@@ -177,12 +192,18 @@ class Fusion_Model:
             # component_index = self.find_component_index(name)
             parent_name = item["Parent"]
             # print(self._component_indices)
-            component_index = self._component_indices[f"{parent_name}/{name}"]
+
+            # component_index = self._component_indices[f"{parent_name}/{name}"]
+            component_index = self._component_indices[name] # [CHANGED FOR ID]
+
             # if parent_name != "Root":
             #     print(_component_counts)
             #     parent_name += f"_{_component_counts[parent_name]}"
             # parent_index = self.find_component_index(parent_name)
-            parent_index = self.find_parent_index(parent_name)
+
+            # parent_index = self.find_parent_index(parent_name)
+            parent_index = self._component_indices[parent_name] # [CHANGED FOR ID]
+
             # print("Parent index for component", parent_name, ":", parent_index)
             # print("Check:", self.components[parent_index].name)
 
@@ -206,7 +227,8 @@ class Fusion_Model:
                 "Translation":      np.array(item["Transformation"]["Translation"])
             }
             self.components[component_index].quaternion         = Quaternion(transformation["Quaternion"]).normalised
-            self.components[component_index].translation        = np.array(transformation["Translation"]) / 100 # Convert from dm to mm
+            # self.components[component_index].translation        = np.array(transformation["Translation"]) / 100 # Convert from dm to mm
+            self.components[component_index].translation        = np.array(transformation["Translation"]) # / 100 # Convert from dm to mm # [CHANGED FOR ID]
 
         # print(self._component_indices)
 
@@ -230,7 +252,8 @@ class Fusion_Model:
             if comp.parent.name == "Root":
                 parent_index = 0
             else:
-                comp_name = f'{comp.parent.name}/{comp.name}'
+                # comp_name = f'{comp.parent.name}/{comp.name}'
+                comp_name = comp.name # [CHANGED FOR ID]
                 parent_index = self._component_indices[self._parent_dict[comp_name]]
             comp.parent = self.components[parent_index]
             # comp.unique_name = f'{comp.parent.name}/{comp.name}'
@@ -410,7 +433,9 @@ class Fusion_Model:
         '''
         if component is None:
             return
-        print("  " * level + '- ' + component.name)
+        # print("  " * level + '- ' + component.name)
+        stlname = component.stlname.split(".stl")[0] if component.stlname is not None else None # [CHANGED FOR ID]
+        print(f"{'  ' * level}- {component.name} ({stlname})") # [CHANGED FOR ID]
         for child in component.children:
             # if child.name == "M-MP:1":
             #     print("CHILDREN OF M-MP:1:", len(child.children))
@@ -443,11 +468,12 @@ class Fusion_Model:
         #         print("Joint.axis:\t", np.around(component.joint.axis, 3))
 
 if __name__ == "__main__":
-    pass
     # fusion_model = Fusion_Model(json_file_path='assets/fusion_export_2024-11-13_13-04-40/fusion_info.json')
-    # # print(fusion_model)
-    # # fusion_model.print_detailed_info()
+    fusion_model = Fusion_Model(json_file_path='assets/fusion_export_2024-11-14_21-01-59/fusion_info.json')
+    print(fusion_model)
+    # fusion_model.print_detailed_info()
 
     # fusion_model2 = Fusion_Model(json_file_path='assets/fusion_export_2024-11-13_13-04-40/fusion_info.json')
-    # fusion_model2.remap_component_tree()
-    # print(fusion_model2)
+    fusion_model2 = Fusion_Model(json_file_path='assets/fusion_export_2024-11-14_21-01-59/fusion_info.json')
+    fusion_model2.remap_component_tree()
+    print(fusion_model2)
