@@ -5,6 +5,10 @@ from typing import List, Dict, Tuple
 from pyquaternion import Quaternion
 from termcolor import colored
 
+# TODO: Add equalities (pay attention to remove actuator for motion links)
+
+# TODO: Add orca defaults
+# TODO: Maybe make everything sub-body of "root", like in orca
 @dataclass
 class Fusion_Model:
     # Neccesary inputs
@@ -48,7 +52,7 @@ class Fusion_Model:
     @dataclass
     class Joint:
         joint_name:         str                             = field()
-        transform:          Tuple[np.ndarray, np.ndarray]   = field(default_factory=lambda: (np.zeros(3), np.zeros(3))) # (axis, pos)
+        transform:          Tuple[np.ndarray, np.ndarray]   = field(default_factory=lambda: (np.zeros(3), np.zeros(3))) # (axis, pos) - Same as absolute transform
         relative_transform: Tuple[np.ndarray, np.ndarray]   = field(default_factory=lambda: (np.zeros(3), np.zeros(3))) # (axis, pos)
         range:               List[float]                    = field(default_factory=lambda: [-np.pi, np.pi])
 
@@ -227,9 +231,8 @@ class Fusion_Model:
             if component.joint is None: # Base component
                 continue
 
-            absolute_joint_transform = component.joint.transform
-            relative_axis = component.absolute_transform[0].inverse.rotate(absolute_joint_transform[0])
-            relative_pos = component.absolute_transform[0].inverse.rotate(absolute_joint_transform[1] - component.absolute_transform[1])
+            relative_axis = component.absolute_transform[0].inverse.rotate(component.joint.transform[0])
+            relative_pos = component.absolute_transform[0].inverse.rotate(component.joint.transform[1] - component.absolute_transform[1])
             component.joint.relative_transform = (relative_axis, relative_pos)
         pass
 

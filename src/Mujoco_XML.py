@@ -226,7 +226,7 @@ class Mujoco_XML:
         '''
         self._insert_after_first(f'body name="{body_name}"', f'<joint name="{joint_name}" pos="{pos[0]} {pos[1]} {pos[2]}" axis="{axis[0]} {axis[1]} {axis[2]}" range="{range[0]} {range[1]}"/>')
 
-    def add_actuator(self, name: str, joint_name: str, actuator_type: str = 'motor', ctrlrange: List[float] | np.ndarray = np.array([-1, 1])):
+    def add_actuator(self, name: str, joint_name: str, actuator_type: str = 'position', ctrlrange: List[float] | np.ndarray = np.array([-1, 1])):
         '''
         TODO (perfect/debug)
         '''

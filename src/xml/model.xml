@@ -139,6 +139,26 @@
 		</body>
 	</worldbody>
 	<actuator>
+		<position name="15_joint_actuator" joint="15_joint" ctrlrange="-3.141592653589793 3.141592653589793"/>
+		<position name="16_joint_actuator" joint="16_joint" ctrlrange="-3.141592653589793 3.141592653589793"/>
+		<position name="17_joint_actuator" joint="17_joint" ctrlrange="-3.141592653589793 3.141592653589793"/>
+		<position name="18_joint_actuator" joint="18_joint" ctrlrange="-3.141592653589793 3.141592653589793"/>
+		<position name="11_joint_actuator" joint="11_joint" ctrlrange="-3.141592653589793 3.141592653589793"/>
+		<position name="12_joint_actuator" joint="12_joint" ctrlrange="-3.141592653589793 3.141592653589793"/>
+		<position name="13_joint_actuator" joint="13_joint" ctrlrange="-3.141592653589793 3.141592653589793"/>
+		<position name="14_joint_actuator" joint="14_joint" ctrlrange="-3.141592653589793 3.141592653589793"/>
+		<position name="07_joint_actuator" joint="07_joint" ctrlrange="-3.141592653589793 3.141592653589793"/>
+		<position name="08_joint_actuator" joint="08_joint" ctrlrange="-3.141592653589793 3.141592653589793"/>
+		<position name="09_joint_actuator" joint="09_joint" ctrlrange="-3.141592653589793 3.141592653589793"/>
+		<position name="10_joint_actuator" joint="10_joint" ctrlrange="-3.141592653589793 3.141592653589793"/>
+		<position name="23_joint_actuator" joint="23_joint" ctrlrange="-3.141592653589793 3.141592653589793"/>
+		<position name="24_joint_actuator" joint="24_joint" ctrlrange="-3.141592653589793 3.141592653589793"/>
+		<position name="25_joint_actuator" joint="25_joint" ctrlrange="-3.141592653589793 3.141592653589793"/>
+		<position name="26_joint_actuator" joint="26_joint" ctrlrange="-3.141592653589793 3.141592653589793"/>
+		<position name="19_joint_actuator" joint="19_joint" ctrlrange="-3.141592653589793 3.141592653589793"/>
+		<position name="20_joint_actuator" joint="20_joint" ctrlrange="-3.141592653589793 3.141592653589793"/>
+		<position name="21_joint_actuator" joint="21_joint" ctrlrange="-3.141592653589793 3.141592653589793"/>
+		<position name="22_joint_actuator" joint="22_joint" ctrlrange="-3.141592653589793 3.141592653589793"/>
 	</actuator>
 	<contact>
 		<exclude body1="01" body2="15"/>

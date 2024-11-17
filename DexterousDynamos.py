@@ -14,9 +14,9 @@ class DexterousDynamos:
     # /
 
     # Optional inputs
-    model_name: str = "DexterousDynamos"
-    asset_folder: str = "assets/"
-    json_filename: str = "fusion_info.json"
+    model_name:     str = "DexterousDynamos"
+    asset_folder:   str = "assets/"
+    json_filename:  str = "fusion_info.json"
 
     # Public variables, not to be set by user
     # /
@@ -95,6 +95,7 @@ class DexterousDynamos:
         self._env.add_body(component.id, component.stlname, trans, quat, parent_name)
         if component.joint is not None:
             self._env.add_joint(component.id, component.joint.joint_name, component.joint.relative_transform[1], component.joint.relative_transform[0], component.joint.range)
+            self._env.add_actuator(component.joint.joint_name + "_actuator", component.joint.joint_name, ctrlrange=component.joint.range)
 
         for child in component.children:
             self._recursive_add_component(child)
