@@ -1,0 +1,147 @@
+<mujoco model="DexterousDynamos">
+	<compiler angle="radian"/>
+	<option integrator="RK4"/>
+	<default>
+		<default class="collision">
+			<geom contype="1" conaffinity="1" group="4"/>
+		</default>
+		<default class="visual">
+			<geom contype="0" conaffinity="0" group="1" mass="0"/>
+		</default>
+		<geom type="mesh" quat="1 0 0 0"/>
+		<position ctrllimited="true" kp="100"/>
+		<velocity ctrllimited="true" kv="10"/>
+		<motor ctrllimited="true"/>
+		<mesh scale="0.001 0.001 0.001"/>
+		<joint type="hinge" limited="true"/>
+	</default>
+	<asset>
+		<mesh name="T-PP" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/fusion_export_2024-11-14_21-01-59/T-PP.stl"/>
+		<mesh name="M-DP" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/fusion_export_2024-11-14_21-01-59/M-DP.stl"/>
+		<mesh name="I-PP" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/fusion_export_2024-11-14_21-01-59/I-PP.stl"/>
+		<mesh name="T-AP_OUT" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/fusion_export_2024-11-14_21-01-59/T-AP_OUT.stl"/>
+		<mesh name="M-MP" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/fusion_export_2024-11-14_21-01-59/M-MP.stl"/>
+		<mesh name="T-DP" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/fusion_export_2024-11-14_21-01-59/T-DP.stl"/>
+		<mesh name="Carpals" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/fusion_export_2024-11-14_21-01-59/Carpals.stl"/>
+		<mesh name="P-PP" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/fusion_export_2024-11-14_21-01-59/P-PP.stl"/>
+		<mesh name="M-PP" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/fusion_export_2024-11-14_21-01-59/M-PP.stl"/>
+		<mesh name="T-Assembly" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/fusion_export_2024-11-14_21-01-59/T-Assembly.stl"/>
+		<mesh name="M-Assembly" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/fusion_export_2024-11-14_21-01-59/M-Assembly.stl"/>
+		<mesh name="M-AP" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/fusion_export_2024-11-14_21-01-59/M-AP.stl"/>
+		<mesh name="P-Assembly" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/fusion_export_2024-11-14_21-01-59/P-Assembly.stl"/>
+		<mesh name="I-Assembly" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/fusion_export_2024-11-14_21-01-59/I-Assembly.stl"/>
+		<mesh name="T-AP" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/fusion_export_2024-11-14_21-01-59/T-AP.stl"/>
+	</asset>
+	<worldbody>
+		<body name="01" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0">
+			<body name="19" pos="0.028872205457314275 0.0026874214663675125 0.04161740433078695" quat="0.3265055756219767 0.2705980500730984 0.6532814824381886 -0.6272113751262515">
+				<body name="20" pos="-1.1690705480312684e-16 4.3671336227542125e-17 8.630645624194291e-18" quat="0.7660444431189766 3.3306690738754696e-16 -0.6427876096865381 1.1102230246251565e-16">
+					<body name="21" pos="1.5612511283791264e-17 -2.0816681711721685e-17 0.048000000000000015" quat="0.9999999999999978 8.326672684688674e-17 3.0808688933348094e-15 -1.6653345369377348e-16">
+						<body name="22" pos="0.0009999999999998656 -0.00010000000000006011 0.028000000000000084" quat="0.5000000000000037 0.4999999999999992 0.5 0.5000000000000006">
+							<geom class="visual" mesh="M-DP"/>
+							<geom class="collision" mesh="M-DP"/>
+						</body>
+						<geom class="visual" mesh="M-MP"/>
+						<geom class="collision" mesh="M-MP"/>
+					</body>
+					<geom class="visual" mesh="M-PP"/>
+					<geom class="collision" mesh="M-PP"/>
+				</body>
+				<geom class="visual" mesh="M-AP"/>
+				<geom class="collision" mesh="M-AP"/>
+			</body>
+			<body name="23" pos="0.047916294077601604 0.009684832653442693 0.026848611098292226" quat="0.31214716912115686 0.13204319109680737 0.696435709963295 -0.6325393603425353">
+				<body name="24" pos="3.3689711733889896e-16 4.79020458533684e-17 -5.4767624688648634e-17" quat="0.7660444431189763 -4.440892098500626e-16 -0.6427876096865404 0.0">
+					<body name="25" pos="9.107298248878237e-17 -5.637851296924623e-17 0.029999999999999975" quat="0.9999999999999973 5.828670879282072e-16 4.274358644806853e-15 -4.440892098500626e-16">
+						<body name="26" pos="0.000999999999999948 -0.00010000000000002542 0.02800000000000011" quat="0.500000000000003 0.49999999999999817 0.5000000000000002 0.5000000000000011">
+							<geom class="visual" mesh="M-DP"/>
+							<geom class="collision" mesh="M-DP"/>
+						</body>
+						<geom class="visual" mesh="M-MP"/>
+						<geom class="collision" mesh="M-MP"/>
+					</body>
+					<geom class="visual" mesh="P-PP"/>
+					<geom class="collision" mesh="P-PP"/>
+				</body>
+				<geom class="visual" mesh="M-AP"/>
+				<geom class="collision" mesh="M-AP"/>
+			</body>
+			<body name="07" pos="-0.03438778677666598 0.00830507569081303 -0.035012156902848916" quat="-0.410137020146706 0.8820758153862192 0.07296349761445203 0.22001411007430002">
+				<body name="08" pos="-0.01626345596729065 1.0512424264419451e-15 0.016263455967290896" quat="0.6532814824381884 0.653281482438197 0.2705980500730959 -0.2705980500730881">
+					<body name="09" pos="1.2710348209084786e-15 1.901726345105347e-16 9.2922765574284e-16" quat="1.1934897514720433e-15 -0.7660444431189752 -3.3861802251067274e-15 0.6427876096865379">
+						<body name="10" pos="4.766152750246277e-16 3.7643499428696714e-16 0.030000000000000002" quat="0.4999999999999937 0.5000000000000095 0.4999999999999981 0.4999999999999997">
+							<geom class="visual" mesh="T-DP"/>
+							<geom class="collision" mesh="T-DP"/>
+						</body>
+						<geom class="visual" mesh="T-PP"/>
+						<geom class="collision" mesh="T-PP"/>
+					</body>
+					<geom class="visual" mesh="T-AP_OUT"/>
+					<geom class="collision" mesh="T-AP_OUT"/>
+				</body>
+				<geom class="visual" mesh="T-AP"/>
+				<geom class="collision" mesh="T-AP"/>
+			</body>
+			<body name="11" pos="-0.018279794332525433 0.0015361038937075063 0.049471102826037235" quat="-0.402691056740765 -0.45740820860392006 -0.5462096196996411 0.5746935660596334">
+				<body name="12" pos="5.150136399827679e-16 -5.3645723691710045e-17 1.7467264640023975e-18" quat="0.7660444431189807 -5.551115123125783e-16 -0.6427876096865364 -3.3306690738754696e-16">
+					<body name="13" pos="-3.382710778154774e-16 3.9898639947466563e-17 0.03999999999999958" quat="0.9999999999999999 4.0245584642661925e-16 -7.424616477180734e-16 -2.220446049250313e-16">
+						<body name="14" pos="0.0009999999999998127 -0.00010000000000014511 0.027999999999999386" quat="0.5000000000000014 0.4999999999999982 0.49999999999999734 0.5000000000000033">
+							<geom class="visual" mesh="M-DP"/>
+							<geom class="collision" mesh="M-DP"/>
+						</body>
+						<geom class="visual" mesh="M-MP"/>
+						<geom class="collision" mesh="M-MP"/>
+					</body>
+					<geom class="visual" mesh="I-PP"/>
+					<geom class="collision" mesh="I-PP"/>
+				</body>
+				<geom class="visual" mesh="M-AP"/>
+				<geom class="collision" mesh="M-AP"/>
+			</body>
+			<body name="15" pos="0.005123563502627037 5.494914855853194e-18 0.05200937594888335" quat="-0.37992819659091526 -0.3799281965909158 -0.5963678105290183 0.5963678105290187">
+				<body name="16" pos="1.8843021096399572e-16 9.382154005942786e-17 -2.640032290002196e-17" quat="0.7660444431189772 -4.440892098500626e-16 -0.6427876096865388 -6.106226635438361e-16">
+					<body name="17" pos="-4.5102810375396984e-17 -8.673617379884035e-19 0.04800000000000042" quat="0.9999999999999979 5.551115123125783e-17 2.706168622523819e-15 1.1102230246251565e-16">
+						<body name="18" pos="0.0009999999999998526 -0.00010000000000001284 0.02799999999999979" quat="0.5000000000000026 0.5000000000000002 0.49999999999999967 0.5000000000000034">
+							<geom class="visual" mesh="M-DP"/>
+							<geom class="collision" mesh="M-DP"/>
+						</body>
+						<geom class="visual" mesh="M-MP"/>
+						<geom class="collision" mesh="M-MP"/>
+					</body>
+					<geom class="visual" mesh="M-PP"/>
+					<geom class="collision" mesh="M-PP"/>
+				</body>
+				<geom class="visual" mesh="M-AP"/>
+				<geom class="collision" mesh="M-AP"/>
+			</body>
+			<geom class="visual" mesh="Carpals"/>
+			<geom class="collision" mesh="Carpals"/>
+		</body>
+	</worldbody>
+	<actuator>
+	</actuator>
+	<contact>
+		<exclude body1="01" body2="15"/>
+		<exclude body1="15" body2="16"/>
+		<exclude body1="16" body2="17"/>
+		<exclude body1="17" body2="18"/>
+		<exclude body1="01" body2="11"/>
+		<exclude body1="11" body2="12"/>
+		<exclude body1="12" body2="13"/>
+		<exclude body1="13" body2="14"/>
+		<exclude body1="01" body2="07"/>
+		<exclude body1="07" body2="08"/>
+		<exclude body1="08" body2="09"/>
+		<exclude body1="09" body2="10"/>
+		<exclude body1="01" body2="23"/>
+		<exclude body1="23" body2="24"/>
+		<exclude body1="24" body2="25"/>
+		<exclude body1="25" body2="26"/>
+		<exclude body1="01" body2="19"/>
+		<exclude body1="19" body2="20"/>
+		<exclude body1="20" body2="21"/>
+		<exclude body1="21" body2="22"/>
+	</contact>
+	<equality>
+	</equality>
+</mujoco>

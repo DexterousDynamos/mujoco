@@ -497,14 +497,8 @@
     ],
     "Joints": [
         {
-            "Base Component": {
-                "Component Name": "Carpals:1",
-                "Parent": "Root"
-            },
-            "Rotating Component": {
-                "Component Name": "M-AP:1",
-                "Parent": "M-Assembly:1"
-            },
+            "Base Component": "01",
+            "Rotating Component": "15",
             "Transformation": {
                 "Joint Origin": [
                     0.3435648161455517,
@@ -515,18 +509,16 @@
                     -5.698528981712034e-16,
                     -0.9999999999999993,
                     3.566676201868501e-18
+                ],
+                "Joint Range": [
+                    -1.5707963267948966,
+                    1.5707963267948966
                 ]
             }
         },
         {
-            "Base Component": {
-                "Component Name": "Carpals:1",
-                "Parent": "Root"
-            },
-            "Rotating Component": {
-                "Component Name": "M-AP:1",
-                "Parent": "I-Assembly:1"
-            },
+            "Base Component": "01",
+            "Rotating Component": "11",
             "Transformation": {
                 "Joint Origin": [
                     -1.789954880318897,
@@ -537,18 +529,16 @@
                     -0.08715574274765818,
                     -0.9961946980917403,
                     -6.834384161560845e-17
+                ],
+                "Joint Range": [
+                    -1.5707963267948966,
+                    1.5707963267948966
                 ]
             }
         },
         {
-            "Base Component": {
-                "Component Name": "Carpals:1",
-                "Parent": "Root"
-            },
-            "Rotating Component": {
-                "Component Name": "T-AP:1",
-                "Parent": "T-Assembly:1"
-            },
+            "Base Component": "01",
+            "Rotating Component": "07",
             "Transformation": {
                 "Joint Origin": [
                     -2.61800921484849,
@@ -559,18 +549,16 @@
                     0.22488341988997165,
                     0.7556498909230248,
                     -0.6151590768301594
+                ],
+                "Joint Range": [
+                    -1.5707963267948966,
+                    1.5707963267948966
                 ]
             }
         },
         {
-            "Base Component": {
-                "Component Name": "Carpals:1",
-                "Parent": "Root"
-            },
-            "Rotating Component": {
-                "Component Name": "M-AP:1",
-                "Parent": "P-Assembly:1"
-            },
+            "Base Component": "01",
+            "Rotating Component": "23",
             "Transformation": {
                 "Joint Origin": [
                     3.6909147655043846,
@@ -581,18 +569,16 @@
                     0.26281464039812563,
                     -0.9634798136049455,
                     -0.051333357265829355
+                ],
+                "Joint Range": [
+                    -1.5707963267948966,
+                    1.5707963267948966
                 ]
             }
         },
         {
-            "Base Component": {
-                "Component Name": "M-MP:1",
-                "Parent": "M-Assembly:1"
-            },
-            "Rotating Component": {
-                "Component Name": "M-DP:1",
-                "Parent": "M-Assembly:1"
-            },
+            "Base Component": "17",
+            "Rotating Component": "18",
             "Transformation": {
                 "Joint Origin": [
                     5.452509997322104,
@@ -603,18 +589,16 @@
                     -0.819152044288992,
                     3.801379576713891e-16,
                     0.5735764363510469
+                ],
+                "Joint Range": [
+                    -1.5707963267948966,
+                    1.5707963267948966
                 ]
             }
         },
         {
-            "Base Component": {
-                "Component Name": "M-PP:1",
-                "Parent": "M-Assembly:1"
-            },
-            "Rotating Component": {
-                "Component Name": "M-MP:1",
-                "Parent": "M-Assembly:1"
-            },
+            "Base Component": "16",
+            "Rotating Component": "17",
             "Transformation": {
                 "Joint Origin": [
                     3.880854987516481,
@@ -625,18 +609,16 @@
                     -0.819152044288989,
                     4.656382670457073e-16,
                     0.5735764363510452
+                ],
+                "Joint Range": [
+                    -1.5707963267948966,
+                    1.5707963267948966
                 ]
             }
         },
         {
-            "Base Component": {
-                "Component Name": "M-AP:1",
-                "Parent": "M-Assembly:1"
-            },
-            "Rotating Component": {
-                "Component Name": "M-PP:1",
-                "Parent": "M-Assembly:1"
-            },
+            "Base Component": "15",
+            "Rotating Component": "16",
             "Transformation": {
                 "Joint Origin": [
                     1.1695148844910572,
@@ -647,18 +629,16 @@
                     -0.8191520442889914,
                     3.9141500130112373e-16,
                     0.5735764363510454
+                ],
+                "Joint Range": [
+                    -1.5707963267948966,
+                    1.5707963267948966
                 ]
             }
         },
         {
-            "Base Component": {
-                "Component Name": "M-MP:1",
-                "Parent": "M-Assembly:2"
-            },
-            "Rotating Component": {
-                "Component Name": "M-DP:1",
-                "Parent": "M-Assembly:2"
-            },
+            "Base Component": "21",
+            "Rotating Component": "22",
             "Transformation": {
                 "Joint Origin": [
                     9.151771901664592,
@@ -669,18 +649,16 @@
                     -0.6399168651668559,
                     -0.06676517241774912,
                     0.7655382534054365
+                ],
+                "Joint Range": [
+                    -1.5707963267948966,
+                    1.5707963267948966
                 ]
             }
         },
         {
-            "Base Component": {
-                "Component Name": "M-PP:1",
-                "Parent": "M-Assembly:2"
-            },
-            "Rotating Component": {
-                "Component Name": "M-MP:1",
-                "Parent": "M-Assembly:2"
-            },
+            "Base Component": "20",
+            "Rotating Component": "21",
             "Transformation": {
                 "Joint Origin": [
                     7.009150966754743,
@@ -691,18 +669,16 @@
                     -0.6399168651668554,
                     -0.06676517241774897,
                     0.7655382534054354
+                ],
+                "Joint Range": [
+                    -1.5707963267948966,
+                    1.5707963267948966
                 ]
             }
         },
         {
-            "Base Component": {
-                "Component Name": "M-AP:1",
-                "Parent": "M-Assembly:1"
-            },
-            "Rotating Component": {
-                "Component Name": "M-PP:1",
-                "Parent": "M-Assembly:2"
-            },
+            "Base Component": "19",
+            "Rotating Component": "20",
             "Transformation": {
                 "Joint Origin": [
                     3.327844863154888,
@@ -713,18 +689,16 @@
                     -0.6399168651668585,
                     -0.06676517241774899,
                     0.765538253405441
+                ],
+                "Joint Range": [
+                    -1.5707963267948966,
+                    1.5707963267948966
                 ]
             }
         },
         {
-            "Base Component": {
-                "Component Name": "M-MP:1",
-                "Parent": "I-Assembly:1"
-            },
-            "Rotating Component": {
-                "Component Name": "M-DP:1",
-                "Parent": "I-Assembly:1"
-            },
+            "Base Component": "13",
+            "Rotating Component": "14",
             "Transformation": {
                 "Joint Origin": [
                     1.521224399748309,
@@ -735,18 +709,16 @@
                     -0.9028590122851707,
                     0.07898992833716534,
                     0.4226182617407008
+                ],
+                "Joint Range": [
+                    -1.5707963267948966,
+                    1.5707963267948966
                 ]
             }
         },
         {
-            "Base Component": {
-                "Component Name": "I-PP:1",
-                "Parent": "I-Assembly:1"
-            },
-            "Rotating Component": {
-                "Component Name": "M-MP:1",
-                "Parent": "I-Assembly:1"
-            },
+            "Base Component": "12",
+            "Rotating Component": "13",
             "Transformation": {
                 "Joint Origin": [
                     0.4185755970867963,
@@ -757,18 +729,16 @@
                     -0.9028590122851716,
                     0.0789899283371654,
                     0.42261826174070055
+                ],
+                "Joint Range": [
+                    -1.5707963267948966,
+                    1.5707963267948966
                 ]
             }
         },
         {
-            "Base Component": {
-                "Component Name": "M-AP:1",
-                "Parent": "I-Assembly:1"
-            },
-            "Rotating Component": {
-                "Component Name": "I-PP:1",
-                "Parent": "I-Assembly:1"
-            },
+            "Base Component": "11",
+            "Rotating Component": "12",
             "Transformation": {
                 "Joint Origin": [
                     -1.179342589986993,
@@ -779,18 +749,16 @@
                     -0.9028590122851698,
                     0.07898992833716559,
                     0.4226182617406987
+                ],
+                "Joint Range": [
+                    -1.5707963267948966,
+                    1.5707963267948966
                 ]
             }
         },
         {
-            "Base Component": {
-                "Component Name": "T-AP:1",
-                "Parent": "T-Assembly:1"
-            },
-            "Rotating Component": {
-                "Component Name": "T-AP_OUT:1",
-                "Parent": "T-Assembly:1"
-            },
+            "Base Component": "07",
+            "Rotating Component": "08",
             "Transformation": {
                 "Joint Origin": [
                     -4.232706583960327,
@@ -801,18 +769,16 @@
                     -0.1844263068755772,
                     0.6529279054420841,
                     0.7346237728437888
+                ],
+                "Joint Range": [
+                    -1.5707963267948966,
+                    1.5707963267948966
                 ]
             }
         },
         {
-            "Base Component": {
-                "Component Name": "T-AP_OUT:1",
-                "Parent": "T-Assembly:1"
-            },
-            "Rotating Component": {
-                "Component Name": "T-PP:1",
-                "Parent": "T-Assembly:1"
-            },
+            "Base Component": "08",
+            "Rotating Component": "09",
             "Transformation": {
                 "Joint Origin": [
                     -5.423011819453346,
@@ -823,18 +789,16 @@
                     -0.8355571977929616,
                     -0.4977301306975941,
                     0.2326131686128629
+                ],
+                "Joint Range": [
+                    -1.5707963267948966,
+                    1.5707963267948966
                 ]
             }
         },
         {
-            "Base Component": {
-                "Component Name": "T-PP:1",
-                "Parent": "T-Assembly:1"
-            },
-            "Rotating Component": {
-                "Component Name": "T-DP:1",
-                "Parent": "T-Assembly:1"
-            },
+            "Base Component": "09",
+            "Rotating Component": "10",
             "Transformation": {
                 "Joint Origin": [
                     -6.855920931446621,
@@ -845,18 +809,16 @@
                     -0.8355571977929889,
                     -0.4977301306976104,
                     0.23261316861287037
+                ],
+                "Joint Range": [
+                    -1.5707963267948966,
+                    1.5707963267948966
                 ]
             }
         },
         {
-            "Base Component": {
-                "Component Name": "M-MP:1",
-                "Parent": "P-Assembly:1"
-            },
-            "Rotating Component": {
-                "Component Name": "M-DP:1",
-                "Parent": "P-Assembly:1"
-            },
+            "Base Component": "25",
+            "Rotating Component": "26",
             "Transformation": {
                 "Joint Origin": [
                     10.152163665853523,
@@ -867,18 +829,16 @@
                     -0.43133895527174754,
                     -0.1649171066048595,
                     0.8869887561937647
+                ],
+                "Joint Range": [
+                    -1.5707963267948966,
+                    1.5707963267948966
                 ]
             }
         },
         {
-            "Base Component": {
-                "Component Name": "P-PP:1",
-                "Parent": "P-Assembly:1"
-            },
-            "Rotating Component": {
-                "Component Name": "M-MP:1",
-                "Parent": "P-Assembly:1"
-            },
+            "Base Component": "24",
+            "Rotating Component": "25",
             "Transformation": {
                 "Joint Origin": [
                     7.633624922209502,
@@ -889,18 +849,16 @@
                     -0.4313389552717466,
                     -0.16491710660485867,
                     0.8869887561937624
+                ],
+                "Joint Range": [
+                    -1.5707963267948966,
+                    1.5707963267948966
                 ]
             }
         },
         {
-            "Base Component": {
-                "Component Name": "M-AP:1",
-                "Parent": "P-Assembly:1"
-            },
-            "Rotating Component": {
-                "Component Name": "P-PP:1",
-                "Parent": "P-Assembly:1"
-            },
+            "Base Component": "23",
+            "Rotating Component": "24",
             "Transformation": {
                 "Joint Origin": [
                     4.946864072269654,
@@ -911,6 +869,30 @@
                     -0.43133895527174815,
                     -0.16491710660485834,
                     0.8869887561937667
+                ],
+                "Joint Range": [
+                    -1.5707963267948966,
+                    1.5707963267948966
+                ]
+            }
+        },
+        {
+            "Base Component": "01",
+            "Rotating Component": "19",
+            "Transformation": {
+                "Joint Origin": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Joint Axis": [
+                    0.0,
+                    -1.0,
+                    0.0
+                ],
+                "Joint Range": [
+                    -1.5707963267948966,
+                    1.5707963267948966
                 ]
             }
         }

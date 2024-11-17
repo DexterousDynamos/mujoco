@@ -220,11 +220,11 @@ class Mujoco_XML:
         if self._first_set['visual_class']:
             self._insert_after_first(f'body name="{body_name}"', f'<geom class="visual" mesh="{mesh_name}"/>')
 
-    def add_joint(self, body_name: str, pos: List[float] | np.ndarray = np.array([0, 0, 0]), axis: List[float] | np.ndarray = np.array([0, 0, 1]), range: List[float] | np.ndarray = np.array([-1, 1])):
+    def add_joint(self, body_name: str, joint_name: str, pos: List[float] | np.ndarray = np.array([0, 0, 0]), axis: List[float] | np.ndarray = np.array([0, 0, 1]), range: List[float] | np.ndarray = np.array([-1, 1])):
         '''
         TODO (perfect/debug)
         '''
-        self._insert_after_first(f'body name="{body_name}"', f'<joint name="joint_{body_name}" pos="{pos[0]} {pos[1]} {pos[2]}" axis="{axis[0]} {axis[1]} {axis[2]}" range="{range[0]} {range[1]}"/>')
+        self._insert_after_first(f'body name="{body_name}"', f'<joint name="{joint_name}" pos="{pos[0]} {pos[1]} {pos[2]}" axis="{axis[0]} {axis[1]} {axis[2]}" range="{range[0]} {range[1]}"/>')
 
     def add_actuator(self, name: str, joint_name: str, actuator_type: str = 'motor', ctrlrange: List[float] | np.ndarray = np.array([-1, 1])):
         '''

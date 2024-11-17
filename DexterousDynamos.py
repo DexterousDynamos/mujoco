@@ -24,7 +24,7 @@ class DexterousDynamos:
     # Internal variables
     _env: Mujoco_XML = field(init=False)
     _fusion_data: Fusion_Model = field(init=False)
-    _remapped_fusion_data: Fusion_Model = field(init=False) # Should be removeable in the future
+    # _remapped_fusion_data: Fusion_Model = field(init=False) # Should be removeable in the future
     _quattrans_dict: Dict[str, Tuple[Quaternion, np.ndarray]] = field(init=False, default_factory=dict)
     _joint_transforms: Dict[str, Tuple[np.ndarray, np.ndarray]] = field(init=False, default_factory=dict) # pos, axis # DEBUG - manual joints, should be removed later
 
@@ -39,15 +39,11 @@ class DexterousDynamos:
 
         # Read the Fusion JSON file
         self._fusion_data = Fusion_Model(json_file_path=os.path.join(self.asset_folder, self.json_filename))
-        self._remapped_fusion_data = Fusion_Model(json_file_path=os.path.join(self.asset_folder, self.json_filename))
-        self._remapped_fusion_data.remap_component_tree()
-        
 
         # Add components to the Mujoco XML environment
-        for child in self._fusion_data.root_component.children:
-            self.add_component(child)
+        self._recursive_add_component(self._fusion_data.joint_components[0])
 
-    def _find_latest_folder(self):
+    def _find_latest_folder(self) -> str:
         '''
         Find the latest folder in the asset folder.
 
@@ -88,174 +84,22 @@ class DexterousDynamos:
             for file in files:
                 if file.lower().endswith(".stl"):
                     full_filepath = os.path.abspath(os.path.join(root, file))
-                    base_name = os.path.splitext(file)[0] # .lower()
+                    base_name = os.path.splitext(file)[0]
                     self._env.add_asset(base_name, full_filepath)
 
-    def _compname_to_stlname(self, comp_name: str):
-        '''
-        Convert a Fusion component name to an STL file name.
-
-        Args:
-            comp_name (str): The Fusion component name.
-
-        Returns:
-            str: The STL file name.
-        '''
-        split_name = comp_name.split(":")
-        if len(split_name) > 2:
-            raise ValueError("Component name should not contain more than one colon")
-        elif len(split_name) == 1:
-            raise ValueError("Component name should contain a colon")
-        return split_name[0]
-    
-    def _find_component_ind(self, component: Fusion_Model.Component, is_orig: bool) -> int:
-        '''
-        Find the index of a component in the Fusion model.
-
-        Args:
-            component (Fusion_Model.Component): The component to find the index of.
-
-        Returns:
-            int: The index of the component.
-        '''
-        if is_orig:
-            data = self._fusion_data
-        else:
-            data = self._remapped_fusion_data
-        
-        for index, comp in enumerate(data.components):
-            if comp.id == component.id:
-                return index
-        return None
-
-    def find_joint_parent(self, component: Fusion_Model.Component) -> Fusion_Model.Component:
-        '''
-        Finds the earliest parent of the component that is not in the exclude_parent_list.
-
-        Args:
-            component (Fusion_Model.Component): The component to find the parent of.
-
-        Returns:
-            Fusion_Model.Component:             The parent component.
-        '''
-        parent = component.parent
-        while parent.name in self._fusion_data._subassembly_names:
-            parent = parent.parent
-        if parent == None:
-            raise ValueError("Some error finding parent")
-        return parent
-
-    # TODO: Make remapped_component input useless via fixes in Fusion Model (comp ids in fusion script)
-    def add_component(self, component: Fusion_Model.Component) -> None:
+    def _recursive_add_component(self, component: Fusion_Model.Component) -> None:
         '''
         Adds a component and its children to the Mujoco XML environment.
 
         Args:
             component_name (str): The name of the component to add. Its children will also be added.
         '''
+        quat, trans = component.relative_transform
+        parent_name = component.parent.id if component.parent is not None else ''
+        self._env.add_body(component.id, component.stlname, trans, quat, parent_name)
 
-        def get_relative_transform(parent_pos: np.ndarray, parent_quat: np.ndarray | Quaternion, child_pos: np.ndarray, child_quat: np.ndarray | Quaternion) -> Tuple[np.ndarray, np.ndarray | Quaternion]:
-            """
-            Calculate the relative position and quaternion of a child body relative to its parent.
-            
-            Args:
-                parent_pos (np.ndarray):                  Position of the parent body as a numpy array.
-                parent_quat (np.ndarray | Quaternion):    Quaternion of the parent body as a numpy array (w, x, y, z).
-                child_pos (np.ndarray):                   Position of the child body as a numpy array.
-                child_quat (np.ndarray | Quaternion):     Quaternion of the child body as a numpy array (w, x, y, z).
-            
-            Returns:
-                (Tuple[np.ndarray, np.ndarray | Quaternion]): The relative position and quaternion of the child body.
-            """
-            if isinstance(parent_quat, np.ndarray):
-                parent_quat = Quaternion(parent_quat).normalised
-                parent_is_np = True
-            else:
-                if not np.isclose(parent_quat.norm, 1):
-                    parent_quat = parent_quat.normalised
-                parent_is_np = False
-
-            if isinstance(child_quat, np.ndarray):
-                child_quat = Quaternion(child_quat).normalised
-                child_is_np = True
-            else:
-                if not np.isclose(child_quat.norm, 1):
-                    child_quat = child_quat.normalised
-                child_is_np = False
-
-            # Step 1: Calculate relative position in the parent's frame
-            # Translate child position by the inverse of the parent's rotation
-            relative_pos = parent_quat.inverse.rotate(child_pos - parent_pos)
-
-            # Step 2: Calculate relative orientation (quaternion)
-            relative_quat = parent_quat.inverse * child_quat
-
-            if parent_is_np and child_is_np:
-                relative_quat = relative_quat.normalised.elements
-            
-            return relative_pos, relative_quat
-        
-        def recursive_calculate_quat(component: Fusion_Model.Component) -> Quaternion:
-            '''
-            Recursively calculates the total quaternion of the component.
-
-            Args:
-                component (Fusion_Model.Component): The component to calculate the quaternion of.
-
-            Returns:
-                Quaternion: The total quaternion of the component.
-            '''
-            if component.name == "Root":
-                return component.quaternion
-            return recursive_calculate_quat(component.parent) * component.quaternion
-        
-        def recursive_calculate_trans(component: Fusion_Model.Component, component_translation: np.ndarray) -> np.ndarray:
-            '''
-            Recursively calculates the total translation of the component.
-
-            Args:
-                component (Fusion_Model.Component): The component to calculate the translation of.
-                component_translation (np.ndarray): The translation of the component.
-
-            Returns:
-                np.ndarray: The total translation of the component.
-            '''
-            if component.name == "Root":
-                return component_translation
-            return recursive_calculate_trans(component.parent, component.parent.quaternion.rotate(component_translation) + component.parent.translation)
-
-        # orig_component = self._fusion_data.components[self._fusion_data.find_component_index(component_name)]
-        # remapped_component = self._fusion_data.joint_components[self._fusion_data.find_joint_component_index(component_name)]
-        # if component_name not in self._fusion_data._subassembly_names:
-        #     quat    = recursive_calculate_quat(orig_component)
-        #     trans   = recursive_calculate_trans(orig_component, orig_component.translation)
-        #     self._quattrans_dict[component_name] = [quat, trans]
-
-        #     remapped_parent_name = self.find_joint_parent(remapped_component).name
-        #     if remapped_parent_name != "Root":
-        #         trans, quat = get_relative_transform(self._quattrans_dict[remapped_parent_name][1], self._quattrans_dict[remapped_parent_name][0], trans, quat)
-        #     self._env.add_body(self._compname_to_stlname(component_name), pos=trans, quat=quat, parent='' if remapped_parent_name == "Root" else self._compname_to_stlname(remapped_parent_name))
-
-        # for child in remapped_component.children:
-        #     self.add_component(child.name)
-        orig_component = self._fusion_data.components[self._find_component_ind(component, True)]
-        remapped_component = self._remapped_fusion_data.components[self._find_component_ind(component, False)]
-        component_name = component.name
-        full_component_name = f"{component_name}/{component.id}"
-        if component_name not in self._fusion_data._subassembly_names:
-            quat    = recursive_calculate_quat(orig_component)
-            trans   = recursive_calculate_trans(orig_component, orig_component.translation)
-            self._quattrans_dict[full_component_name] = [quat, trans]
-
-            remapped_parent = self.find_joint_parent(remapped_component)
-            remapped_parent_name = remapped_parent.name
-            full_remapped_parent_name = f"{remapped_parent_name}/{remapped_parent.id}"
-            if remapped_parent_name != "Root":
-                trans, quat = get_relative_transform(self._quattrans_dict[full_remapped_parent_name][1], self._quattrans_dict[full_remapped_parent_name][0], trans, quat)
-            self._env.add_body(full_component_name, self._compname_to_stlname(component_name), pos=trans, quat=quat, parent_body_name='' if remapped_parent_name == "Root" else full_remapped_parent_name)
-
-        for child in remapped_component.children:
-            self.add_component(child)
+        for child in component.children:
+            self._recursive_add_component(child)
 
     # TODO: Fix correct file path (w.r.t. DexterousDynamos.py, not Mujoco_XML.py)
     def export_xml(self, filename: str):
@@ -293,11 +137,11 @@ class DexterousDynamos:
 if __name__ == "__main__":
     model = DexterousDynamos()
     model.export_xml("xml/model.xml")
-    for comp in model._fusion_data.components:
-        if comp.parent != None:
-            print()
-            print(f"{comp.name}/{comp.id}")
-            print(f"{comp.parent.name}/{comp.name}")
+    # for comp in model._fusion_data.components:
+    #     if comp.parent != None:
+    #         print()
+    #         print(f"{comp.name}/{comp.id}")
+    #         print(f"{comp.parent.name}/{comp.name}")
             
     model.run_interactive()
     exit()
