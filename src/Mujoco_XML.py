@@ -197,7 +197,7 @@ class Mujoco_XML:
 
     def add_body(self, body_name: str, mesh_name: str = '', pos: List[float] | np.ndarray = np.array([0, 0, 0]), quat: List[float] | np.ndarray | Quaternion = Quaternion(1, 0, 0, 0), parent_body_name: str = ''):
         '''
-        Add a body within the "worldbody" section to the Mujoco XML file. TODO: Add separate mesh name
+        Add a body within the "worldbody" section to the Mujoco XML file.
 
         Args:
             body_name (str):                                The name of the body.
@@ -208,10 +208,10 @@ class Mujoco_XML:
         '''
         if mesh_name == '':
             mesh_name = body_name
-        # Assumes that previous mesh name is the same as body name
         if parent_body_name == '':
             self._insert_before_last("worldbody", f'<body name="{body_name}" pos="{pos[0]} {pos[1]} {pos[2]}" quat="{quat[0]} {quat[1]} {quat[2]} {quat[3]}">', add_end='</body>')
         else:
+            # TODO: Add before closing bracket, not after opening bracket
             self._insert_after_first(f'body name="{parent_body_name}"', f'<body name="{body_name}" pos="{pos[0]} {pos[1]} {pos[2]}" quat="{quat[0]} {quat[1]} {quat[2]} {quat[3]}">', add_end='</body>')
             self.exclude_contact(parent_body_name, body_name)
 

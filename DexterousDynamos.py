@@ -93,6 +93,8 @@ class DexterousDynamos:
         quat, trans = component.relative_transform
         parent_name = component.parent.id if component.parent is not None else ''
         self._env.add_body(component.id, component.stlname, trans, quat, parent_name)
+        if component.joint is not None:
+            self._env.add_joint(component.id, component.joint.joint_name, component.joint.relative_transform[1], component.joint.relative_transform[0], component.joint.range)
 
         for child in component.children:
             self._recursive_add_component(child)

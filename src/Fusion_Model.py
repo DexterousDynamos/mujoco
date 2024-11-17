@@ -211,6 +211,8 @@ class Fusion_Model:
             joint_component = self.joint_components[self._joint_component_indices[component.id]] if component.id in self._joint_component_indices else None
             if joint_component is not None: # Not subassembly
                 joint_component.absolute_transform = (quat, trans)
+            
+            component.absolute_transform = (quat, trans) # Should be useless
 
         # Calculate relative transforms
         for component in self.joint_components:
@@ -221,6 +223,14 @@ class Fusion_Model:
             component.relative_transform = (relative_quat, relative_trans)
 
         # Calculate joint transforms
+        for component in self.joint_components:
+            if component.joint is None: # Base component
+                continue
+
+            absolute_joint_transform = component.joint.transform
+            relative_axis = component.absolute_transform[0].inverse.rotate(absolute_joint_transform[0])
+            relative_pos = component.absolute_transform[0].inverse.rotate(absolute_joint_transform[1] - component.absolute_transform[1])
+            component.joint.relative_transform = (relative_axis, relative_pos)
         pass
 
     def detailed_name(self, component: 'Fusion_Model.Component', level: int = None) -> str:
