@@ -47,6 +47,7 @@ sudo apt-get install patchelf
 ## Mujoco_XML.py
 - Add checks
 - Add list of what kwargs are allowed for each tag
+- Fix export directory (w.r.t. file calling export, not Mujoco_XML.py)
 - (later) Implement "run_simulation" for external commands
 
 ## Fusion_Model.py
