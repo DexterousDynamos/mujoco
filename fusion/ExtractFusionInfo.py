@@ -6,6 +6,100 @@ from collections import defaultdict
 from adsk.fusion import Occurrence
 import datetime
 import time
+import hashlib
+
+def hash_string(s: str, length: int = 8):
+    '''
+    Hashes a string using SHA256 and returns the first `length` characters.
+    '''
+    return hashlib.sha256(s.encode()).hexdigest()[:length]
+
+def get_unique_id_from_occurence(occ, length: int = 8):
+    '''
+    Takes an occurrence or string as input, then gets the 'unique' path name
+    and computes the unique ID by hashing it.
+    The output hash is truncated to the specified length.
+    '''
+    if isinstance(occ, Occurrence):
+        unique_name = occ.fullPathName
+        hashed_name = hash_string(unique_name)
+        return hashed_name[:length]
+    elif isinstance(occ, str):
+        return hash_string(occ)[:length]
+    return None
+
+def get_unique_parent_id_from_occurence(occ: Occurrence, length: int = 8):
+    '''
+    Takes an occurrence as input, then gets the 'unique' path name
+    of it's parent and computes the unique ID by hashing it.
+    The output hash is truncated to the specified length.
+    '''
+    plus_index = occ.fullPathName.rfind("+")
+    if plus_index == -1:
+        unique_name = 'Root'
+    else:
+        parent_name = occ.fullPathName[:plus_index]
+        unique_name = hash_string(parent_name)
+    return unique_name
+
+def clean_name(name):
+    '''
+    Cleans up the name by removing the version info but keeping the occurence number.
+    '''
+    match = re.match(r'(\S+)\s.*:(\d+)', name)
+    if match:
+        return f"{match.group(1)}:{match.group(2)}"
+    return name  
+
+def get_parent_name(occ: Occurrence):
+    '''
+    Extracts the parent name and the unique name from the occurrence.
+    '''
+    plus_index = occ.fullPathName.rfind("+")
+    if plus_index == -1:
+        parent_name = 'Root'
+        unique_name = occ.fullPathName
+    else:
+        parent_name = occ.fullPathName[:plus_index]
+        unique_name = occ.fullPathName[plus_index+1:] 
+    
+    return parent_name, unique_name  #
+
+def get_base_name(name):
+    '''
+    Cleans up the name by removing the version info and the occurence number.
+    This is also the exported STL file name.
+    '''
+    base_name = re.sub(r'(\s*v\s*\d+:\d+|:\d+)', '', name).strip()
+    return base_name
+
+def is_desired_component(occ, desired_component_names):
+    '''
+    Checks if the component name is in the desired component names list.
+    '''
+    if isinstance(occ, Occurrence): 
+        base_name = get_base_name(occ.name)
+    elif isinstance(occ, str):
+        base_name = get_base_name(occ)
+    else: 
+        return False
+    return base_name in desired_component_names
+
+def truncate_occurence_path(occ):
+    '''
+    Truncates the occurence path to the last occurence name.
+    '''
+    if isinstance(occ, Occurrence):
+        plus_index = occ.fullPathName.rfind("+")
+        if plus_index == -1:
+            return occ.fullPathName
+        return occ.fullPathName[:plus_index]
+    elif isinstance(occ, str):
+        plus_index = occ.rfind("+")
+        if plus_index == -1:
+            return occ
+        return occ[:plus_index]
+    return None
 
 # Main function to run the script
 def run(context):
@@ -40,40 +134,18 @@ def run(context):
             "Components": [],
             "Joints": []
         }
-
+        
         # Root component and all occurrences
         rootComp = design.rootComponent
         allOccs = rootComp.allOccurrences
         joints = rootComp.allJoints
         
-        def clean_name(name):
-            # Extract the number after the first colon and add it to the letters before the first empty space with a hyphen
-            match = re.match(r'(\S+)\s.*:(\d+)', name)
-            if match:
-                return f"{match.group(1)}:{match.group(2)}"
-            return name  
+        # define list of all id's for joints later
+        component_id_stl_dict = {}
         
-        def get_parent_name(occ: Occurrence):
-            plus_index = occ.fullPathName.rfind("+")
-            if plus_index == -1:
-                parent_name = 'Root'
-                unique_name = occ.fullPathName
-            else:
-                parent_name = occ.fullPathName[:plus_index]
-                unique_name = occ.fullPathName[plus_index+1:] 
-            
-            return parent_name, unique_name  #
-        
-        def get_base_name(name):
-            base_name = re.sub(r'(\s*v\s*\d+:\d+|:\d+)', '', name).strip()
-            return base_name
-                
-
-        # Collect component data
         def extract_component_data(occ: Occurrence):
-            # Extract the base component name without the version info
-            comp_name_with_version = occ.name  # Includes version (e.g., "M_MP v76:1")
-            base_name = get_base_name(comp_name_with_version)
+            occ_name = occ.name  # Includes version (e.g., "M_MP v76:1")
+            base_name = get_base_name(occ_name)
 
             # Only proceed if the base name is in the desired component names list
             if base_name not in desired_component_names:
@@ -89,8 +161,6 @@ def run(context):
             quaternion = rotation_matrix_to_quaternion(rotation_matrix)
             translation = (transform.getCell(0, 3), transform.getCell(1, 3), transform.getCell(2, 3))
         
-            parent_name, unique_name = get_parent_name(occ)
-
             # Set up the STL export
             export_mgr = app.activeProduct.exportManager
             stl_export_options = export_mgr.createSTLExportOptions(occ)
@@ -99,60 +169,59 @@ def run(context):
             stl_file_path = os.path.join(output_folder, stl_filename)  # Save in output directory
             stl_export_options.filename = stl_file_path
             export_mgr.execute(stl_export_options)
+            
+            # save for later use in joints
+            component_id_stl_dict[get_unique_id_from_occurence(occ)] = base_name
 
             entry = {
-                "Component Name": clean_name(comp_name_with_version),
-                "Parent": clean_name(parent_name),
+                "Component Name": get_unique_id_from_occurence(occ),
+                "Parent": get_unique_parent_id_from_occurence(occ),
                 "Transformation": {
                     # "Rotation Matrix": rotation_matrix,
                     "Quaternion": quaternion,
                     "Translation": translation
                 },
                 "STL File": stl_filename,  # Add STL file path to the component data
-                "Is Base Component": "Assembly" not in comp_name_with_version
+                "Is Base Component": "Assembly" not in occ_name
             }
             return entry
         
         def extract_joint_data(joint):
             if joint.jointMotion.jointType == 1: # revolute joint
-                occ1, occ1_name = joint.occurrenceOne, clean_name(joint.occurrenceOne.name)
-                occ2, occ2_name = joint.occurrenceTwo, clean_name(joint.occurrenceTwo.name)
-                comp1, comp1_name = occ1.component, clean_name(occ1.name)
-                comp2, comp2_name = occ2.component, clean_name(occ2.name)
-        
-                parent1_name, _ = get_parent_name(occ1)
-                parent2_name, _ = get_parent_name(occ2)
-                parent1_name = clean_name(parent1_name)
-                parent2_name = clean_name(parent2_name)
-                
-                if 'Carpals' in parent1_name: # Special case where carpals bones are subcomponents in the same rigid body
-                    occ1_name = parent1_name
-                    parent1_name = 'Root'
-                if 'Carpals' in parent2_name:
-                    occ2_name = parent2_name
-                    parent2_name = 'Root'
-                    
-                
-                base_name1 = get_base_name(occ1_name)
-                base_name2 = get_base_name(occ2_name)
-                
+                occ1, occ2 = joint.occurrenceOne, joint.occurrenceTwo
+                occ1_full_path, occ2_full_path = occ1.fullPathName, occ2.fullPathName
+              
+                # Delete subcomponents, to reach the parent component which was used to generate the stl files
+                search_index = 0
+                while not get_unique_id_from_occurence(occ1_full_path) in component_id_stl_dict:
+                    occ1_full_path = truncate_occurence_path(occ1)
+                    search_index += 1
+                    if search_index > 10:
+                        ui.messageBox(f'Failed to find STL file for component: {occ1}.')
+                search_index = 0
+                while not get_unique_id_from_occurence(occ2_full_path) in component_id_stl_dict:
+                    occ2_full_path = truncate_occurence_path(occ2)
+                    search_index += 1
+                    if search_index > 10:
+                        ui.messageBox(f'Failed to find STL file for component: {occ2}.')
             
-                if desired_component_names.index(base_name1) > desired_component_names.index(base_name2):
-                    occ1_name, occ2_name = occ2_name, occ1_name
-                    parent1_name, parent2_name = parent2_name, parent1_name
+                id_1 = get_unique_id_from_occurence(occ1_full_path)
+                id_2 = get_unique_id_from_occurence(occ2_full_path)
                 
+                base_name1 = component_id_stl_dict[id_1]
+                base_name2 = component_id_stl_dict[id_2]
+                
+                # Ensure that the base name is sorted correctly
+                if desired_component_names.index(base_name1) > desired_component_names.index(base_name2):
+                    occ1, occ2 = occ2, occ1
+                    base_name1, base_name2 = base_name2, base_name1
+                                
                 try:
                     joint_origin = joint.geometryOrOriginOne.origin
                     joint_axis = joint.jointMotion.rotationAxisVector
                     joint_info = {
-                        "Base Component": {
-                            "Component Name": occ1_name,
-                            "Parent": parent1_name
-                        },
-                        "Rotating Component": {
-                            "Component Name": occ2_name,
-                            "Parent": parent2_name
-                        },
+                        "Component Name": id_1,
+                        "Rotating Component": id_2,
                         "Transformation": {
                             "Joint Origin": [
                                 joint_origin.x,
@@ -180,6 +249,7 @@ def run(context):
 
         extracted_joint_num = 0
 
+        print("Extracting joints...")
         for joint in joints:
             entry = extract_joint_data(joint)
             if entry:
