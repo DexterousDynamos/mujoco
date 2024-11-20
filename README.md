@@ -38,7 +38,7 @@ sudo apt-get install patchelf
 # TODO
 ## Fusion360 script
 - Use IDs
-- Include joint limits
+- Apply correct joint limits
 - Debug repetition and missing joint errors
 - Add motion links (i.e. linked joints)
 - Add correct dimensions to fusion script (translation /= 100)

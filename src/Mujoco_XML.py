@@ -3,7 +3,7 @@ import subprocess
 
 from mujoco_py import load_model_from_xml, MjSim, MjViewer
 from dataclasses import dataclass, field
-from typing import List, Dict
+from typing import List, Dict, Union
 import numpy as np
 from pyquaternion import Quaternion
 
@@ -55,10 +55,10 @@ class Mujoco_XML:
         if self.use_defaults:
             self.add_option(integrator="RK4")
             self.add_compiler(angle="radian")
-            self.add_default_class("collision")
-            self.add_default("geom", "collision", contype="1", conaffinity="1", group="4")
-            self.add_default_class("visual")
-            self.add_default("geom", "visual", contype="0", conaffinity="0", group="1", mass="0")
+            # self.add_default_class("collision")
+            # self.add_default("geom", "collision", contype="1", conaffinity="1", group="4")
+            # self.add_default_class("visual")
+            # self.add_default("geom", "visual", contype="0", conaffinity="0", group="1", mass="0")
             # self.add_default("geom", type="mesh", quat=f"{np.sqrt(2)/2} {np.sqrt(2)/2} 0 0")
             self.add_default("geom", type="mesh", quat=f"1 0 0 0") # No Rotation
             self.add_default("position", ctrllimited="true", kp="100")
@@ -145,18 +145,10 @@ class Mujoco_XML:
         '''
         kwarg_str = ' '.join([f'{key}="{value}"' for key, value in kwargs.items()])
         self._insert_after_first(self.model_name, f'<compiler {kwarg_str}/>')
-    # def add_compiler(self, angle: str = "radian"):
-    #     '''
-    #     Add default compiler to the Mujoco XML file.
-
-    #     Args:
-    #         angle (str): The angle to use for the compiler. Defaults to "radian".
-    #     '''
-    #     self._insert_after_first(self.model_name, f'<compiler angle="{angle}"/>')
 
     def add_default_class(self, class_name: str, parent_class: str = ''):
         '''
-        Add a default class to the Mujoco XML file. TODO: Parent class still to implement
+        Add a default class to the Mujoco XML file.
 
         Args:
             class_name (str):   The name of the default class to add.
@@ -195,7 +187,7 @@ class Mujoco_XML:
         self._insert_before_last("asset", f'<mesh name="{name}" file="{filepath}"/>')
         self._assets.append(filepath)
 
-    def add_body(self, body_name: str, mesh_name: str = '', pos: List[float] | np.ndarray = np.array([0, 0, 0]), quat: List[float] | np.ndarray | Quaternion = Quaternion(1, 0, 0, 0), parent_body_name: str = ''):
+    def add_body(self, body_name: str, mesh_name: str = '', pos: Union[List[float], np.ndarray] = np.array([0, 0, 0]), quat: Union[List[float], np.ndarray, Quaternion] = Quaternion(1, 0, 0, 0), parent_body_name: str = ''):
         '''
         Add a body within the "worldbody" section to the Mujoco XML file.
 
@@ -211,7 +203,7 @@ class Mujoco_XML:
         if parent_body_name == '':
             self._insert_before_last("worldbody", f'<body name="{body_name}" pos="{pos[0]} {pos[1]} {pos[2]}" quat="{quat[0]} {quat[1]} {quat[2]} {quat[3]}">', add_end='</body>')
         else:
-            # TODO: Add before closing bracket, not after opening bracket
+            # TODO (For better .xml-file readability): Add before closing bracket, not after opening bracket
             self._insert_after_first(f'body name="{parent_body_name}"', f'<body name="{body_name}" pos="{pos[0]} {pos[1]} {pos[2]}" quat="{quat[0]} {quat[1]} {quat[2]} {quat[3]}">', add_end='</body>')
             self.exclude_contact(parent_body_name, body_name)
 
@@ -220,13 +212,15 @@ class Mujoco_XML:
         if self._first_set['visual_class']:
             self._insert_after_first(f'body name="{body_name}"', f'<geom class="visual" mesh="{mesh_name}"/>')
 
-    def add_joint(self, body_name: str, joint_name: str, pos: List[float] | np.ndarray = np.array([0, 0, 0]), axis: List[float] | np.ndarray = np.array([0, 0, 1]), range: List[float] | np.ndarray = np.array([-1, 1])):
+        self._insert_after_first(f'body name="{body_name}"', f'<geom mesh="{mesh_name}"/>')
+
+    def add_joint(self, body_name: str, joint_name: str, pos: Union[List[float], np.ndarray] = np.array([0, 0, 0]), axis: Union[List[float], np.ndarray] = np.array([0, 0, 1]), range: Union[List[float], np.ndarray] = np.array([-1, 1])):
         '''
         TODO (perfect/debug)
         '''
         self._insert_after_first(f'body name="{body_name}"', f'<joint name="{joint_name}" pos="{pos[0]} {pos[1]} {pos[2]}" axis="{axis[0]} {axis[1]} {axis[2]}" range="{range[0]} {range[1]}"/>')
 
-    def add_actuator(self, name: str, joint_name: str, actuator_type: str = 'position', ctrlrange: List[float] | np.ndarray = np.array([-1, 1])):
+    def add_actuator(self, name: str, joint_name: str, actuator_type: str = 'position', ctrlrange: Union[List[float], np.ndarray] = np.array([-1, 1])):
         '''
         TODO (perfect/debug)
         '''
@@ -255,11 +249,33 @@ class Mujoco_XML:
         if filepath == '':
             raise ValueError("ERROR in 'export_xml': 'filepath' cannot be empty.")
         
-        self._xml_path = os.path.join(os.path.dirname(__file__), filepath)
-        if os.path.dirname(filepath) != '' and not os.path.exists(os.path.dirname(self._xml_path)):
+        self._xml_path = os.path.abspath(filepath)# os.path.join(os.path.dirname(__file__), filepath)
+        if os.path.dirname(self._xml_path) != '' and not os.path.exists(os.path.dirname(self._xml_path)):
             os.makedirs(os.path.dirname(self._xml_path))
         with open(self._xml_path, 'w') as file:
             file.write(self.model_str)
+
+# def export_xml(self, filepath: str = 'model.xml'):
+#     '''
+#     Export the Mujoco XML file to the specified filepath.
+
+#     Args:
+#         filepath (str): The file path to export the XML file to. Defaults to 'model.xml'.
+#     '''
+#     if filepath == '':
+#         raise ValueError("ERROR in 'export_xml': 'filepath' cannot be empty.")
+    
+#     # Resolve path relative to the current working directory
+#     abs_path = os.path.abspath(filepath)
+    
+#     # Ensure directory exists
+#     if os.path.dirname(abs_path) != '' and not os.path.exists(os.path.dirname(abs_path)):
+#         os.makedirs(os.path.dirname(abs_path))
+    
+#     # Write to file
+#     with open(abs_path, 'w') as file:
+#         file.write(self.model_str)
+
 
     def run_interactive(self, filepath: str = ''):
         '''

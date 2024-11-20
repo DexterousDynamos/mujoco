@@ -7,6 +7,7 @@ from typing import Dict, List, Tuple
 from dataclasses import dataclass, field
 import re
 import datetime
+from src.utils import reduce_mesh, find_latest_folder
 
 @dataclass
 class DexterousDynamos:
@@ -14,9 +15,10 @@ class DexterousDynamos:
     # /
 
     # Optional inputs
-    model_name:     str = "DexterousDynamos"
-    asset_folder:   str = "assets/"
-    json_filename:  str = "fusion_info.json"
+    model_name:         str = "DexterousDynamos"
+    asset_folder:       str = "assets/"
+    json_filename:      str = "fusion_info.json"
+    reduction_level:    str = None
 
     # Public variables, not to be set by user
     # /
@@ -30,7 +32,9 @@ class DexterousDynamos:
         self._env = Mujoco_XML(model_name=self.model_name)
 
         # Add assets to the Mujoco XML environment
-        self.asset_folder = os.path.abspath(self._find_latest_folder())
+        # if self.reduction_level is not None: # TODO: Implement this
+        #     reduce_mesh(self.asset_folder, self.reduction_level)
+        self.asset_folder = os.path.abspath(find_latest_folder(self.asset_folder))
         self._add_assets()
 
         # Read the Fusion JSON file
@@ -39,38 +43,38 @@ class DexterousDynamos:
         # Add components to the Mujoco XML environment
         self._recursive_add_component(self._fusion_data.joint_components[0])
 
-    def _find_latest_folder(self) -> str:
-        '''
-        Find the latest folder in the asset folder.
+    # def _find_latest_folder(self) -> str:
+    #     '''
+    #     Find the latest folder in the asset folder.
 
-        Returns:
-            str: The path to the latest folder.
-        '''
-        base_path = self.asset_folder
-        # Regular expression to match folders in the format "fusion_export_YYYY-MM-DD_HH-MM-SS"
-        folder_pattern = re.compile(r"fusion_export_(\d{4}-\d{2}-\d{2}_\d{2}-\d{2}-\d{2})")
+    #     Returns:
+    #         str: The path to the latest folder.
+    #     '''
+    #     base_path = self.asset_folder
+    #     # Regular expression to match folders in the format "fusion_export_YYYY-MM-DD_HH-MM-SS"
+    #     folder_pattern = re.compile(r"fusion_export_(\d{4}-\d{2}-\d{2}_\d{2}-\d{2}-\d{2})")
 
-        latest_time = None
-        latest_folder = None
+    #     latest_time = None
+    #     latest_folder = None
 
-        # Iterate over items in the base directory
-        for folder_name in os.listdir(base_path):
-            folder_path = os.path.join(base_path, folder_name)
+    #     # Iterate over items in the base directory
+    #     for folder_name in os.listdir(base_path):
+    #         folder_path = os.path.join(base_path, folder_name)
             
-            # Only consider directories that match the naming pattern
-            if os.path.isdir(folder_path):
-                match = folder_pattern.match(folder_name)
-                if match:
-                    # Extract and parse the timestamp
-                    timestamp_str = match.group(1)
-                    folder_time = datetime.datetime.strptime(timestamp_str, "%Y-%m-%d_%H-%M-%S")
+    #         # Only consider directories that match the naming pattern
+    #         if os.path.isdir(folder_path):
+    #             match = folder_pattern.match(folder_name)
+    #             if match:
+    #                 # Extract and parse the timestamp
+    #                 timestamp_str = match.group(1)
+    #                 folder_time = datetime.datetime.strptime(timestamp_str, "%Y-%m-%d_%H-%M-%S")
 
-                    # Check if this folder is the latest so far
-                    if latest_time is None or folder_time > latest_time:
-                        latest_time = folder_time
-                        latest_folder = folder_path
+    #                 # Check if this folder is the latest so far
+    #                 if latest_time is None or folder_time > latest_time:
+    #                     latest_time = folder_time
+    #                     latest_folder = folder_path
 
-        return latest_folder
+    #     return latest_folder
 
     def _add_assets(self):
         '''
@@ -100,7 +104,6 @@ class DexterousDynamos:
         for child in component.children:
             self._recursive_add_component(child)
 
-    # TODO: Fix correct file path (w.r.t. DexterousDynamos.py, not Mujoco_XML.py)
     def export_xml(self, filename: str):
         '''
         Export the Mujoco XML environment to a file.

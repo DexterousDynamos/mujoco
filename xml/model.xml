@@ -1,98 +1,160 @@
-<mujoco model="main">
+<mujoco model="DexterousDynamos">
 	<compiler angle="radian"/>
+	<option integrator="RK4"/>
 	<default>
-		<default class="collision">
-			<geom contype="1" conaffinity="1" group="4"/>
-		</default>
-		<default class="visual">
-			<geom contype="0" conaffinity="0" group="1" mass="0"/>
-		</default>
 		<geom type="mesh" quat="1 0 0 0"/>
 		<position ctrllimited="true" kp="100"/>
 		<velocity ctrllimited="true" kv="10"/>
 		<motor ctrllimited="true"/>
 		<mesh scale="0.001 0.001 0.001"/>
 		<joint type="hinge" limited="true"/>
-		<default class="index_joint">
-			<joint axis="1 0 0"/>
-		</default>
 	</default>
 	<asset>
-		<mesh name="carpals" file="/home/ccc/dev/03_RWR/mujoco/assets/Carpals.stl"/>
-		<mesh name="middle_0" file="/home/ccc/dev/03_RWR/mujoco/assets/Middle/Middle_0.stl"/>
-		<mesh name="middle_3" file="/home/ccc/dev/03_RWR/mujoco/assets/Middle/Middle_3.stl"/>
-		<mesh name="middle_2" file="/home/ccc/dev/03_RWR/mujoco/assets/Middle/Middle_2.stl"/>
-		<mesh name="middle_1" file="/home/ccc/dev/03_RWR/mujoco/assets/Middle/Middle_1.stl"/>
-		<mesh name="link_3_0" file="/home/ccc/dev/03_RWR/mujoco/assets/Test/link_3_0.stl"/>
-		<mesh name="link_1" file="/home/ccc/dev/03_RWR/mujoco/assets/Test/link_1.stl"/>
-		<mesh name="link_2" file="/home/ccc/dev/03_RWR/mujoco/assets/Test/link_2.stl"/>
-		<mesh name="link_3_1" file="/home/ccc/dev/03_RWR/mujoco/assets/Test/link_3_1.stl"/>
-		<mesh name="link_0" file="/home/ccc/dev/03_RWR/mujoco/assets/Test/link_0.stl"/>
-		<mesh name="ring_1" file="/home/ccc/dev/03_RWR/mujoco/assets/Ring/Ring_1.stl"/>
-		<mesh name="ring_3" file="/home/ccc/dev/03_RWR/mujoco/assets/Ring/Ring_3.stl"/>
-		<mesh name="ring_2" file="/home/ccc/dev/03_RWR/mujoco/assets/Ring/Ring_2.stl"/>
-		<mesh name="ring_0" file="/home/ccc/dev/03_RWR/mujoco/assets/Ring/Ring_0.stl"/>
-		<mesh name="index_0" file="/home/ccc/dev/03_RWR/mujoco/assets/Index/Index_0.stl"/>
-		<mesh name="index_2" file="/home/ccc/dev/03_RWR/mujoco/assets/Index/Index_2.stl"/>
-		<mesh name="index_1" file="/home/ccc/dev/03_RWR/mujoco/assets/Index/Index_1.stl"/>
-		<mesh name="index_3" file="/home/ccc/dev/03_RWR/mujoco/assets/Index/Index_3.stl"/>
+		<mesh name="T-PP" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/fusion_export_2024-11-20_10-49-27/T-PP.stl"/>
+		<mesh name="M-DP" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/fusion_export_2024-11-20_10-49-27/M-DP.stl"/>
+		<mesh name="I-PP" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/fusion_export_2024-11-20_10-49-27/I-PP.stl"/>
+		<mesh name="T-AP_OUT" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/fusion_export_2024-11-20_10-49-27/T-AP_OUT.stl"/>
+		<mesh name="M-MP" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/fusion_export_2024-11-20_10-49-27/M-MP.stl"/>
+		<mesh name="T-DP" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/fusion_export_2024-11-20_10-49-27/T-DP.stl"/>
+		<mesh name="Carpals" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/fusion_export_2024-11-20_10-49-27/Carpals.stl"/>
+		<mesh name="P-PP" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/fusion_export_2024-11-20_10-49-27/P-PP.stl"/>
+		<mesh name="M-PP" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/fusion_export_2024-11-20_10-49-27/M-PP.stl"/>
+		<mesh name="T-Assembly" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/fusion_export_2024-11-20_10-49-27/T-Assembly.stl"/>
+		<mesh name="M-Assembly" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/fusion_export_2024-11-20_10-49-27/M-Assembly.stl"/>
+		<mesh name="M-AP" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/fusion_export_2024-11-20_10-49-27/M-AP.stl"/>
+		<mesh name="P-Assembly" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/fusion_export_2024-11-20_10-49-27/P-Assembly.stl"/>
+		<mesh name="I-Assembly" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/fusion_export_2024-11-20_10-49-27/I-Assembly.stl"/>
+		<mesh name="T-AP" file="/home/arturo/Documents/DexterousDynamos/mujoco/assets/fusion_export_2024-11-20_10-49-27/T-AP.stl"/>
 	</asset>
 	<worldbody>
-		<body name="carpals" pos="-0.0023819095706446845 7.700894238483424e-05 0.04535823796707632" quat="0.9961946980917453 -1.4202884614863493e-17 0.08715574274765808 -1.3800197464863533e-16">
-			<geom class="visual" mesh="carpals"/>
-			<geom class="collision" mesh="carpals"/>
-		</body>
-		<body name="middle_0" pos="0.005936181919859301 7.700894238483121e-05 0.09807321937108542" quat="-0.4545194776720437 -0.45451947767204454 -0.5416752204197023 0.5416752204197018">
-			<body name="middle_1" pos="-3.4864695314573206e-17 3.788952308610547e-17 -3.2891983407779e-17" quat="0.5372996083468236 -4.996003610813204e-16 -0.843391445812885 0.0">
-				<body name="middle_2" pos="1.2576745200831851e-17 8.673617379884035e-18 0.04800000000000014" quat="-0.9762960071199318 2.7755575615628914e-16 0.21643961393810357 2.7755575615628914e-16">
-					<body name="middle_3" pos="0.0010000000000001952 -9.999999999998205e-05 0.028000000000000032" quat="-0.5633249626000132 -0.42739324574880116 -0.4273932457488011 -0.5633249626000137">
-						<geom class="visual" mesh="middle_3"/>
-						<geom class="collision" mesh="middle_3"/>
+		<body name="98f93b48" pos="0.0 0.0 0.0" quat="1.0 0.0 0.0 0.0">
+			<body name="e7df5a1d" pos="5.301112400252535 0.8351108948623003 2.343668789284357" quat="0.28402453039043646 0.10174485344926933 0.7017525569750018 -0.6453846912595067">
+				<body name="8cebe07f" pos="-5.89277804560564e-14 -4.404634739913639e-14 8.864121528810026e-17" quat="-0.1736481776669303 3.073929999430902e-15 0.984807753012207 6.661338147750939e-16">
+					<body name="7f42f6c7" pos="-5.384581669432009e-15 2.6645352591003757e-15 3.000000000000006" quat="0.9063077870366494 1.1657341758564144e-15 -0.4226182617406927 -6.106226635438361e-16">
+						<body name="548ad412" pos="0.10000000000000617 -0.010000000000005782 2.799999999999992" quat="0.6161925953304919 0.34685254137726806 0.34685254137726884 0.6161925953304972">
+							<joint name="M-DP_548ad412_joint" pos="0.01000000000000377 -6.78472035497979e-15 -9.129849654065936e-15" axis="-1.000000000000001 6.689093723366568e-15 -5.828670879282072e-16" range="0.0 1.3089969389957472"/>
+							<geom mesh="M-DP"/>
+						</body>
+						<joint name="M-MP_7f42f6c7_joint" pos="9.866037553560828e-16 3.3245041192027057e-15 -6.5119649762243036e-15" axis="3.4416913763379853e-15 -1.0000000000000044 2.3869795029440866e-15" range="0.0 2.0943951023931953"/>
+						<geom mesh="M-MP"/>
 					</body>
-					<geom class="visual" mesh="middle_2"/>
-					<geom class="collision" mesh="middle_2"/>
+					<joint name="P-PP_8cebe07f_joint" pos="-3.052415617048413e-15 2.0069667380598023e-16 1.8605024740009358e-15" axis="6.938893903907228e-17 -1.000000000000015 1.6653345369377348e-15" range="0.0 0.0"/>
+					<geom mesh="P-PP"/>
 				</body>
-				<geom class="visual" mesh="middle_1"/>
-				<geom class="collision" mesh="middle_1"/>
+				<joint name="M-AP_e7df5a1d_joint" pos="1.4399999999999502 -4.243827511629661e-14 -1.4016565685892601e-15" axis="3.066991105526995e-15 -1.27675647831893e-15 1.0" range="-0.6108652381980153 0.4363323129985824"/>
+				<geom mesh="M-AP"/>
 			</body>
-			<geom class="visual" mesh="middle_0"/>
-			<geom class="collision" mesh="middle_0"/>
-		</body>
-		<body name="ring_0" pos="0.0283538320485732 0.0022825334664441092 0.08512081153257103" quat="0.40230685029693464 0.356826327968979 0.6166378107275327 -0.574962590307832">
-			<body name="ring_1" pos="1.419719338147371e-16 -4.222937038133595e-17 9.759347954116955e-18" quat="-0.49999999999999956 4.718447854656915e-16 0.8660254037844377 -1.1102230246251565e-16">
-				<body name="ring_2" pos="1.3444106938820255e-17 3.642919299551295e-17 0.048000000000000334" quat="0.9396926207859074 -1.1102230246251565e-16 -0.34202014332566866 -2.220446049250313e-16">
-					<body name="ring_3" pos="0.0010000000000000946 -0.0001000000000001295 0.027999999999999844" quat="0.5963678105290191 0.379928196590915 0.3799281965909147 0.5963678105290177">
-						<geom class="visual" mesh="ring_3"/>
-						<geom class="collision" mesh="ring_3"/>
+			<body name="608d5547" pos="-2.265195941214382 1.8276088584000216 -1.4920281323551494" quat="0.4365458384591239 -0.6391275482682663 0.6122886517958575 0.1613887073206458">
+				<body name="72df0459" pos="-1.884049701864707 1.1457501614131615e-13 1.3192258036073876" quat="0.6743797232066311 0.6743797232066373 0.21263110997158388 -0.21263110997157628">
+					<body name="abcfea3b" pos="1.1668757376618887e-13 6.334419289532604e-16 1.029106146978749e-13" quat="2.942091015256665e-15 -0.4226182617407144 -1.6930901125533637e-15 0.9063077870366357">
+						<body name="43ddf67c" pos="-1.0880185641326534e-14 4.829470157119431e-14 3.0000000000000213" quat="0.6123724356957934 0.3535533905932759 0.3535533905932762 0.6123724356957989">
+							<joint name="T-DP_43ddf67c_joint" pos="1.278006382886802e-15 -1.1470289145357461e-14 1.0334897049351158e-14" axis="1.0000000000000222 4.163336342344337e-16 7.216449660063518e-15" range="0.0 0.0"/>
+							<geom mesh="T-DP"/>
+						</body>
+						<joint name="T-PP_abcfea3b_joint" pos="6.908497559175275e-15 -1.6068075968190866e-15 1.325009647610561e-15" axis="0.0 0.9999999999999953 7.327471962526033e-15" range="0.0 0.0"/>
+						<geom mesh="T-PP"/>
 					</body>
-					<geom class="visual" mesh="ring_2"/>
-					<geom class="collision" mesh="ring_2"/>
+					<joint name="T-AP_OUT_72df0459_joint" pos="2.300000000000074 -8.659739592076221e-15 7.960299086562372e-14" axis="-1.1685097334179773e-14 5.551115123125783e-17 0.9999999999999901" range="0.0 0.0"/>
+					<geom mesh="T-AP_OUT"/>
 				</body>
-				<geom class="visual" mesh="ring_1"/>
-				<geom class="collision" mesh="ring_1"/>
+				<joint name="T-AP_608d5547_joint" pos="1.6900000000000643 3.9745984281580604e-14 -0.009999999999979775" axis="8.298917109073045e-15 1.4654943925052066e-14 0.9999999999999574" range="0.0 0.0"/>
+				<geom mesh="T-AP"/>
 			</body>
-			<geom class="visual" mesh="ring_0"/>
-			<geom class="collision" mesh="ring_0"/>
-		</body>
-		<body name="index_0" pos="-0.01785597093181504 0.0021435167985030023 0.09860118442086245" quat="-0.4777144171082614 -0.5213338044735973 -0.4777144171082613 0.5213338044735972">
-			<body name="index_1" pos="6.938893903907216e-17 -1.0482127311298181e-17 -3.889450690041816e-19" quat="0.6427876096865395 5.551115123125783e-17 -0.7660444431189772 -2.220446049250313e-16">
-				<body name="index_2" pos="-5.182486384480711e-17 -8.673617379884035e-18 0.040000000000000015" quat="0.9961946980917423 3.3306690738754696e-16 -0.08715574274765538 -2.220446049250313e-16">
-					<body name="index_3" pos="0.0009999999999998417 -0.00010000000000004363 0.02800000000000002" quat="0.5265137402888885 0.4719992386508775 0.4719992386508784 0.52651374028889">
-						<geom class="visual" mesh="index_3"/>
-						<geom class="collision" mesh="index_3"/>
+			<body name="fe928183" pos="2.218588263493888 0.1600534099963323 4.476759599324927" quat="0.47771441710826074 0.4304593345768794 0.5609855267969318 -0.521333804473599">
+				<body name="fa695545" pos="-3.262941227241397e-14 -1.4213366314281087e-14 -6.453178534213375e-16" quat="-0.17364817766693014 -1.1102230246251565e-16 0.9848077530122057 -2.220446049250313e-16">
+					<body name="d85dbc30" pos="-6.661338147750939e-16 4.440892098500626e-15 4.800000000000026" quat="0.9999999999999994 -1.1102230246251565e-16 2.220446049250313e-16 8.326672684688674e-17">
+						<body name="455cab0f" pos="0.10000000000002196 -0.010000000000024212 2.8000000000000105" quat="-0.5000000000000003 -0.5000000000000008 -0.5000000000000017 -0.499999999999999">
+							<joint name="M-DP_455cab0f_joint" pos="0.010000000000002356 -1.3784221160328958e-14 1.8386408660777537e-14" axis="-0.999999999999999 -4.440892098500626e-16 1.876103439268917e-15" range="0.0 1.3089969389957472"/>
+							<geom mesh="M-DP"/>
+						</body>
+						<joint name="M-MP_d85dbc30_joint" pos="1.2811575474316909e-14 -6.976616599647546e-16 -7.759005094861495e-15" axis="2.1649348980190553e-15 -0.9999999999999969 1.0547118733938987e-15" range="0.0 2.0943951023931953"/>
+						<geom mesh="M-MP"/>
 					</body>
-					<geom class="visual" mesh="index_2"/>
-					<geom class="collision" mesh="index_2"/>
+					<joint name="M-PP_fa695545_joint" pos="7.441619435170383e-15 -4.592018034535764e-16 1.2372001359668185e-15" axis="2.4702462297909733e-15 -1.000000000000004 1.4432899320127035e-15" range="0.0 0.0"/>
+					<geom mesh="M-PP"/>
 				</body>
-				<geom class="visual" mesh="index_1"/>
-				<geom class="collision" mesh="index_1"/>
+				<joint name="M-AP_fe928183_joint" pos="1.439999999999964 -1.7263968032921184e-14 -3.3306690738754696e-15" axis="1.0547118733938987e-15 5.551115123125783e-16 0.9999999999999978" range="-0.6108652381980153 0.4363323129985824"/>
+				<geom mesh="M-AP"/>
 			</body>
-			<geom class="visual" mesh="index_0"/>
-			<geom class="collision" mesh="index_0"/>
+			<body name="a4698d0c" pos="-3.217828353765355 0.22882734238636668 4.57460204359572" quat="0.6360874680441195 0.6692319384003472 0.24432730214936907 -0.2963536992287328">
+				<body name="3fc76622" pos="1.6863967575608326e-13 -6.916274373869234e-15 1.3945809571172022e-15" quat="-0.2588190451025183 -4.163336342344337e-16 0.9659258262890644 5.551115123125783e-17">
+					<body name="63583a71" pos="2.0816681711721685e-14 2.220446049250313e-15 3.9999999999999836" quat="0.9762960071199339 0.0 -0.2164396139381023 3.885780586188048e-16">
+						<body name="ec768ba9" pos="0.10000000000000187 -0.010000000000000675 2.799999999999999" quat="0.5633249626000163 0.427393245748799 0.42739324574880183 0.5633249626000161">
+							<joint name="M-DP_ec768ba9_joint" pos="0.009999999999982013 5.522383765554917e-15 -1.0012932323555379e-14" axis="-0.9999999999999915 -3.677613769070831e-15 -5.3377441355806354e-15" range="0.0 1.3089969389957472"/>
+							<geom mesh="M-DP"/>
+						</body>
+						<joint name="M-MP_63583a71_joint" pos="-7.493669952982123e-15 -1.143550251125034e-14 3.357900443393089e-15" axis="-2.4424906541753444e-15 -0.9999999999999994 -1.887379141862766e-15" range="0.0 2.0943951023931953"/>
+						<geom mesh="M-MP"/>
+					</body>
+					<joint name="I-PP_3fc76622_joint" pos="1.5221777355551585e-16 4.238211649789894e-16 -8.571744667553757e-16" axis="5.551115123125783e-17 -0.9999999999999953 -2.220446049250313e-15" range="0.0 0.0"/>
+					<geom mesh="I-PP"/>
+				</body>
+				<joint name="M-AP_a4698d0c_joint" pos="1.440000000000151 1.1102230246251565e-16 4.6629367034256575e-15" axis="-2.914335439641036e-15 1.887379141862766e-15 0.9999999999999876" range="-0.6108652381980153 0.4363323129985824"/>
+				<geom mesh="M-AP"/>
+			</body>
+			<body name="bb23932f" pos="-0.22171821620053223 -1.433112912781672e-17 5.330374746807639" quat="-0.5213338044735958 -0.5213338044735969 -0.4777144171082615 0.4777144171082616">
+				<body name="48f7f420" pos="1.4309291721858814e-15 4.025813717631184e-15 4.3368086899415444e-17" quat="-0.1736481776669307 4.163336342344337e-16 0.9848077530122076 2.220446049250313e-16">
+					<body name="fd89f85c" pos="6.217248937900877e-15 0.0 4.8000000000000345" quat="0.9999999999999992 1.1102230246251565e-16 -8.326672684688674e-16 -5.551115123125783e-17">
+						<body name="3c2944b4" pos="0.09999999999999465 -0.00999999999999135 2.799999999999976" quat="-0.49999999999999933 -0.5000000000000014 -0.5000000000000012 -0.5000000000000001">
+							<joint name="M-DP_3c2944b4_joint" pos="0.009999999999992163 5.584698285418521e-15 -2.8424206483532513e-15" axis="-1.000000000000002 -1.0928757898653885e-16 -3.454268121538817e-16" range="0.0 1.3089969389957472"/>
+							<geom mesh="M-DP"/>
+						</body>
+						<joint name="M-MP_fd89f85c_joint" pos="-1.284124737754726e-15 -4.534592992406961e-15 2.3681560150853517e-15" axis="3.885780586188048e-16 -1.0000000000000004 -1.1657341758564144e-15" range="0.0 2.0943951023931953"/>
+						<geom mesh="M-MP"/>
+					</body>
+					<joint name="M-PP_48f7f420_joint" pos="4.127206554799835e-15 -3.313982673788879e-17 -9.207657543257483e-16" axis="1.6653345369377348e-16 -1.0000000000000004 -1.27675647831893e-15" range="0.0 0.0"/>
+					<geom mesh="M-PP"/>
+				</body>
+				<joint name="M-AP_bb23932f_joint" pos="1.4400000000000062 2.942091015256665e-15 9.992007221626409e-16" axis="-9.43689570931383e-16 1.1102230246251565e-15 0.9999999999999998" range="-0.4363323129985824 0.6108652381980153"/>
+				<geom mesh="M-AP"/>
+			</body>
+			<geom mesh="Carpals"/>
 		</body>
 	</worldbody>
 	<actuator>
+		<position name="M-AP_bb23932f_joint_actuator" joint="M-AP_bb23932f_joint" ctrlrange="-0.4363323129985824 0.6108652381980153"/>
+		<position name="M-PP_48f7f420_joint_actuator" joint="M-PP_48f7f420_joint" ctrlrange="0.0 0.0"/>
+		<position name="M-MP_fd89f85c_joint_actuator" joint="M-MP_fd89f85c_joint" ctrlrange="0.0 2.0943951023931953"/>
+		<position name="M-DP_3c2944b4_joint_actuator" joint="M-DP_3c2944b4_joint" ctrlrange="0.0 1.3089969389957472"/>
+		<position name="M-AP_a4698d0c_joint_actuator" joint="M-AP_a4698d0c_joint" ctrlrange="-0.6108652381980153 0.4363323129985824"/>
+		<position name="I-PP_3fc76622_joint_actuator" joint="I-PP_3fc76622_joint" ctrlrange="0.0 0.0"/>
+		<position name="M-MP_63583a71_joint_actuator" joint="M-MP_63583a71_joint" ctrlrange="0.0 2.0943951023931953"/>
+		<position name="M-DP_ec768ba9_joint_actuator" joint="M-DP_ec768ba9_joint" ctrlrange="0.0 1.3089969389957472"/>
+		<position name="M-AP_fe928183_joint_actuator" joint="M-AP_fe928183_joint" ctrlrange="-0.6108652381980153 0.4363323129985824"/>
+		<position name="M-PP_fa695545_joint_actuator" joint="M-PP_fa695545_joint" ctrlrange="0.0 0.0"/>
+		<position name="M-MP_d85dbc30_joint_actuator" joint="M-MP_d85dbc30_joint" ctrlrange="0.0 2.0943951023931953"/>
+		<position name="M-DP_455cab0f_joint_actuator" joint="M-DP_455cab0f_joint" ctrlrange="0.0 1.3089969389957472"/>
+		<position name="T-AP_608d5547_joint_actuator" joint="T-AP_608d5547_joint" ctrlrange="0.0 0.0"/>
+		<position name="T-AP_OUT_72df0459_joint_actuator" joint="T-AP_OUT_72df0459_joint" ctrlrange="0.0 0.0"/>
+		<position name="T-PP_abcfea3b_joint_actuator" joint="T-PP_abcfea3b_joint" ctrlrange="0.0 0.0"/>
+		<position name="T-DP_43ddf67c_joint_actuator" joint="T-DP_43ddf67c_joint" ctrlrange="0.0 0.0"/>
+		<position name="M-AP_e7df5a1d_joint_actuator" joint="M-AP_e7df5a1d_joint" ctrlrange="-0.6108652381980153 0.4363323129985824"/>
+		<position name="P-PP_8cebe07f_joint_actuator" joint="P-PP_8cebe07f_joint" ctrlrange="0.0 0.0"/>
+		<position name="M-MP_7f42f6c7_joint_actuator" joint="M-MP_7f42f6c7_joint" ctrlrange="0.0 2.0943951023931953"/>
+		<position name="M-DP_548ad412_joint_actuator" joint="M-DP_548ad412_joint" ctrlrange="0.0 1.3089969389957472"/>
 	</actuator>
 	<contact>
+		<exclude body1="98f93b48" body2="bb23932f"/>
+		<exclude body1="bb23932f" body2="48f7f420"/>
+		<exclude body1="48f7f420" body2="fd89f85c"/>
+		<exclude body1="fd89f85c" body2="3c2944b4"/>
+		<exclude body1="98f93b48" body2="a4698d0c"/>
+		<exclude body1="a4698d0c" body2="3fc76622"/>
+		<exclude body1="3fc76622" body2="63583a71"/>
+		<exclude body1="63583a71" body2="ec768ba9"/>
+		<exclude body1="98f93b48" body2="fe928183"/>
+		<exclude body1="fe928183" body2="fa695545"/>
+		<exclude body1="fa695545" body2="d85dbc30"/>
+		<exclude body1="d85dbc30" body2="455cab0f"/>
+		<exclude body1="98f93b48" body2="608d5547"/>
+		<exclude body1="608d5547" body2="72df0459"/>
+		<exclude body1="72df0459" body2="abcfea3b"/>
+		<exclude body1="abcfea3b" body2="43ddf67c"/>
+		<exclude body1="98f93b48" body2="e7df5a1d"/>
+		<exclude body1="e7df5a1d" body2="8cebe07f"/>
+		<exclude body1="8cebe07f" body2="7f42f6c7"/>
+		<exclude body1="7f42f6c7" body2="548ad412"/>
 	</contact>
+	<equality>
+	</equality>
 </mujoco>

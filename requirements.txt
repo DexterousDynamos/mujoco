@@ -4,3 +4,6 @@ cython<3
 numpy
 pyquaternion
 termcolor
+numpy-stl
+trimesh
+fast_simplification

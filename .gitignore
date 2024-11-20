@@ -6,6 +6,6 @@ trash
 mujoco_env/
 
 assets/*
-# xml
+xml
 misc
 config
