@@ -131,8 +131,9 @@ def run(context):
         os.makedirs(output_folder, exist_ok=True)
         
         output_data = {
-            "Components": [],
-            "Joints": []
+            "components": [],
+            "joints": [],
+            "desired_component_names": desired_component_names,
         }
         
         # Root component and all occurrences
@@ -174,15 +175,20 @@ def run(context):
             component_id_stl_dict[get_unique_id_from_occurence(occ)] = base_name
 
             entry = {
-                "Component Name": get_unique_id_from_occurence(occ),
-                "Parent": get_unique_parent_id_from_occurence(occ),
-                "Transformation": {
-                    # "Rotation Matrix": rotation_matrix,
-                    "Quaternion": quaternion,
-                    "Translation": translation
+                "component": {
+                    "name": base_name,
+                    "id": get_unique_id_from_occurence(occ)
                 },
-                "STL File": stl_filename,  # Add STL file path to the component data
-                "Is Base Component": "Assembly" not in occ_name
+                "parent": {
+                    "id": get_unique_parent_id_from_occurence(occ),
+                },
+                "transformation": {
+                    # "Rotation Matrix": rotation_matrix,
+                    "quaternion": quaternion,
+                    "translation": translation
+                },
+                "stl_file": stl_filename,  # Add STL file path to the component data
+                "is_base_component": "Assembly" not in base_name
             }
             return entry
         
@@ -215,23 +221,34 @@ def run(context):
                 if desired_component_names.index(base_name1) > desired_component_names.index(base_name2):
                     occ1, occ2 = occ2, occ1
                     base_name1, base_name2 = base_name2, base_name1
+                    id_1, id_2 = id_2, id_1
                                 
                 try:
                     joint_origin = joint.geometryOrOriginOne.origin
                     joint_axis = joint.jointMotion.rotationAxisVector
                     joint_info = {
-                        "Component Name": id_1,
-                        "Rotating Component": id_2,
-                        "Transformation": {
-                            "Joint Origin": [
+                        "component_base": {
+                            "id": id_1,
+                            "name": base_name1                            
+                        },
+                        "component_rotating": {
+                            "id": id_2,
+                            "name": base_name2
+                        },
+                        "transformation": {
+                            "joint_origin": [
                                 joint_origin.x,
                                 joint_origin.y,
                                 joint_origin.z
                             ],
-                            "Joint Axis": [
+                            "joint_axis": [
                                 joint_axis.x,
                                 joint_axis.y,
                                 joint_axis.z
+                            ],
+                            "joint_range": [
+                                joint.jointMotion.rotationLimits.minimumValue,
+                                joint.jointMotion.rotationLimits.maximumValue
                             ]
                         }
                     }
@@ -245,7 +262,7 @@ def run(context):
         for occ in allOccs:
             entry = extract_component_data(occ)
             if entry:
-                output_data["Components"].append(entry)
+                output_data["components"].append(entry)
 
         extracted_joint_num = 0
 
@@ -254,7 +271,7 @@ def run(context):
             entry = extract_joint_data(joint)
             if entry:
                 extracted_joint_num += 1
-                output_data["Joints"].append(entry)
+                output_data["joints"].append(entry)
                 
         print(f"Extracted: {extracted_joint_num} joints")
 
@@ -262,7 +279,7 @@ def run(context):
         with open(output_file_path, 'w') as output_file:
             json.dump(output_data, output_file, indent=4)
 
-        ui.messageBox(f'Output saved to: {output_file_path}. Exported {len(output_data["Components"])} components and {len(output_data["Joints"])} joints.')
+        ui.messageBox(f'Output saved to: {output_file_path}. Exported {len(output_data["components"])} components and {len(output_data["joints"])} joints.')
 
     except Exception as e:
         if ui:
