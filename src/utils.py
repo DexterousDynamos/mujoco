@@ -5,7 +5,16 @@ import os
 import datetime
 import re
 
-def reduce_mesh(input_file, output_file, quality_after, verbose: bool=False):#
+def reduce_mesh(input_file: str, output_file: str, reduction_factor: float, verbose: bool=False) -> None:
+    '''
+    Reduce the size of an STL mesh file by a given factor.
+
+    Args:
+        input_file (str): The path to the input STL file.
+        output_file (str): The path to the output STL file.
+        reduction_factor (float): The factor by which to multiply the file size. Must be between 0 and 1.
+        verbose (bool): Whether to print verbose output.
+    '''
     def convert_stl_to_trimesh(stl_mesh):
         # Extract vertices and faces from the STL mesh
         vertices = stl_mesh.vectors.reshape(-1, 3)  # Flatten the triangle vertices
@@ -30,26 +39,26 @@ def reduce_mesh(input_file, output_file, quality_after, verbose: bool=False):#
         print(f"Input file size: {os.path.getsize(input_file)} bytes")
         print("Faces before:", len(trimesh_mesh.faces))
 
-    # Determine the reduction factor
-    if quality_after == 'extremely_low':
-        factor = 0.1
-    if quality_after == 'low':
-        factor = 0.3
-    elif quality_after == 'medium':
-        factor = 0.5
-    elif quality_after == 'high':
-        factor = 0.7
-    elif quality_after == 'extremely_high':
-        factor = 0.9
-    else:
-        raise ValueError("Reduction level must be 'extremely_low', 'low', 'medium', 'high', or 'extremely_high'.")
+    # # Determine the reduction factor
+    # if quality_after == 'extremely_low':
+    #     factor = 0.1
+    # elif quality_after == 'low':
+    #     factor = 0.3
+    # elif quality_after == 'medium':
+    #     factor = 0.5
+    # elif quality_after == 'high':
+    #     factor = 0.7
+    # elif quality_after == 'extremely_high':
+    #     factor = 0.9
+    # else:
+    #     raise ValueError("Reduction level must be 'extremely_low', 'low', 'medium', 'high', or 'extremely_high'.")
     
     # Calculate target reduction as a fraction
     if verbose:
-        print(f"Target reduction: {factor * 100:.2f}%")
+        print(f"Target reduction: {reduction_factor * 100:.2f}%")
     
     # Simplify the mesh
-    simplified_mesh = trimesh_mesh.simplify_quadric_decimation(factor)
+    simplified_mesh = trimesh_mesh.simplify_quadric_decimation(reduction_factor)
     
     # Validate simplified mesh
     if len(simplified_mesh.faces) == 0 or len(simplified_mesh.vertices) == 0:
@@ -63,6 +72,18 @@ def reduce_mesh(input_file, output_file, quality_after, verbose: bool=False):#
     if verbose:
         print(f"Mesh reduced and saved to {output_file}")
         print(f"Output file size: {os.path.getsize(output_file)} bytes")
+
+def bytes_to_mb(bytes: int) -> float:
+    '''
+    Convert bytes to megabytes.
+
+    Args:
+        bytes (int): The number of bytes.
+
+    Returns:
+        float: The number of megabytes.
+    '''
+    return bytes / 1024 / 1024
 
 def find_latest_folder(asset_folder: str) -> str:
     '''

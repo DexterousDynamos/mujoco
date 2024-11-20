@@ -53,19 +53,25 @@ class Mujoco_XML:
 
         # Default settings - turn off when creating a new 'Mujoco_XML' object by passing 'use_defaults=False'
         if self.use_defaults:
-            self.add_option(integrator="RK4")
-            self.add_compiler(angle="radian")
+            # self.add_option(integrator="RK4")
+            # self.add_compiler(angle="radian")
             # self.add_default_class("collision")
             # self.add_default("geom", "collision", contype="1", conaffinity="1", group="4")
             # self.add_default_class("visual")
             # self.add_default("geom", "visual", contype="0", conaffinity="0", group="1", mass="0")
-            # self.add_default("geom", type="mesh", quat=f"{np.sqrt(2)/2} {np.sqrt(2)/2} 0 0")
-            self.add_default("geom", type="mesh", quat=f"1 0 0 0") # No Rotation
-            self.add_default("position", ctrllimited="true", kp="100")
-            self.add_default("velocity", ctrllimited="true", kv="10")
-            self.add_default("motor", ctrllimited="true")
-            self.add_default("mesh", scale="0.001 0.001 0.001")
-            self.add_default("joint", type="hinge", limited="true")
+            # self.add_default("geom", type="mesh", quat=f"1 0 0 0") # No Rotation
+            # self.add_default("position", ctrllimited="true", kp="100")
+            # self.add_default("velocity", ctrllimited="true", kv="10")
+            # self.add_default("motor", ctrllimited="true")
+            # self.add_default("mesh", scale="0.001 0.001 0.001")
+            # self.add_default("joint", type="hinge", limited="true")
+
+            self.add_compiler(angle="radian")
+            self.add_default("geom", rgba="1 1 1 1", type="mesh", friction="1 0.005 0.001", condim="3", margin="0.0005", contype="1", conaffinity="1")
+            self.add_default("joint", type="hinge", limited="true", damping="0.1", armature="0.001", margin="0.01", frictionloss="0.001")
+            self.add_default("position", ctrllimited="true", forcelimited="true", forcerange="-1 1", kp="2.0")
+            # Add root body
+            self._insert_before_last("worldbody", '<body name="root" quat="1.0 0.0 0.0 0.0">', add_end='</body>')
         # self.sim = mujoco_py.MjSim(self.model)
 
     def _insert_at_index(self, target: str, index: int, insert: str, add_end: str = ''):
@@ -187,7 +193,7 @@ class Mujoco_XML:
         self._insert_before_last("asset", f'<mesh name="{name}" file="{filepath}"/>')
         self._assets.append(filepath)
 
-    def add_body(self, body_name: str, mesh_name: str = '', pos: Union[List[float], np.ndarray] = np.array([0, 0, 0]), quat: Union[List[float], np.ndarray, Quaternion] = Quaternion(1, 0, 0, 0), parent_body_name: str = ''):
+    def add_body(self, body_name: str, mesh_name: str = '', pos: Union[List[float], np.ndarray] = np.array([0, 0, 0]), quat: Union[List[float], np.ndarray, Quaternion] = Quaternion(1, 0, 0, 0), parent_body_name: str = '', exclude_contact: bool = True):
         '''
         Add a body within the "worldbody" section to the Mujoco XML file.
 
@@ -200,19 +206,45 @@ class Mujoco_XML:
         '''
         if mesh_name == '':
             mesh_name = body_name
+
+        insert_str = f'<body name="{body_name}" pos="{pos[0]} {pos[1]} {pos[2]}" quat="{quat[0]} {quat[1]} {quat[2]} {quat[3]}">'
         if parent_body_name == '':
-            self._insert_before_last("worldbody", f'<body name="{body_name}" pos="{pos[0]} {pos[1]} {pos[2]}" quat="{quat[0]} {quat[1]} {quat[2]} {quat[3]}">', add_end='</body>')
+            self._insert_before_last("worldbody", insert_str, add_end='</body>')
         else:
             # TODO (For better .xml-file readability): Add before closing bracket, not after opening bracket
-            self._insert_after_first(f'body name="{parent_body_name}"', f'<body name="{body_name}" pos="{pos[0]} {pos[1]} {pos[2]}" quat="{quat[0]} {quat[1]} {quat[2]} {quat[3]}">', add_end='</body>')
-            self.exclude_contact(parent_body_name, body_name)
+            self._insert_after_first(f'body name="{parent_body_name}"', insert_str, add_end='</body>')
+            if exclude_contact:
+                self.exclude_contact(parent_body_name, body_name)
 
-        if self._first_set['collision_class']:
-            self._insert_after_first(f'body name="{body_name}"', f'<geom class="collision" mesh="{mesh_name}"/>')
-        if self._first_set['visual_class']:
-            self._insert_after_first(f'body name="{body_name}"', f'<geom class="visual" mesh="{mesh_name}"/>')
+        self._insert_after_first(insert_str, f'<geom mesh="{mesh_name}"/>')
 
-        self._insert_after_first(f'body name="{body_name}"', f'<geom mesh="{mesh_name}"/>')
+    # def add_body(self, body_name: str, mesh_name: str = '', pos: Union[List[float], np.ndarray] = np.array([0, 0, 0]), quat: Union[List[float], np.ndarray, Quaternion] = Quaternion(1, 0, 0, 0), parent_body_name: str = '', exclude_contact: bool = True):
+    #     '''
+    #     Add a body within the "worldbody" section to the Mujoco XML file.
+
+    #     Args:
+    #         body_name (str):                                The name of the body.
+    #         mesh_name (str):                                The name of the mesh asset. Defaults to empty string (i.e. body name).
+    #         pos (List[float] | np.ndarray):                 The position of the body in the format [x, y, z]. Defaults to [0, 0, 0].
+    #         quat (List[float] | np.ndarray | Quaternion):   The quaternion of the body in the format [w, x, y, z]. Defaults to [1, 0, 0, 0].
+    #         parent_body_name (str):                         The name of the parent body. Defaults to empty string.
+    #     '''
+    #     if mesh_name == '':
+    #         mesh_name = body_name
+    #     if parent_body_name == '':
+    #         self._insert_before_last("worldbody", f'<body name="{body_name}" pos="{pos[0]} {pos[1]} {pos[2]}" quat="{quat[0]} {quat[1]} {quat[2]} {quat[3]}">', add_end='</body>')
+    #     else:
+    #         # TODO (For better .xml-file readability): Add before closing bracket, not after opening bracket
+    #         self._insert_after_first(f'body name="{parent_body_name}"', f'<body name="{body_name}" pos="{pos[0]} {pos[1]} {pos[2]}" quat="{quat[0]} {quat[1]} {quat[2]} {quat[3]}">', add_end='</body>')
+    #         if exclude_contact:
+    #             self.exclude_contact(parent_body_name, body_name)
+
+    #     if self._first_set['collision_class']:
+    #         self._insert_after_first(f'body name="{body_name}"', f'<geom class="collision" mesh="{mesh_name}"/>')
+    #     if self._first_set['visual_class']:
+    #         self._insert_after_first(f'body name="{body_name}"', f'<geom class="visual" mesh="{mesh_name}"/>')
+
+    #     self._insert_after_first(f'body name="{body_name}"', f'<geom mesh="{mesh_name}"/>')
 
     def add_joint(self, body_name: str, joint_name: str, pos: Union[List[float], np.ndarray] = np.array([0, 0, 0]), axis: Union[List[float], np.ndarray] = np.array([0, 0, 1]), range: Union[List[float], np.ndarray] = np.array([-1, 1])):
         '''
