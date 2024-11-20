@@ -2,11 +2,10 @@ import adsk.core, adsk.fusion, traceback
 import re
 import os
 import json
-from collections import defaultdict
 from adsk.fusion import Occurrence
 import datetime
-import time
 import hashlib
+
 
 def hash_string(s: str, length: int = 8):
     '''
@@ -112,9 +111,9 @@ def run(context):
             ui.messageBox('No active Fusion design', 'Error')
             return
 
-        # Set the desired component names
+        # Set the desired component names, already in hierachical order
         desired_component_names = [
-            'Carpals','M-AP','T-AP','T-AP_OUT', 'M-PP', 'I-PP', 'P-PP' , 'T-PP' ,'M-MP','M-DP','T-DP', 'P-Assembly', 'I-Assembly', 'M-Assembly', 'T-Assembly'
+            'Tower_MK3', 'Carpals','M-AP','T-AP','T-AP_OUT', 'M-PP', 'I-PP', 'P-PP' , 'T-PP' ,'M-MP','M-DP','T-DP', 'P-Assembly', 'I-Assembly', 'M-Assembly', 'T-Assembly'
         ]
 
         # Set the output directory
@@ -160,8 +159,7 @@ def run(context):
                 [transform.getCell(2, 0), transform.getCell(2, 1), transform.getCell(2, 2)]
             ]
             quaternion = rotation_matrix_to_quaternion(rotation_matrix)
-            translation = (transform.getCell(0, 3), transform.getCell(1, 3), transform.getCell(2, 3))
-        
+            translation = (transform.getCell(0, 3) / 100, transform.getCell(1, 3) / 100, transform.getCell(2, 3) / 100)        
             # Set up the STL export
             export_mgr = app.activeProduct.exportManager
             stl_export_options = export_mgr.createSTLExportOptions(occ)
@@ -237,9 +235,9 @@ def run(context):
                         },
                         "transformation": {
                             "joint_origin": [
-                                joint_origin.x,
-                                joint_origin.y,
-                                joint_origin.z
+                                joint_origin.x / 100 ,
+                                joint_origin.y / 100,
+                                joint_origin.z / 100
                             ],
                             "joint_axis": [
                                 joint_axis.x,
