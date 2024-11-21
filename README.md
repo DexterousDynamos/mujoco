@@ -38,7 +38,7 @@ sudo apt-get install patchelf
 # TODO
 ## Fusion360 script
 - Use IDs
-- Include joint limits
+- Apply correct joint limits
 - Debug repetition and missing joint errors
 - Add motion links (i.e. linked joints)
 - Add correct dimensions to fusion script (translation /= 100)
@@ -47,6 +47,7 @@ sudo apt-get install patchelf
 ## Mujoco_XML.py
 - Add checks
 - Add list of what kwargs are allowed for each tag
+- Fix export directory (w.r.t. file calling export, not Mujoco_XML.py)
 - (later) Implement "run_simulation" for external commands
 
 ## Fusion_Model.py

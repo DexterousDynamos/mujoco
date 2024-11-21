@@ -1,7 +1,7 @@
 import json
 import numpy as np
 from dataclasses import dataclass, field
-from typing import List, Dict, Tuple
+from typing import List, Dict, Tuple, Union
 from pyquaternion import Quaternion
 from termcolor import colored
 
@@ -41,6 +41,7 @@ class Fusion_Model:
     @dataclass
     class Component:
         id:                 int                             = field()
+        name:               str                             = field(default=None)
         stlname:            str                             = field(default=None)
         transform:          Tuple[Quaternion, np.ndarray]   = field(init=False, default_factory=lambda: (Quaternion(1, 0, 0, 0).normalised, np.zeros(3))) # (quaternion, translation)
         absolute_transform: Tuple[Quaternion, np.ndarray]   = field(init=False, default_factory=lambda: (Quaternion(1, 0, 0, 0).normalised, np.zeros(3))) # (quaternion, translation)
@@ -52,7 +53,7 @@ class Fusion_Model:
     @dataclass
     class Joint:
         joint_name:         str                             = field()
-        transform:          Tuple[np.ndarray, np.ndarray]   = field(default_factory=lambda: (np.zeros(3), np.zeros(3))) # (axis, pos) - Same as absolute transform
+        transform:          Tuple[np.ndarray, np.ndarray]   = field(default_factory=lambda: (np.zeros(3), np.zeros(3))) # (axis, pos) - Same as "absolute_transform"
         relative_transform: Tuple[np.ndarray, np.ndarray]   = field(default_factory=lambda: (np.zeros(3), np.zeros(3))) # (axis, pos)
         range:               List[float]                    = field(default_factory=lambda: [-np.pi, np.pi])
 
@@ -60,22 +61,24 @@ class Fusion_Model:
         '''
         Build the component tree from the JSON data.
         '''
-        data = self._json_data["Components"]
+        # data = self._json_data["Components"]
+        data = self._json_data["components"]
 
         # Add components to tree
-        self.root_component = Fusion_Model.Component("Root", None)
+        self.root_component = Fusion_Model.Component(id="Root", name="Root", stlname=None)
         self.components.append(self.root_component)
         self._component_indices["Root"] = 0
         for item in data:
-            id = item["Component Name"]
-            stlname = item["STL File"]
-            self.components.append(Fusion_Model.Component(id, stlname))
+            id = item["component"]["id"]
+            name = item["component"]["name"]
+            stlname = item["stl_file"]
+            self.components.append(Fusion_Model.Component(id=id, name=f"{name}_{id}", stlname=stlname))
             self._component_indices[id] = len(self._component_indices)
 
         # Remap parent to child
         for item in data:
-            component_index = self._component_indices[item["Component Name"]]
-            parent_index = self._component_indices[item["Parent"]]
+            component_index = self._component_indices[item["component"]["id"]]
+            parent_index = self._component_indices[item["parent"]["id"]]
 
             # Add parent to child
             self.components[component_index].parent = self.components[parent_index]
@@ -84,42 +87,46 @@ class Fusion_Model:
             self.components[parent_index].children.append(self.components[component_index])
 
             # Add transformation
-            quat = Quaternion(item["Transformation"]["Quaternion"]).normalised
-            trans = np.array(item["Transformation"]["Translation"]) / 100 # Convert from dm to mm
+            quat = Quaternion(item["transformation"]["quaternion"]).normalised
+            trans = np.array(item["transformation"]["translation"]) # / 100 # Convert from dm to mm?
             self.components[component_index].transform = (quat, trans)
 
     def _build_joint_tree(self):
         '''
         Build the joint tree from the JSON data.
         '''
-        data = self._json_data["Joints"]
+        # data = self._json_data["Joints"]
+        data = self._json_data["joints"]
 
         # Add joints components to tree with transformation
         for item in data:
-            base_component_id = item["Base Component"]
-            rotating_component_id = item["Rotating Component"]
+            base_component_id = item["component_base"]["id"]
+            rotating_component_id = item["component_rotating"]["id"]
+            rotating_component_name = item["component_rotating"]["name"]
 
             if rotating_component_id not in self._joint_component_indices:
                 stlname = self.components[self._component_indices[rotating_component_id]].stlname.split(".stl")[0]
-                self.joint_components.append(Fusion_Model.Component(rotating_component_id, stlname))
+                self.joint_components.append(Fusion_Model.Component(id=rotating_component_id, name=f"{rotating_component_name}_{rotating_component_id}", stlname=stlname))
                 self.joint_components[-1].parent = base_component_id # 'str' for now, later becomes 'Fusion_Model.Component'
 
-                axis = np.array(item["Transformation"]["Joint Axis"])
-                pos = np.array(item["Transformation"]["Joint Origin"]) / 100 # Convert from dm to mm
-                range = item["Transformation"]["Joint Range"]
-                self.joint_components[-1].joint = Fusion_Model.Joint(rotating_component_id + "_joint", (axis, pos), range)
+                axis = np.array(item["transformation"]["joint_axis"])
+                pos = np.array(item["transformation"]["joint_origin"]) # / 100 # Convert from dm to mm?
+                range = item["transformation"]["joint_range"]
+                # TODO: Make joint names more intuitive ('name(id)_p-name(p-id)' or similar)
+                self.joint_components[-1].joint = Fusion_Model.Joint(joint_name=f"{rotating_component_name}_{rotating_component_id}_joint", transform=(axis, pos), range=range)
 
                 self._joint_component_indices[rotating_component_id] = len(self._joint_component_indices) + 1
 
         # Add base
         root_added = False
         for item in data:
-            base_component_id = item["Base Component"]
+            base_component_id = item["component_base"]["id"]
+            base_component_name = item["component_base"]["name"]
 
             if base_component_id not in self._joint_component_indices:
                 if not root_added:
                     stlname = self.components[self._component_indices[base_component_id]].stlname.split(".stl")[0]
-                    self.joint_components.insert(0, Fusion_Model.Component(base_component_id, stlname))
+                    self.joint_components.insert(0, Fusion_Model.Component(id=base_component_id, name=f"{base_component_name}_{base_component_id}", stlname=stlname))
                     self._joint_component_indices[base_component_id] = 0
                     root_added = True
                 else:
@@ -138,7 +145,7 @@ class Fusion_Model:
         '''
         Calculate the relative (and absolute) transforms of all components and joints in the Fusion Model.
         '''
-        def get_relative_transform(parent_pos: np.ndarray, parent_quat: np.ndarray | Quaternion, child_pos: np.ndarray, child_quat: np.ndarray | Quaternion) -> Tuple[np.ndarray, np.ndarray | Quaternion]:
+        def get_relative_transform(parent_pos: np.ndarray, parent_quat: Union[np.ndarray, Quaternion], child_pos: np.ndarray, child_quat: Union[np.ndarray, Quaternion]) -> Tuple[np.ndarray, Union[np.ndarray, Quaternion]]:
             """
             Calculate the relative position and quaternion of a child body relative to its parent.
             
@@ -216,7 +223,7 @@ class Fusion_Model:
             if joint_component is not None: # Not subassembly
                 joint_component.absolute_transform = (quat, trans)
             
-            component.absolute_transform = (quat, trans) # Should be useless
+            component.absolute_transform = (quat, trans) # Should be useless, as only transforms of joint components are later used
 
         # Calculate relative transforms
         for component in self.joint_components:
@@ -308,6 +315,6 @@ class Fusion_Model:
             print()
 
 if __name__ == "__main__":
-    fusion_model = Fusion_Model(json_file_path='assets/fusion_export_2024-11-14_21-01-59/fusion_info.json')
+    fusion_model = Fusion_Model(json_file_path='assets/fusion_export_2024-11-20_10-49-27/fusion_info.json')
     print(fusion_model)
     fusion_model.print_detailed_info()

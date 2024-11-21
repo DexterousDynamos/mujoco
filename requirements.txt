@@ -1,6 +1,9 @@
 mujoco-py<2.2,>=2.1
 mujoco
 cython<3
-numpy
+numpy<2
 pyquaternion
 termcolor
+numpy-stl
+trimesh
+# fast_simplification
