@@ -104,7 +104,7 @@ class DexterousDynamos:
             self._env.add_joint(body_name=component.name, joint_name=component.joint.joint_name, pos=component.joint.relative_transform[1], axis=component.joint.relative_transform[0], range=component.joint.range)
             
             # Joint equalites hardcoded here for now, but will be implemented soon (hopefully)
-            if "DP" in component.name:
+            if "M-DP" in component.name:
                 self._env.add_joint_equality(component.joint.joint_name, component.parent.joint.joint_name, 70/120)
             else:
                 self._env.add_actuator(component.joint.joint_name + "_actuator", component.joint.joint_name, ctrlrange=component.joint.range)
