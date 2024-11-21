@@ -112,6 +112,7 @@ class Fusion_Model:
                 axis = np.array(item["transformation"]["joint_axis"])
                 pos = np.array(item["transformation"]["joint_origin"]) # / 100 # Convert from dm to mm?
                 range = item["transformation"]["joint_range"]
+                # TODO: Make joint names more intuitive ('name(id)_p-name(p-id)' or similar)
                 self.joint_components[-1].joint = Fusion_Model.Joint(joint_name=f"{rotating_component_name}_{rotating_component_id}_joint", transform=(axis, pos), range=range)
 
                 self._joint_component_indices[rotating_component_id] = len(self._joint_component_indices) + 1

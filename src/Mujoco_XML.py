@@ -70,6 +70,7 @@ class Mujoco_XML:
             self.add_default("geom", rgba="1 1 1 1", type="mesh", friction="1 0.005 0.001", condim="3", margin="0.0005", contype="1", conaffinity="1")
             self.add_default("joint", type="hinge", limited="true", damping="0.1", armature="0.001", margin="0.01", frictionloss="0.001")
             self.add_default("position", ctrllimited="true", forcelimited="true", forcerange="-1 1", kp="2.0")
+            self.add_default("mesh", scale="0.001 0.001 0.001") # New
             # Add root body
             self._insert_before_last("worldbody", '<body name="root" quat="1.0 0.0 0.0 0.0">', add_end='</body>')
         # self.sim = mujoco_py.MjSim(self.model)
@@ -266,10 +267,10 @@ class Mujoco_XML:
 
     def add_joint_equality(self, joint1: str, joint2: str, factor: float = 1):
         '''
-        TODO (perfect/debug)
+        TODO: Remove extra added indentation 
         '''
         # Linear relationship (theta_2 = theta_1 * factor, usually t2 = a_0 + a_1 * t1 + ... + a_4 * t1^4 possible)
-        self._insert_before_last("equality", f'<joint name="{joint1}" joint="joint_{joint2}" factor="0 {factor} 0 0 0"/>')
+        self._insert_before_last("equality", f'<joint joint1="{joint1}" joint2="{joint2}" polycoef="0 {factor} 0 0 0"/>')
 
     def export_xml(self, filepath: str = 'model.xml'):
         '''

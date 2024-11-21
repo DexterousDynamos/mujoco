@@ -97,11 +97,17 @@ class DexterousDynamos:
         '''
         quat, trans = component.relative_transform
         # parent_name = component.parent.id if component.parent is not None else ''
-        parent_name = component.parent.id if component.parent is not None else 'root' # New
-        self._env.add_body(component.id, component.stlname, trans, quat, parent_name, exclude_contact=True)
+        parent_name = component.parent.name if component.parent is not None else 'root' # New
+        # TODO: Add better 
+        self._env.add_body(component.name, component.stlname, trans, quat, parent_name, exclude_contact=True)
         if component.joint is not None:
-            self._env.add_joint(body_name=component.id, joint_name=component.joint.joint_name, pos=component.joint.relative_transform[1], axis=component.joint.relative_transform[0], range=component.joint.range)
-            self._env.add_actuator(component.joint.joint_name + "_actuator", component.joint.joint_name, ctrlrange=component.joint.range)
+            self._env.add_joint(body_name=component.name, joint_name=component.joint.joint_name, pos=component.joint.relative_transform[1], axis=component.joint.relative_transform[0], range=component.joint.range)
+            
+            # Joint equalites hardcoded here for now, but will be implemented soon (hopefully)
+            if "DP" in component.name:
+                self._env.add_joint_equality(component.joint.joint_name, component.parent.joint.joint_name, 70/120)
+            else:
+                self._env.add_actuator(component.joint.joint_name + "_actuator", component.joint.joint_name, ctrlrange=component.joint.range)
 
         for child in component.children:
             self._recursive_add_component(child)
