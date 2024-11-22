@@ -1,0 +1,1218 @@
+{
+    "components": [
+        {
+            "component": {
+                "name": "Carpals",
+                "id": "b89de987"
+            },
+            "parent": {
+                "id": "Root"
+            },
+            "transformation": {
+                "quaternion": [
+                    0.9999999320332225,
+                    0.0003686916741598106,
+                    -1.7082130132992534e-16,
+                    -5.683175112366671e-16
+                ],
+                "translation": [
+                    -0.006492326252276957,
+                    -3.686916491009419e-05,
+                    0.022720770934923164
+                ]
+            },
+            "stl_file": "Carpals.stl",
+            "is_base_component": true
+        },
+        {
+            "component": {
+                "name": "M-MP",
+                "id": "7fda9f69"
+            },
+            "parent": {
+                "id": "ab994751"
+            },
+            "transformation": {
+                "quaternion": [
+                    0.7064608819222051,
+                    -1.7206834583169911e-16,
+                    -0.7077520909991707,
+                    -1.684636955318018e-16
+                ],
+                "translation": [
+                    -0.047999919973397843,
+                    4.773959005888173e-17,
+                    -8.765014211522102e-05
+                ]
+            },
+            "stl_file": "M-MP.stl",
+            "is_base_component": true
+        },
+        {
+            "component": {
+                "name": "M-DP",
+                "id": "94d2158a"
+            },
+            "parent": {
+                "id": "ab994751"
+            },
+            "transformation": {
+                "quaternion": [
+                    0.7071064864606884,
+                    -0.0006456045384833907,
+                    -0.0006456045384834305,
+                    0.7071064864606881
+                ],
+                "translation": [
+                    -0.07600169933584054,
+                    5.995204332975846e-17,
+                    0.0008612189410966897
+                ]
+            },
+            "stl_file": "M-DP.stl",
+            "is_base_component": true
+        },
+        {
+            "component": {
+                "name": "M-AP",
+                "id": "bb9fccd7"
+            },
+            "parent": {
+                "id": "ab994751"
+            },
+            "transformation": {
+                "quaternion": [
+                    1.0,
+                    -3.072460114405262e-32,
+                    0.0,
+                    -1.232595164407831e-32
+                ],
+                "translation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "stl_file": "M-AP.stl",
+            "is_base_component": true
+        },
+        {
+            "component": {
+                "name": "M-PP",
+                "id": "5eafbf69"
+            },
+            "parent": {
+                "id": "ab994751"
+            },
+            "transformation": {
+                "quaternion": [
+                    0.7064608819222051,
+                    -1.7202881395794492e-16,
+                    -0.7077520909991707,
+                    -2.1176148029771612e-16
+                ],
+                "translation": [
+                    -3.552713678800501e-17,
+                    2.7755575615628914e-17,
+                    0.0
+                ]
+            },
+            "stl_file": "M-PP.stl",
+            "is_base_component": true
+        },
+        {
+            "component": {
+                "name": "M-Assembly",
+                "id": "ab994751"
+            },
+            "parent": {
+                "id": "Root"
+            },
+            "transformation": {
+                "quaternion": [
+                    0.4998156201795317,
+                    0.5001843118536914,
+                    0.5001843118536908,
+                    -0.49981562017953235
+                ],
+                "translation": [
+                    -0.007454465718716044,
+                    -7.621486393606357e-05,
+                    0.07607930024404588
+                ]
+            },
+            "stl_file": "M-Assembly.stl",
+            "is_base_component": false
+        },
+        {
+            "component": {
+                "name": "M-MP",
+                "id": "93965ca4"
+            },
+            "parent": {
+                "id": "095026ef"
+            },
+            "transformation": {
+                "quaternion": [
+                    0.7065050981872623,
+                    4.794567525011371e-16,
+                    -0.7077079526438892,
+                    2.7303397494348496e-16
+                ],
+                "translation": [
+                    -0.0479999305507756,
+                    -7.716050021144837e-17,
+                    -8.165243859900595e-05
+                ]
+            },
+            "stl_file": "M-MP.stl",
+            "is_base_component": true
+        },
+        {
+            "component": {
+                "name": "M-DP",
+                "id": "caab02f8"
+            },
+            "parent": {
+                "id": "095026ef"
+            },
+            "transformation": {
+                "quaternion": [
+                    0.7071065254155758,
+                    -0.000601427228313387,
+                    -0.0006014272283137224,
+                    0.7071065254155747
+                ],
+                "translation": [
+                    -0.07600159113119871,
+                    -1.0824674490095276e-16,
+                    0.000870715525359405
+                ]
+            },
+            "stl_file": "M-DP.stl",
+            "is_base_component": true
+        },
+        {
+            "component": {
+                "name": "M-AP",
+                "id": "c9980cc4"
+            },
+            "parent": {
+                "id": "095026ef"
+            },
+            "transformation": {
+                "quaternion": [
+                    1.0,
+                    -3.9302328752599536e-19,
+                    9.215718466126788e-19,
+                    0.0
+                ],
+                "translation": [
+                    -8.881784197001253e-18,
+                    -1.6653345369377347e-18,
+                    -1.3877787807814457e-19
+                ]
+            },
+            "stl_file": "M-AP.stl",
+            "is_base_component": true
+        },
+        {
+            "component": {
+                "name": "M-PP",
+                "id": "32fb69bf"
+            },
+            "parent": {
+                "id": "095026ef"
+            },
+            "transformation": {
+                "quaternion": [
+                    0.7065050981872624,
+                    4.79456752501137e-16,
+                    -0.7077079526438891,
+                    3.199735285800963e-16
+                ],
+                "translation": [
+                    -1.1546319456101628e-16,
+                    -1.9428902930940238e-17,
+                    -8.534839501805891e-18
+                ]
+            },
+            "stl_file": "M-PP.stl",
+            "is_base_component": true
+        },
+        {
+            "component": {
+                "name": "M-Assembly",
+                "id": "095026ef"
+            },
+            "parent": {
+                "id": "Root"
+            },
+            "transformation": {
+                "quaternion": [
+                    0.4543333370903769,
+                    0.4057081974303607,
+                    0.5794550432983334,
+                    -0.5414923177130573
+                ],
+                "translation": [
+                    0.016917221737709053,
+                    0.0016379113054446922,
+                    0.06721721060513969
+                ]
+            },
+            "stl_file": "M-Assembly.stl",
+            "is_base_component": false
+        },
+        {
+            "component": {
+                "name": "M-MP",
+                "id": "5fd212cd"
+            },
+            "parent": {
+                "id": "9eef32ff"
+            },
+            "transformation": {
+                "quaternion": [
+                    0.7064409996809057,
+                    -3.6925807366480786e-16,
+                    -0.7077719364101976,
+                    -1.643704891500454e-16
+                ],
+                "translation": [
+                    -0.03999992914429693,
+                    -1.0880185641326534e-16,
+                    -7.528911758735462e-05
+                ]
+            },
+            "stl_file": "M-MP.stl",
+            "is_base_component": true
+        },
+        {
+            "component": {
+                "name": "M-DP",
+                "id": "f8cbda88"
+            },
+            "parent": {
+                "id": "9eef32ff"
+            },
+            "transformation": {
+                "quaternion": [
+                    0.7071064680455522,
+                    -0.0006654683646463069,
+                    -0.0006654683646462006,
+                    0.7071064680455509
+                ],
+                "translation": [
+                    -0.0680017617732444,
+                    -0.00010000000000011555,
+                    0.0008720067287089131
+                ]
+            },
+            "stl_file": "M-DP.stl",
+            "is_base_component": true
+        },
+        {
+            "component": {
+                "name": "M-AP",
+                "id": "00c7e80f"
+            },
+            "parent": {
+                "id": "9eef32ff"
+            },
+            "transformation": {
+                "quaternion": [
+                    1.0,
+                    0.0,
+                    -8.673617379884035e-19,
+                    0.0
+                ],
+                "translation": [
+                    0.0,
+                    -4.440892098500626e-18,
+                    -2.8189256484623116e-19
+                ]
+            },
+            "stl_file": "M-AP.stl",
+            "is_base_component": true
+        },
+        {
+            "component": {
+                "name": "I-PP",
+                "id": "cf0e2182"
+            },
+            "parent": {
+                "id": "9eef32ff"
+            },
+            "transformation": {
+                "quaternion": [
+                    0.7064409996809057,
+                    -3.649608059746106e-16,
+                    -0.7077719364101978,
+                    -1.1848180917258174e-16
+                ],
+                "translation": [
+                    -7.105427357601002e-17,
+                    -1.376676550535194e-16,
+                    9.710114656780178e-18
+                ]
+            },
+            "stl_file": "I-PP.stl",
+            "is_base_component": true
+        },
+        {
+            "component": {
+                "name": "I-Assembly",
+                "id": "9eef32ff"
+            },
+            "parent": {
+                "id": "Root"
+            },
+            "transformation": {
+                "quaternion": [
+                    0.5173590312785357,
+                    0.5650102333375984,
+                    0.43439376236687743,
+                    -0.4737141840763049
+                ],
+                "translation": [
+                    -0.031021856157271075,
+                    0.0014950505163322835,
+                    0.07246100068645588
+                ]
+            },
+            "stl_file": "I-Assembly.stl",
+            "is_base_component": false
+        },
+        {
+            "component": {
+                "name": "T-DP",
+                "id": "aed3379a"
+            },
+            "parent": {
+                "id": "5666ef32"
+            },
+            "transformation": {
+                "quaternion": [
+                    0.5963678105290188,
+                    -0.3799281965909173,
+                    0.37992819659091304,
+                    0.5963678105290241
+                ],
+                "translation": [
+                    -0.05299999999999926,
+                    -1.6431300764452317e-16,
+                    -7.529393775129734e-16
+                ]
+            },
+            "stl_file": "T-DP.stl",
+            "is_base_component": true
+        },
+        {
+            "component": {
+                "name": "T-AP",
+                "id": "ac170ba5"
+            },
+            "parent": {
+                "id": "5666ef32"
+            },
+            "transformation": {
+                "quaternion": [
+                    1.0,
+                    -2.7755575615628914e-17,
+                    5.551115123125783e-17,
+                    -1.3877787807814457e-17
+                ],
+                "translation": [
+                    4.440892098500626e-18,
+                    0.0,
+                    -7.632783294297951e-19
+                ]
+            },
+            "stl_file": "T-AP.stl",
+            "is_base_component": true
+        },
+        {
+            "component": {
+                "name": "T-PP",
+                "id": "1254f8d5"
+            },
+            "parent": {
+                "id": "5666ef32"
+            },
+            "transformation": {
+                "quaternion": [
+                    0.5963678105290118,
+                    -0.3799281965909136,
+                    -0.5963678105290235,
+                    0.3799281965909164
+                ],
+                "translation": [
+                    -0.02299999999999929,
+                    -9.325873406851315e-17,
+                    -6.869504964868156e-18
+                ]
+            },
+            "stl_file": "T-PP.stl",
+            "is_base_component": true
+        },
+        {
+            "component": {
+                "name": "T-AP_OUT",
+                "id": "a7c38301"
+            },
+            "parent": {
+                "id": "5666ef32"
+            },
+            "transformation": {
+                "quaternion": [
+                    0.5372996083468241,
+                    0.8433914458128913,
+                    -1.2914384816428543e-15,
+                    6.715480104542842e-16
+                ],
+                "translation": [
+                    -0.023000000000000496,
+                    5.773159728050814e-16,
+                    1.0970391262077328e-16
+                ]
+            },
+            "stl_file": "T-AP_OUT.stl",
+            "is_base_component": true
+        },
+        {
+            "component": {
+                "name": "T-Assembly",
+                "id": "5666ef32"
+            },
+            "parent": {
+                "id": "Root"
+            },
+            "transformation": {
+                "quaternion": [
+                    -0.46285732107332,
+                    0.7676877575538935,
+                    -0.44017978614284703,
+                    -0.0515787078351683
+                ],
+                "translation": [
+                    -0.03609006288817236,
+                    0.017952993792219422,
+                    0.0035665067704986654
+                ]
+            },
+            "stl_file": "T-Assembly.stl",
+            "is_base_component": false
+        },
+        {
+            "component": {
+                "name": "M-MP",
+                "id": "2bfd2f04"
+            },
+            "parent": {
+                "id": "78786a0b"
+            },
+            "transformation": {
+                "quaternion": [
+                    0.7065579686474562,
+                    2.5134854284226037e-16,
+                    -0.7076551681015124,
+                    -1.3610876526317761e-16
+                ],
+                "translation": [
+                    -0.02999996388460075,
+                    -3.7747582837255325e-17,
+                    -4.655021644679347e-05
+                ]
+            },
+            "stl_file": "M-MP.stl",
+            "is_base_component": true
+        },
+        {
+            "component": {
+                "name": "M-DP",
+                "id": "5f0d2926"
+            },
+            "parent": {
+                "id": "78786a0b"
+            },
+            "transformation": {
+                "quaternion": [
+                    0.7071065683744845,
+                    -0.0005485997270281882,
+                    -0.0005485997270284019,
+                    0.7071065683744844
+                ],
+                "translation": [
+                    -0.058001481850776325,
+                    -0.00010000000000005337,
+                    0.0009100017110228653
+                ]
+            },
+            "stl_file": "M-DP.stl",
+            "is_base_component": true
+        },
+        {
+            "component": {
+                "name": "M-AP",
+                "id": "48910c27"
+            },
+            "parent": {
+                "id": "78786a0b"
+            },
+            "transformation": {
+                "quaternion": [
+                    1.0,
+                    1.7564075194265172e-17,
+                    1.0842021724855044e-17,
+                    -1.3877787807814457e-17
+                ],
+                "translation": [
+                    0.0,
+                    -2.220446049250313e-18,
+                    1.1102230246251566e-18
+                ]
+            },
+            "stl_file": "M-AP.stl",
+            "is_base_component": true
+        },
+        {
+            "component": {
+                "name": "P-PP",
+                "id": "13f0f3d3"
+            },
+            "parent": {
+                "id": "78786a0b"
+            },
+            "transformation": {
+                "quaternion": [
+                    0.7065579686474562,
+                    2.317071426689946e-16,
+                    -0.7076551681015124,
+                    -8.838630077969595e-17
+                ],
+                "translation": [
+                    1.7763568394002505e-17,
+                    6.661338147750939e-18,
+                    2.55351295663786e-17
+                ]
+            },
+            "stl_file": "P-PP.stl",
+            "is_base_component": true
+        },
+        {
+            "component": {
+                "name": "P-Assembly",
+                "id": "78786a0b"
+            },
+            "parent": {
+                "id": "Root"
+            },
+            "transformation": {
+                "quaternion": [
+                    0.3915764712181704,
+                    0.22206243860713887,
+                    0.6736855417089321,
+                    -0.586092084437692
+                ],
+                "translation": [
+                    0.043304086731163316,
+                    0.007380818045610538,
+                    0.04987554128631695
+                ]
+            },
+            "stl_file": "P-Assembly.stl",
+            "is_base_component": false
+        },
+        {
+            "component": {
+                "name": "Tower_MK3",
+                "id": "cdd9b821"
+            },
+            "parent": {
+                "id": "Root"
+            },
+            "transformation": {
+                "quaternion": [
+                    0.7071067811865472,
+                    -3.8025676733747664e-16,
+                    -0.7071067811865477,
+                    -3.8025676733747634e-16
+                ],
+                "translation": [
+                    -0.004492326252276878,
+                    5.084936535668403e-33,
+                    -0.17127921547172179
+                ]
+            },
+            "stl_file": "Tower_MK3.stl",
+            "is_base_component": true
+        }
+    ],
+    "joints": [
+        {
+            "component_base": {
+                "id": "b89de987",
+                "name": "Carpals"
+            },
+            "component_rotating": {
+                "id": "bb9fccd7",
+                "name": "M-AP"
+            },
+            "transformation": {
+                "joint_origin": [
+                    -0.007454465718716024,
+                    -6.559654444195428e-05,
+                    0.0616793041589321
+                ],
+                "joint_axis": [
+                    -1.1373763461747634e-15,
+                    -0.9999997281328991,
+                    -0.0007373832982020441
+                ],
+                "joint_range": [
+                    -0.4363323129985824,
+                    0.6108652381980153
+                ]
+            }
+        },
+        {
+            "component_base": {
+                "id": "b89de987",
+                "name": "Carpals"
+            },
+            "component_rotating": {
+                "id": "ac170ba5",
+                "name": "T-AP"
+            },
+            "transformation": {
+                "joint_origin": [
+                    -0.025829011812569993,
+                    0.007338203488309086,
+                    -0.004658276365116854
+                ],
+                "joint_axis": [
+                    -0.32828818809839105,
+                    -0.756067606933174,
+                    0.5662054744537708
+                ],
+                "joint_range": [
+                    -1.3089969389957472,
+                    1.3089969389957472
+                ]
+            }
+        },
+        {
+            "component_base": {
+                "id": "cdd9b821",
+                "name": "Tower_MK3"
+            },
+            "component_rotating": {
+                "id": "b89de987",
+                "name": "Carpals"
+            },
+            "transformation": {
+                "joint_origin": [
+                    -0.004492326252276939,
+                    6.110563444128303e-18,
+                    -0.02727921547172179
+                ],
+                "joint_axis": [
+                    0.9999999999999996,
+                    -1.0755285551056194e-15,
+                    4.0245584642661934e-16
+                ],
+                "joint_range": [
+                    -1.3962634015954636,
+                    1.3962634015954636
+                ]
+            }
+        },
+        {
+            "component_base": {
+                "id": "b89de987",
+                "name": "Carpals"
+            },
+            "component_rotating": {
+                "id": "c9980cc4",
+                "name": "M-AP"
+            },
+            "transformation": {
+                "joint_origin": [
+                    0.013202537910140446,
+                    0.0013231748079666323,
+                    0.053308146474208576
+                ],
+                "joint_axis": [
+                    0.08715574274765642,
+                    -0.9961944272591812,
+                    -0.0007345773321301388
+                ],
+                "joint_range": [
+                    -0.4363323129985824,
+                    0.6108652381980153
+                ]
+            }
+        },
+        {
+            "component_base": {
+                "id": "b89de987",
+                "name": "Carpals"
+            },
+            "component_rotating": {
+                "id": "48910c27",
+                "name": "M-AP"
+            },
+            "transformation": {
+                "joint_origin": [
+                    0.03474022988337583,
+                    0.0050797091051919254,
+                    0.03852982608034914
+                ],
+                "joint_axis": [
+                    -0.26730073922901987,
+                    0.9635923789912182,
+                    0.006327871495613009
+                ],
+                "joint_range": [
+                    -0.6108652381980153,
+                    0.4363323129985824
+                ]
+            }
+        },
+        {
+            "component_base": {
+                "id": "b89de987",
+                "name": "Carpals"
+            },
+            "component_rotating": {
+                "id": "00c7e80f",
+                "name": "M-AP"
+            },
+            "transformation": {
+                "joint_origin": [
+                    -0.028519224543847067,
+                    0.0015053208745024825,
+                    0.058280142830626644
+                ],
+                "joint_axis": [
+                    -0.0858316511774323,
+                    -0.9961832673789186,
+                    -0.015869009118913955
+                ],
+                "joint_range": [
+                    -0.4363323129985824,
+                    0.6108652381980153
+                ]
+            }
+        },
+        {
+            "component_base": {
+                "id": "7fda9f69",
+                "name": "M-MP"
+            },
+            "component_rotating": {
+                "id": "94d2158a",
+                "name": "M-DP"
+            },
+            "transformation": {
+                "joint_origin": [
+                    -0.007454465718715966,
+                    -0.0009934759546208847,
+                    0.1520803438690616
+                ],
+                "joint_axis": [
+                    -1.0,
+                    1.1890150858611835e-15,
+                    5.863908552344687e-16
+                ],
+                "joint_range": [
+                    0.0,
+                    1.3089969389957472
+                ]
+            }
+        },
+        {
+            "component_base": {
+                "id": "5eafbf69",
+                "name": "M-PP"
+            },
+            "component_rotating": {
+                "id": "7fda9f69",
+                "name": "M-MP"
+            },
+            "transformation": {
+                "joint_origin": [
+                    -0.007454465718715985,
+                    -2.3959084953453725e-05,
+                    0.12407927179959558
+                ],
+                "joint_axis": [
+                    -1.0,
+                    1.2503140508554706e-15,
+                    6.475564975857685e-16
+                ],
+                "joint_range": [
+                    0.0,
+                    2.0943951023931953
+                ]
+            }
+        },
+        {
+            "component_base": {
+                "id": "bb9fccd7",
+                "name": "M-AP"
+            },
+            "component_rotating": {
+                "id": "5eafbf69",
+                "name": "M-PP"
+            },
+            "transformation": {
+                "joint_origin": [
+                    -0.007454465718716016,
+                    -7.62148639360636e-05,
+                    0.07607930024404591
+                ],
+                "joint_axis": [
+                    -1.0000000000000002,
+                    1.3115441047798605e-15,
+                    7.087911234899398e-16
+                ],
+                "joint_range": [
+                    -0.17453292519943295,
+                    2.007128639793479
+                ]
+            }
+        },
+        {
+            "component_base": {
+                "id": "93965ca4",
+                "name": "M-MP"
+            },
+            "component_rotating": {
+                "id": "caab02f8",
+                "name": "M-DP"
+            },
+            "transformation": {
+                "joint_origin": [
+                    0.03659879580747027,
+                    0.0024316534204781386,
+                    0.14062705746229753
+                ],
+                "joint_axis": [
+                    -0.962215345647746,
+                    -0.0843738567910997,
+                    0.2588873903653545
+                ],
+                "joint_range": [
+                    0.0,
+                    1.3089969389957472
+                ]
+            }
+        },
+        {
+            "component_base": {
+                "id": "32fb69bf",
+                "name": "M-PP"
+            },
+            "component_rotating": {
+                "id": "93965ca4",
+                "name": "M-MP"
+            },
+            "transformation": {
+                "joint_origin": [
+                    0.029292366768593908,
+                    0.0027683731500784082,
+                    0.11358075060676615
+                ],
+                "joint_axis": [
+                    -0.9622153456477462,
+                    -0.08437385679109978,
+                    0.2588873903653545
+                ],
+                "joint_range": [
+                    0.0,
+                    2.0943951023931953
+                ]
+            }
+        },
+        {
+            "component_base": {
+                "id": "c9980cc4",
+                "name": "M-AP"
+            },
+            "component_rotating": {
+                "id": "32fb69bf",
+                "name": "M-PP"
+            },
+            "transformation": {
+                "joint_origin": [
+                    0.016917221737709053,
+                    0.001637911305444701,
+                    0.06721721060513978
+                ],
+                "joint_axis": [
+                    -0.9622153456477491,
+                    -0.08437385679110011,
+                    0.2588873903653553
+                ],
+                "joint_range": [
+                    -0.17453292519943295,
+                    2.007128639793479
+                ]
+            }
+        },
+        {
+            "component_base": {
+                "id": "5fd212cd",
+                "name": "M-MP"
+            },
+            "component_rotating": {
+                "id": "f8cbda88",
+                "name": "M-DP"
+            },
+            "transformation": {
+                "joint_origin": [
+                    -0.042914990738957576,
+                    0.0005778718340384498,
+                    0.13941405986291663
+                ],
+                "joint_axis": [
+                    -0.9810344648238488,
+                    0.08728338394256911,
+                    -0.17306932054907498
+                ],
+                "joint_range": [
+                    0.0,
+                    1.3089969389957472
+                ]
+            }
+        },
+        {
+            "component_base": {
+                "id": "cf0e2182",
+                "name": "I-PP"
+            },
+            "component_rotating": {
+                "id": "5fd212cd",
+                "name": "M-MP"
+            },
+            "transformation": {
+                "joint_origin": [
+                    -0.03796713613544038,
+                    0.0015415235533292049,
+                    0.11185339749449089
+                ],
+                "joint_axis": [
+                    -0.981034464823849,
+                    0.08728338394256906,
+                    -0.1730693205490751
+                ],
+                "joint_range": [
+                    0.0,
+                    2.0943951023931953
+                ]
+            }
+        },
+        {
+            "component_base": {
+                "id": "00c7e80f",
+                "name": "M-AP"
+            },
+            "component_rotating": {
+                "id": "cf0e2182",
+                "name": "I-PP"
+            },
+            "transformation": {
+                "joint_origin": [
+                    -0.031021856157271217,
+                    0.001495050516332283,
+                    0.07246100068645592
+                ],
+                "joint_axis": [
+                    -0.9810344648238534,
+                    0.0872833839425694,
+                    -0.17306932054907598
+                ],
+                "joint_range": [
+                    -0.17453292519943295,
+                    2.007128639793479
+                ]
+            }
+        },
+        {
+            "component_base": {
+                "id": "ac170ba5",
+                "name": "T-AP"
+            },
+            "component_rotating": {
+                "id": "a7c38301",
+                "name": "T-AP_OUT"
+            },
+            "transformation": {
+                "joint_origin": [
+                    -0.03609006288817211,
+                    0.017952993792219103,
+                    0.0035665067704982035
+                ],
+                "joint_axis": [
+                    -0.7235884309551208,
+                    -0.18400971240013603,
+                    -0.6652519885955404
+                ],
+                "joint_range": [
+                    -0.7853981633974483,
+                    0.7853981633974483
+                ]
+            }
+        },
+        {
+            "component_base": {
+                "id": "a7c38301",
+                "name": "T-AP_OUT"
+            },
+            "component_rotating": {
+                "id": "1254f8d5",
+                "name": "T-PP"
+            },
+            "transformation": {
+                "joint_origin": [
+                    -0.05005480695555952,
+                    0.03239915811115018,
+                    0.014759998611868273
+                ],
+                "joint_axis": [
+                    0.6033318261716655,
+                    0.7629958244876487,
+                    -0.2320087915204376
+                ],
+                "joint_range": [
+                    -0.17453292519943295,
+                    1.5707963267948966
+                ]
+            }
+        },
+        {
+            "component_base": {
+                "id": "1254f8d5",
+                "name": "T-PP"
+            },
+            "component_rotating": {
+                "id": "aed3379a",
+                "name": "T-DP"
+            },
+            "transformation": {
+                "joint_origin": [
+                    -0.06826969052171726,
+                    0.051241981135842184,
+                    0.029360205361481415
+                ],
+                "joint_axis": [
+                    -0.6033318261716636,
+                    -0.7629958244876466,
+                    0.23200879152043646
+                ],
+                "joint_range": [
+                    -1.7453292519943295,
+                    0.0
+                ]
+            }
+        },
+        {
+            "component_base": {
+                "id": "2bfd2f04",
+                "name": "M-MP"
+            },
+            "component_rotating": {
+                "id": "5f0d2926",
+                "name": "M-DP"
+            },
+            "transformation": {
+                "joint_origin": [
+                    0.07804152443966327,
+                    0.015772539585079657,
+                    0.09556897003763855
+                ],
+                "joint_axis": [
+                    -0.7582002489585408,
+                    -0.21436868383866292,
+                    0.6157746745916772
+                ],
+                "joint_range": [
+                    0.0,
+                    1.3089969389957472
+                ]
+            }
+        },
+        {
+            "component_base": {
+                "id": "13f0f3d3",
+                "name": "P-PP"
+            },
+            "component_rotating": {
+                "id": "2bfd2f04",
+                "name": "M-MP"
+            },
+            "transformation": {
+                "joint_origin": [
+                    0.061132990778514903,
+                    0.012219644667411392,
+                    0.07351271407399365
+                ],
+                "joint_axis": [
+                    -0.7582002489585409,
+                    -0.21436868383866303,
+                    0.6157746745916772
+                ],
+                "joint_range": [
+                    0.0,
+                    2.0943951023931953
+                ]
+            }
+        },
+        {
+            "component_base": {
+                "id": "48910c27",
+                "name": "M-AP"
+            },
+            "component_rotating": {
+                "id": "13f0f3d3",
+                "name": "P-PP"
+            },
+            "transformation": {
+                "joint_origin": [
+                    0.0433040867311633,
+                    0.007380818045610504,
+                    0.049875541286316924
+                ],
+                "joint_axis": [
+                    -0.7582002489585408,
+                    -0.21436868383866312,
+                    0.6157746745916769
+                ],
+                "joint_range": [
+                    -0.17453292519943295,
+                    2.007128639793479
+                ]
+            }
+        }
+    ],
+    "desired_component_names": [
+        "Tower_MK3",
+        "Carpals",
+        "M-AP",
+        "T-AP",
+        "T-AP_OUT",
+        "M-PP",
+        "I-PP",
+        "P-PP",
+        "T-PP",
+        "M-MP",
+        "M-DP",
+        "T-DP",
+        "P-Assembly",
+        "I-Assembly",
+        "M-Assembly",
+        "T-Assembly"
+    ]
+}
