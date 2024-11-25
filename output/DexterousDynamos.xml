@@ -158,10 +158,10 @@
 		<exclude body1="T-PP_2fecb75f" body2="T-DP_6c6b99c5"/>
 	</contact>
 	<equality>
-		<joint joint1="M-DP_932d4bbb_joint" joint2="M-MP_284f0eba_joint" polycoef="0 0.5833333333333334 0 0 0"/>
-			<joint joint1="M-DP_5e80261b_joint" joint2="M-MP_681cd8db_joint" polycoef="0 0.5833333333333334 0 0 0"/>
-				<joint joint1="M-DP_dbf0b71e_joint" joint2="M-MP_5d4a2b6f_joint" polycoef="0 0.5833333333333334 0 0 0"/>
-					<joint joint1="M-DP_a35b8d3d_joint" joint2="M-MP_2bb10a06_joint" polycoef="0 0.5833333333333334 0 0 0"/>
-						<joint joint1="T-DP_6c6b99c5_joint" joint2="T-PP_2fecb75f_joint" polycoef="0 0.5833333333333334 0 0 0"/>
+	<joint joint1="M-DP_932d4bbb_joint" joint2="M-MP_284f0eba_joint" polycoef="0 0.5833333333333334 0 0 0"/>
+	<joint joint1="M-DP_5e80261b_joint" joint2="M-MP_681cd8db_joint" polycoef="0 0.5833333333333334 0 0 0"/>
+	<joint joint1="M-DP_dbf0b71e_joint" joint2="M-MP_5d4a2b6f_joint" polycoef="0 0.5833333333333334 0 0 0"/>
+	<joint joint1="M-DP_a35b8d3d_joint" joint2="M-MP_2bb10a06_joint" polycoef="0 0.5833333333333334 0 0 0"/>
+	<joint joint1="T-DP_6c6b99c5_joint" joint2="T-PP_2fecb75f_joint" polycoef="0 -0.5833333333333334 0 0 0"/>
 	</equality>
 </mujoco>
