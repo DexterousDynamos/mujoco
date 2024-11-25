@@ -32,29 +32,27 @@ sudo apt-get install patchelf
 # Implementation instructions
 1) Run the fusion script to create an asset folder (`fusion_export_YYYY-MM-DD_HH-MM-SS`) containing `fusion_info.json` and `.stl` files
 2) Copy this folder to the `assets` folder in the root directory of this project.
-3) Initialize a `DexterousDynamos` object in `DexterousDynamos.py` with the desired parameters (see `DexterousDynamos` class for defaults).
-4) Export the model to a `.xml` file using the `export_to_xml()` method in `DexterousDynamos.py`. Optionally, also directly run an interactive window of the model using the `run_interactive()` method.
+3) Initialize a `Fusion_to_Mujoco` object in `main.py` with the desired parameters (see `Fusion_to_Mujoco.py` with class definition for defaults).
+4) Export the model to a `.xml` file using the `export_to_xml()` method in `main.py`. Optionally, also directly run an interactive window of the model using the `run_interactive()` method.
 
 # TODO
 ## Fusion360 script
-- Use IDs
-- Apply correct joint limits
-- Debug repetition and missing joint errors
 - Add motion links (i.e. linked joints)
-- Add correct dimensions to fusion script (translation /= 100)
 - Add windows compatibility
 
 ## Mujoco_XML.py
-- Add checks
-- Add list of what kwargs are allowed for each tag
-- Fix export directory (w.r.t. file calling export, not Mujoco_XML.py)
+- See if instead of default `<mesh scale="0.001 0.001 0.001">` one can use translations*1000 (in Fusion_Model.py)
+- Add checks (incl. list of what kwargs are allowed for each tag)
 - (later) Implement "run_simulation" for external commands
 
 ## Fusion_Model.py
+- See if instead of default `<mesh scale="0.001 0.001 0.001">` (in Mujoco_XML.py) one can use translations*1000
 - Add motion links (i.e. equalities - pay attention to remove/not add extra actuator)
-- Add orca defaults (incl. possible "root" body that may be necessary for IsaacGym)
 - Add checks
 
-## DexterousDynamos.py
+## Fusion_to_Mujoco.py
 - Add motion links
 - Add checks
+
+## main.py
+- Add section with all default parameters, for better UI

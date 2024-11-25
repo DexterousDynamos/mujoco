@@ -5,6 +5,5 @@ trash
 # Virtual environemnt
 mujoco_env/
 
-xml
-misc
-config
+config/
+output/
