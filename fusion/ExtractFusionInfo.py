@@ -113,7 +113,7 @@ def run(context):
 
         # Set the desired component names, already in hierachical order
         desired_component_names = [
-            'Tower_MK3', 'Carpals','M-AP','T-AP','T-AP_OUT', 'M-PP', 'I-PP', 'P-PP' , 'T-PP' ,'M-MP','M-DP','T-DP', 'P-Assembly', 'I-Assembly', 'M-Assembly', 'T-Assembly'
+            'Tower_MK3', 'Carpals','M-AP','T-AP','T-AP_OUT', 'M-PP', 'I-PP', 'P-PP' , 'T-PP' ,'M-MP','S10-Clemens','S10-Thumb-Clemens', 'P-Assembly', 'I-Assembly', 'M-Assembly', 'T-Assembly'
         ]
 
         # Set the output directory
