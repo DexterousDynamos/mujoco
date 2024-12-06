@@ -75,7 +75,8 @@ class Mujoco_XML:
             self._insert_before_last("worldbody", '<body name="root" quat="1.0 0.0 0.0 0.0">', add_end='</body>')
         # self.sim = mujoco_py.MjSim(self.model)
 
-    def _insert_at_index(self, target: str, index: int, insert: str, add_end: str = ''):
+    # TODO: Add check to see if called from "before" or "after". In "before" case, instead of using "previous_line" use "line"
+    def _insert_at_index(self, target: str, index: int, insert: str, add_end: str = ''): # ", after: bool"
         '''
         Insert a string at a specific index in the Mujoco XML file.
 
